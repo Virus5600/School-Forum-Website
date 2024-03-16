@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -27,4 +29,33 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+	 * Render an exception into an HTTP response.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Throwable  $exception
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 *
+	 * @throws \Throwable
+	 */
+	public function render($request, Throwable $exception)
+	{
+		if ($exception instanceof TokenMismatchException) {
+			return redirect()
+				->back()
+				->withInput($request->except('_token'))
+				->with('flash_info', "Oops! Seems you couldn't submit the form for a long time. Please try again.")
+				->with('has_icon', 'true');
+		}
+		else if ($exception instanceof ModelNotFoundException) {
+			return redirect()
+				->back()
+				->withInput($request->except('_token'))
+				->with('flash_error', "The item either does not exists or is already deleted")
+				->with('has_icon', 'true');
+		}
+
+		return parent::render($request, $exception);
+	}
 }

@@ -1,0 +1,11 @@
+$new-colors: (
+	"primary": $it-primary,
+	"secondary": $it-secondary,
+	"tertiary": $it-tertiary,
+	"quaternary": $it-quaternary
+);
+
+$theme-colors: map-merge(
+	$theme-colors,
+	$new-colors
+);

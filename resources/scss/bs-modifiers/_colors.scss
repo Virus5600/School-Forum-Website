@@ -1,0 +1,49 @@
+$new-colors: (
+	"it-primary": $it-primary,
+	"it-secondary": $it-secondary,
+	"it-tertiary": $it-tertiary,
+	"it-quaternary": $it-quaternary
+);
+
+// Merge the new colors with the existing colors
+$all-colors: map-merge-multiple(
+	$new-colors,
+	$blues,
+	$indigos,
+	$purples,
+	$pinks,
+	$reds,
+	$oranges,
+	$yellows,
+	$greens,
+	$teals,
+	$cyans
+);
+
+// Add the new colors to the $all-colors map
+$all-colors: map-merge(
+	$all-colors,
+	$new-colors
+);
+
+// Add the new colors to the $colors list
+$colors: map-merge(
+	$colors,
+	$new-colors
+);
+
+// Add the new colors to the $utilities map
+$utilities: map-merge(
+	$utilities,
+	(
+		"color": map-merge(
+			map-get($utilities, "color"),
+			(
+				values: map-merge(
+					map-get(map-get($utilities, "color"), "values"),
+					($all-colors),
+				),
+			)
+		),
+	)
+);

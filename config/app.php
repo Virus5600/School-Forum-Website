@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Manila',
 
     /*
     |--------------------------------------------------------------------------
@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+		Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -168,6 +169,16 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+		/**
+		 * Custom Application Service Providers...
+		 */
+		App\Providers\QueryBuilderServiceProvider::class,
+
+		/**
+		 * Custom View Service Providers...
+		 */
+		App\Providers\ViewLayoutServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -182,6 +193,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Image' => Intervention\Image\Facades\Image::class,
+		'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

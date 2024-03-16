@@ -1,0 +1,23 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/custom/components/navbar-dynamic.js": "/js/custom/components/navbar-dynamic.js",
+    "/views/layouts/public/public.js": "/views/layouts/public/public.js",
+    "/css/util/image-input.css": "/css/util/image-input.css",
+    "/css/util/custom-switch.css": "/css/util/custom-switch.css",
+    "/css/util/custom-scrollbar.css": "/css/util/custom-scrollbar.css",
+    "/css/util/animations.css": "/css/util/animations.css",
+    "/css/app.css": "/css/app.css",
+    "/views/index/index.css": "/views/index/index.css",
+    "/css/widget/card-widget.css": "/css/widget/card-widget.css",
+    "/css/util/text-counter.css": "/css/util/text-counter.css",
+    "/js/util/animation.js": "/js/util/animation.js",
+    "/js/util/confirm-leave.js": "/js/util/confirm-leave.js",
+    "/js/util/dirty-form.js": "/js/util/dirty-form.js",
+    "/js/util/disable-on-submit.js": "/js/util/disable-on-submit.js",
+    "/js/util/fallback-image.js": "/js/util/fallback-image.js",
+    "/js/util/image-input.js": "/js/util/image-input.js",
+    "/js/util/reloaded.js": "/js/util/reloaded.js",
+    "/js/util/remove-script.js": "/js/util/remove-script.js",
+    "/js/util/swal-flash.js": "/js/util/swal-flash.js",
+    "/js/util/text-counter.js": "/js/util/text-counter.js"
+}

@@ -1,0 +1,26 @@
+$blurs: (
+	"none": none,
+	"1": blur(4px),
+	"2": blur(8px),
+	"3": blur(12px),
+	"4": blur(16px),
+	"5": blur(20px)
+) !default;
+
+$utilities: map-merge(
+	$utilities,
+	(
+		"backdrop-blur": (
+			property: backdrop-filter,
+			class: backdrop-blur,
+			responsive: true,
+			values: $blurs
+		),
+		"blur": (
+			property: filter,
+			class: blur,
+			responsive: true,
+			values: $blurs
+		)
+	)
+);

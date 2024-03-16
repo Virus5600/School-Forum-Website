@@ -1,0 +1,35 @@
+// Slick Carousel
+@import "./libs/slick";
+
+// INDEX PAGE STYLINGS //
+.carousel img {
+	height: 50vh;
+	width: auto;
+}
+
+.carousel-item {
+	background-size: cover;
+	background-image: var(--bg-img);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* DARK THEME STYLING */
+[data-bs-theme="dark"] {
+	.body-container {
+		background-color: #303030;
+		border-radius: 10px;
+	}
+}
+
+/* LIGHT THEME STYLING */
+[data-bs-theme="light"] {
+	.body-container {
+		background-color: #e3e3e3;
+		border-radius: 10px;
+	}
+}
+
+img.version-banner {
+	width: 50vw;
+}
