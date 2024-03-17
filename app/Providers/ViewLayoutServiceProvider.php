@@ -59,18 +59,6 @@ class ViewLayoutServiceProvider extends ServiceProvider
 	];
 
 	/**
-	 * The list of views that will be used to add the website information. It uses the same formatting as the
-	 * view name format used when returning views.
-	 *
-	 * @var array
-	 */
-	private const VIEWS = [
-		'layouts.public',
-		'login',
-		'layouts.admin',
-	];
-
-	/**
 	 * Register services.
 	 */
 	public function register(): void
@@ -89,26 +77,19 @@ class ViewLayoutServiceProvider extends ServiceProvider
 		}
 
 		// Website information.
-		foreach (self::VIEWS as $v) {
-			view()->composer(
-				$v,
-				fn($view) => $this->getWebsiteInfo($view)
-			);
-		}
+		$this->attachWebsiteInfo();
 
 		// Header Carousel
 		view()->composer(
-			self::VIEWS[0],
+			'layouts.public',
 			fn($view) => $this->getHeaderCarousel($view)
 		);
 	}
 
 	/**
-	 * Get the website information and attaches it to the said view.
-	 *
-	 * @param $view The view path of a blade file.
+	 * Attaches the website information to all the view.
 	 */
-	private function getWebsiteInfo(View $view) {
+	private function attachWebsiteInfo() {
 		// Fetch the constant TO_ADD array and iterate through it.
 		foreach(self::TO_ADD as $key => $value) {
 			// Check if the value is an array.
@@ -129,8 +110,8 @@ class ViewLayoutServiceProvider extends ServiceProvider
 				$val = Settings::$value($key);
 			}
 
-			// Then add the value to the view.
-			$view->with(Str::camel($key), $val);
+			// Then add the value to the views.
+			view()->share(Str::camel($key), $val);
 		}
 
 		// $webName = Settings::getValue('web-name');

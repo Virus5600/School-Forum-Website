@@ -1,3 +1,71 @@
 // Slick Carousel
 @import "node_modules/slick-carousel/slick/slick";
 @import "node_modules/slick-carousel/slick/slick-theme";
+
+// Utility Import
+@import "../components/breakpoints";
+
+.carousel {
+	&.arrow-inside {
+		.slick-arrow {
+			z-index: 1;
+
+			&:before {
+				color: var(--bs-it-secondary);
+				text-shadow:
+					// DIAGONAL SHADOWS
+					-1.5px 1.5px 2.5px var(--bs-it-quaternary),
+					1.5px 1.5px 2.5px var(--bs-it-quaternary),
+					1.5px -1.5px 2.5px var(--bs-it-quaternary),
+					-1.5px -1.5px 2.5px var(--bs-it-quaternary),
+					// STRAIGHT SHADOWS
+					0 1.75px 2.5px var(--bs-it-quaternary),
+					0 -1.75px 2.5px var(--bs-it-quaternary),
+					1.75px 0 2.5px var(--bs-it-quaternary),
+					-1.75px 0 2.5px var(--bs-it-quaternary)
+					;
+			}
+
+			&.slick-next {
+				right: 25px;
+			}
+
+			&.slick-prev {
+				left: 25px;
+			}
+		}
+	}
+
+	$arrow-sizes: (
+		"1": 0.75rem,
+		"2": 1rem,
+		"3": 1.25rem,
+		"4": 1.5rem,
+		"5": 1.75rem,
+		"6": 2rem
+	);
+
+	@each $bk, $bv in $sizes {
+		@each $size, $value in $arrow-sizes {
+			@if $bk == "xs" {
+				&.arrow-#{$size} {
+					.slick-arrow {
+						&:before,
+						&:after {
+							font-size: $value;
+						}
+					}
+				}
+			}
+
+			&.arrow-#{$bk}-#{$size} {
+				.slick-arrow {
+					&:before,
+					&:after {
+						font-size: $value;
+					}
+				}
+			}
+		}
+	}
+}

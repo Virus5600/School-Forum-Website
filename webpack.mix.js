@@ -62,6 +62,7 @@ mix
 	// LAYOUTS
 	// Public Layout
 	.js('resources/js/views/layouts/public.js', 'public/views/layouts/public')
+	.sass('resources/scss/views/layouts/public.scss', 'public/views/layouts/public')
 
 	// Admin Layout
 	// .js('resources/js/views/layouts/admin.js', 'public/views/layouts/admin')
@@ -69,7 +70,7 @@ mix
 
 	// VIEWS
 	// Index (Home) Page
-	.sass('resources/scss/views/index.scss', 'public/views/index')
+	// .sass('resources/scss/views/index.scss', 'public/views/index')
 
 	// ADMIN VIEWS
 	// Settings Page

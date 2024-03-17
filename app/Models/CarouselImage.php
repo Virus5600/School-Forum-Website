@@ -37,6 +37,10 @@ class CarouselImage extends Model
 	 * @param string $type The format of the image to be returned. Allowed values are: html, url, filename. By default, it is set to `html`.
 	 * @param bool $useDefault Whether to use the default image if the image is not found or you feel like it. By default, it is set to `false`.
 	 * @param string $additionalClasses Additional classes to be added to the image tag. Purely optional.
+	 *
+	 * @return string The value of the setting with the specified key as a string.
+	 *
+	 * @throws Exception if `$type` is not one of the allowed values.
 	 */
 	public function getImage($type="html", $useDefault=false, $additionalClasses='') {
 		if (in_array($type, ["html", "url", "filename"]) === false)

@@ -42,13 +42,14 @@
 		<script type="text/javascript" src="{{ mix('js/app.js') }}" data-auto-add-css="false"></script>
 
 		{{-- CUSTOM STYLES --}}
+		<link rel="stylesheet" type="text/css" href="{{ mix('views/layouts/public/public.css') }}">
 		@yield('css')
 
 		{{-- TITLE --}}
 		<title>{{ $webName }} | @yield('title')</title>
 	</head>
 
-	<body>
+	<body class="bg-it-quaternary">
 		{{-- NOSCRIPT --}}
 		@include('includes.noscript')
 

@@ -127,7 +127,7 @@ $animations: (
 			)
 		),
 		classDetails: (
-			animation-duration: .5s,
+			animation-duration: var(--anim-duration, .5s),
 			animation-easing: ease
 		)
 	),
@@ -137,9 +137,9 @@ $animations: (
 
 		// Group is the main animation name. (i.e. slide)
 		Group: (
-			// Subgroups defFromes what other animations are in the group. (i.e. FromLeft, ToLeft, FromRight, ToRight, etc.)
+			// Subgroups defines what other animations are in the group. (i.e. FromLeft, ToLeft, FromRight, ToRight, etc.)
 			SubGroup: (
-				// From and To defFrome the CSS attributes that change durFromg the animation.
+				// From and To defines the CSS attributes that change during the animation.
 				from: (
 					// CSS Attribute: Value
 					attr1: val1,
@@ -163,7 +163,7 @@ $animations: (
 
 @mixin createAnim($animation, $attributes) {
 	@each $anim, $attr in $attributes {
-		@if ($attr != "classDetails") {
+		@if ($anim != "classDetails") {
 			/** #{$animation}#{$anim} **/
 			@keyframes #{$animation}#{$anim} {
 				from {
@@ -180,7 +180,7 @@ $animations: (
 			}
 
 			$details: map-get($attr, "classDetails");
-			$duration: .5s !default;
+			$duration: var(--anim-duration, .5s) !default;
 			$easing: ease !default;
 
 			@if ($details != null) {

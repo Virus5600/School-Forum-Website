@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg fixed-top shadow-lg px-3 bg-it-primary" id="mainNavbar" data-bs-theme="dark">
 	{{-- Branding --}}
 	<a href="{{ route('home') }}" class="navbar-brand m-0 link-body-emphasis">
-		<img src="{{ $webLogo }}" alt="{{ $webName }} Logo" class="m-0 p-1 border border-white rounded-circle bg-it-quaternary" style="max-height: 2.5rem;" draggable="false">
+		<img src="{{ $webLogo }}" alt="{{ $webName }} Logo" class="m-0 p-1 border border-white rounded-circle bg-it-quaternary" draggable="false">
 		{{ $webName }}
 	</a>
 
@@ -108,10 +108,10 @@
 </nav>
 
 {{-- Carousel --}}
-<section class="container-fluid mt-5 pt-5">
+<section class="container-fluid">
 	<div class="row">
-		<div class="col-10 offset-1" id="masthead">
-			<div class="carousel js-only">
+		<div class="col-12 px-0" id="masthead">
+			<div class="carousel arrow-xs-3 arrow-lg-4 arrow-inside js-only">
 				@forelse($carousel as $c)
 				<div class="bg-it-secondary carousel-item" style="--bg-img: url('{{ $c->getImage($type="url") }}')">
 					<div class="opacity-lg-100 opacity-0 backdrop-blur-lg-3">

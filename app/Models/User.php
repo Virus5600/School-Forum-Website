@@ -112,30 +112,36 @@ class User extends Authenticatable
 		}
 	}
 
-	public function getAvatar($useDefault=false, $getFull=true, $isUrl=true, $additionalClasses='') {
-		$avatarF = $this->avatar;
-		$avatarU = asset('/uploads/users/'.$this->avatar);
-		$avatarD = asset('/uploads/users/default.png');
-		$toRet = null;
+	/**
+	 * Get the image in the specified format.
+	 *
+	 * @param string $type The format of the image to be returned. Allowed values are: html, url, filename. By default, it is set to `html`.
+	 * @param bool $useDefault Whether to use the default image if the image is not found or you feel like it. By default, it is set to `false`.
+	 * @param string $additionalClasses Additional classes to be added to the image tag. Purely optional.
+	 *
+	 * @return string The value of the setting with the specified key as a string.
+	 *
+	 * @throws Exception if `$type` is not one of the allowed values.
+	 */
+	public function getAvatar($type="html", $useDefault=false, $additionalClasses='') {
+		if (in_array($type, ["html", "url", "filename"]) === false)
+			throw new Exception("Invalid parameter value for \"\$type\": {$type}\nOnly allowed values are: html, url, filename.");
 
-		if ($useDefault) {
-			if ($getFull)
-				return $avatarD;
-			else
-				return 'default.png';
-		}
-		else {
-			if ($getFull) {
-				$toRet = $avatarU;
-			}
-			else {
-				$toRet = $avatarF;
-			}
-		}
+		$file = $this->filename;
+		if ($useDefault)
+			$file = 'default.png';
 
-		if ($isUrl)
-			return $toRet;
-		return "<img src=\"" . asset($toRet) . "\" class=\"avatar avatar-3 rounded-circle border {$additionalClasses}\">";
+		switch ($type) {
+			case "html":
+				$caption = $this->caption ?? $this->filename;
+				return "<img src=\"" . asset("/uploads/users/{$this->filename}") . "\" class=\"mx-auto {$additionalClasses}\" alt=\"{$caption}\">";
+
+			case "url":
+				return asset("/uploads/users/{$file}");
+
+			case "filename":
+				return $file;
+		}
 	}
 
 	public function getName($include_middle = false) {

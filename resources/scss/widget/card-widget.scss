@@ -1,11 +1,37 @@
 @import "./../bs-modifiers/base";
 
+// ADDS THE NECESSARY SPACING FOR THE FLOATING HEADER
+*:not(hr) {
+	&:has(+ .card.floating-header) {
+		&:after {
+			content: "";
+			position: relative;
+			display: block;
+			padding-bottom: 1.5rem;
+		}
+	}
+
+	&:has(> .card.floating-header:first-child) {
+		&:before {
+			content: "";
+			position: relative;
+			display: block;
+			padding-top: 1.5rem;
+		}
+	}
+}
+// <hr> HANDLER
+hr:has(+ .card.floating-header) {
+	padding-bottom: 1.5rem;
+}
+
+// CARD WIDGET
 .card {
+	// Floating Header
 	&.floating-header {
-		margin-top: 1.5rem;
 		position: relative;
 
-		.card-header {
+		&.card-header {
 			position: absolute;
 			transform: translate(1rem, -50%);
 			transition: .5s ease;
@@ -42,8 +68,48 @@
 			}
 		}
 
-		.card-body {
-			padding: 2rem;
+		&.card-body {
+			&:before {
+				content: "";
+				position: relative;
+				display: block;
+				padding: 1rem;
+			}
+		}
+	}
+
+	// Card Image Overlay
+	&:has(> .card-img-overlay) {
+		--bs-card-height: 10rem;
+		overflow: hidden;
+
+		& > .card-img {
+			pointer-events: none;
+			height: var(--bs-card-height);
+			object-fit: cover;
+		}
+	}
+
+	// Hoverable Cards
+	&.hoverable {
+		transition: .5s ease;
+
+		&:hover,
+		&:focus {
+			transform: scale(1.05);
+			box-shadow: 0 0 10px 2.5px var(--bs-it-secondary);
+		}
+	}
+
+	// Clickable Cards
+	&.clickable {
+		user-select: none;
+		cursor: pointer;
+		@extend .hoverable;
+
+		&:active {
+			transition: 0s ease;
+			transform: scale(1.025);
 		}
 	}
 }

@@ -1,0 +1,36 @@
+// Slick Carousel
+@import "../../libs/slick";
+
+// SLICK CAROUSEL STYLINGS //
+.carousel img {
+	height: 50vh;
+	width: auto;
+}
+
+.carousel-item {
+	background-size: cover;
+	background-image: var(--bg-img);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+// ACTUAL LAYOUT STYLINGS //
+:root {
+	--navbar-height: 75px;
+	--navbar-icon-size: calc(var(--navbar-height) * .75);
+}
+
+body {
+	nav:first-child {
+		min-height: var(--navbar-height) !important;
+		max-height: var(--navbar-height) !important;
+
+		img {
+			max-height: var(--navbar-icon-size) !important;
+		}
+
+		& + * {
+			margin-top: var(--navbar-height);
+		}
+	}
+}

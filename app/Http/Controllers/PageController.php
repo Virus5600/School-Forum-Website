@@ -10,7 +10,13 @@ class PageController extends Controller
 	// GUEST SIDE //
 	////////////////
 	protected function index() {
-		return view('index');
+		$announcements = [
+			\Str::random(1000)
+		];
+
+		return view('index', [
+			'announcements' => $announcements,
+		]);
 	}
 
 	////////////////
