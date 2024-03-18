@@ -10,6 +10,8 @@ use App\Models\CarouselImage;
 use App\Models\Settings;
 
 use Debugbar;
+use Schema;
+use Spatie\Csp\Scheme;
 
 class ViewLayoutServiceProvider extends ServiceProvider
 {
@@ -77,13 +79,15 @@ class ViewLayoutServiceProvider extends ServiceProvider
 		}
 
 		// Website information.
-		$this->attachWebsiteInfo();
+		if (Schema::hasTable("settings"))
+			$this->attachWebsiteInfo();
 
 		// Header Carousel
-		view()->composer(
-			'layouts.public',
-			fn($view) => $this->getHeaderCarousel($view)
-		);
+		if (Schema::hasTable("carousel_images"))
+			view()->composer(
+				'layouts.public',
+				fn($view) => $this->getHeaderCarousel($view)
+			);
 	}
 
 	/**
