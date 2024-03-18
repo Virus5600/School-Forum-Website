@@ -30,6 +30,9 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Create Database
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
       run: |
         mkdir -p database
         touch database/database.sqlite
@@ -55,4 +58,4 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: |
-        echo "Setting up database (SQLite)"
+        echo "Running..."
