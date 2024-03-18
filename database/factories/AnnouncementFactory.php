@@ -4,8 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use Carbon\Carbon;
-
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Announcement>
  */
@@ -25,7 +23,7 @@ class AnnouncementFactory extends Factory
 			"summary" => fake()->paragraph(),
 			"content" => fake()->paragraphs(3, true),
 			"is_draft" => false,
-			"published_at" => fake()->dateTimeThisYear(),
+			"published_at" => now(),
 			"author_id" => 1,
 			"created_at" => now()
         ];
@@ -97,10 +95,7 @@ class AnnouncementFactory extends Factory
 	 */
 	public function published(): static
 	{
-		return $this->publishedAt(
-			Carbon::parse(fake()->dateTimeThisYear())
-				->format("Y-m-d H:i:s")
-		);
+		return $this->publishedAt(now()->format("Y-m-d H:i:s"));
 	}
 
 	/**
