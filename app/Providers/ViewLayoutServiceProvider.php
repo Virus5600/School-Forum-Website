@@ -10,8 +10,9 @@ use App\Models\CarouselImage;
 use App\Models\Settings;
 
 use Debugbar;
+use Exception;
+use Log;
 use Schema;
-use Spatie\Csp\Scheme;
 
 class ViewLayoutServiceProvider extends ServiceProvider
 {
@@ -78,16 +79,20 @@ class ViewLayoutServiceProvider extends ServiceProvider
 			Debugbar::getJavascriptRenderer()->setCspNonce(csp_nonce());
 		}
 
-		// Website information.
-		if (Schema::hasTable("settings"))
-			$this->attachWebsiteInfo();
+		try {
+			// Website information.
+			if (Schema::hasTable("settings"))
+				$this->attachWebsiteInfo();
 
-		// Header Carousel
-		if (Schema::hasTable("carousel_images"))
-			view()->composer(
-				'layouts.public',
-				fn($view) => $this->getHeaderCarousel($view)
-			);
+			// Header Carousel
+			if (Schema::hasTable("carousel_images"))
+				view()->composer(
+					'layouts.public',
+					fn($view) => $this->getHeaderCarousel($view)
+				);
+		} catch (Exception $e) {
+			Log::error($e);
+		}
 	}
 
 	/**
