@@ -10,25 +10,23 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-		// Use Bootstrap as default paginator styling.
-        Paginator::useBootstrap();
-
+	/**
+	 * Register any application services.
+	 */
+	public function register(): void
+	{
 		// New Faker methods
 		$this->implementFakeMethods();
-    }
+	}
+
+	/**
+	 * Bootstrap any application services.
+	 */
+	public function boot(): void
+	{
+		// Use Bootstrap as default paginator styling.
+		Paginator::useBootstrap();
+	}
 
 	private function implementFakeMethods(): void
 	{

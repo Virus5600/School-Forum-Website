@@ -58,6 +58,7 @@ class User extends Authenticatable
 	protected function passwordReset() { return $this->belongsTo('App\Models\PasswordReset'); }
 	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }
 	public function userPerms() { return $this->belongsToMany('App\Models\Permission', 'user_permissions'); }
+	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
 
     // Custom Functions
 	public function permissions() {
