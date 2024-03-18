@@ -5,6 +5,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
+		"barryvdh/laravel-debugbar": "^3.9",
         "php": "^8.2",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
@@ -15,7 +16,6 @@
         "spatie/laravel-csp": "^2.8"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.9",
         "beyondcode/laravel-query-detector": "^1.8",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
