@@ -61,9 +61,7 @@ jobs:
         node-version: '14.x'
 
     - name: Copy .env
-      run: |
-        php -r "file_exists('.env') || copy('.env.example', '.env');"
-        php artisan key:generate
+      run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
 
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-req=php
