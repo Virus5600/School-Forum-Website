@@ -88,6 +88,17 @@ hr:has(+ .card.floating-header) {
 			height: var(--bs-card-height);
 			object-fit: cover;
 		}
+
+		& > .card-img-overlay {
+			&.has-backdrop-blur {
+				transition: backdrop-filter .25s ease;
+
+				&:hover,
+				&:focus {
+					backdrop-filter: blur(4px);
+				}
+			}
+		}
 	}
 
 	// Hoverable Cards

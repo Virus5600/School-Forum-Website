@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Announcement;
+
 class PageController extends Controller
 {
 	////////////////
 	// GUEST SIDE //
 	////////////////
 	protected function index() {
-		$announcements = [
-			\Str::random(1000)
-		];
+		$announcements = Announcement::factory()
+			->count(rand(0, 10))
+			->published()
+			->make();
 
 		return view('index', [
 			'announcements' => $announcements,

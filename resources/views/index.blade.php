@@ -25,12 +25,10 @@
 				@forelse($announcements as $a)
 				<article class="col">
 					<div class="card text-bg-dark clickable">
-						<img src="{{ asset("uploads/carousel/carousel-4.jpg") }}" alt="" class="card-img brightness-2">
-						<div class="card-img-overlay text-center text-lg-start backdrop-blur-1">
-							{{-- <h5 class="card-title display-6">{{ Str::limit(Str::title($a->title), 25) }}</h5>
-							<p class="card-text">{{ Str::limit($a->content, 125) }}</p> --}}
-							<h5 class="card-title display-6">{{ Str::limit(Str::title($a), 25) }}</h5>
-							<p class="card-text">{{ Str::limit($a, 125) }}</p>
+						<img src="{{ $a->getPoster("url") }}" alt="" class="card-img brightness-2">
+						<div class="card-img-overlay has-backdrop-blur text-center text-lg-start">
+							<h5 class="card-title display-6">{{ Str::limit(Str::title($a->title), 25) }}</h5>
+							<p class="card-text">{{ Str::limit($a->content, 125) }}</p>
 						</div>
 					</div>
 				</article>

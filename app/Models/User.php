@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use DB;
@@ -12,7 +13,10 @@ use Log;
 
 class User extends Authenticatable
 {
-	use Notifiable, SoftDeletes;
+	use Notifiable, HasFactory, SoftDeletes;
+
+	// Implement Mailer (https://laracasts.com/discuss/channels/laravel/php-mailer)
+	// (https://www.webappfix.com/post/how-to-send-mail-using-phpmailer-in-laravel.html)
 
 	protected $fillable = [
 		'username',

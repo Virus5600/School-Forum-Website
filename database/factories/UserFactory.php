@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+
+use Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -23,8 +24,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+		$gender = rand(0, 1) ? "male" : "female";
+
         return [
-            'name' => fake()->name(),
+			'username' => fake()->userName(),
+            'first_name' => fake()->firstName($gender),
+			'middle_name' => fake()->optional()->firstName($gender),
+			'last_name' => fake()->lastName($gender),
+			'suffix' => fake()->optional()->suffix(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
