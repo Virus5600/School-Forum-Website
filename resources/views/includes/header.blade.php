@@ -13,7 +13,7 @@
 
 	{{-- Navbar Contents --}}
 	<div class="collapse navbar-collapse" id="navbarContent">
-		<ul class="navbar-nav nav-underline ms-auto text-center text-lg-start">
+		<ul class="navbar-nav nav-underline navbar-nav-scroll text-bg-dark bg-it-primary ms-auto text-center text-lg-start">
 			{{-- HOME --}}
 			<li class="nav-item">
 				@if (\Request::is('/'))

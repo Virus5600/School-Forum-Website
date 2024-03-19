@@ -17,7 +17,7 @@
 
 	{{-- ANNOUNCEMENTS --}}
 	<section class="card floating-header bg-transparent border-0">
-		<h2 class="card-header bg-transparent border-0 display-4">Announcements</h2>
+		<div class="card-header header-center header-lg-start bg-transparent border-0 display-4 text-center text-lg-start transition-3">Announcements</div>
 
 		<div class="card-body">
 			<div class="row row-cols-1 row-cols-lg-2 gx-0 gy-3 gx-lg-3">
@@ -25,7 +25,7 @@
 				@forelse($announcements as $a)
 				<article class="col">
 					<div class="card text-bg-dark clickable">
-						<img src="{{ $a->getPoster("url") }}" alt="" class="card-img brightness-2">
+						<img src="{{ $a->getPoster("url") }}" alt="{{ $a->getPoster("filename") }}" class="card-img brightness-1">
 						<div class="card-img-overlay has-backdrop-blur text-center text-lg-start">
 							<h5 class="card-title display-6">{{ Str::limit(Str::title($a->title), 25) }}</h5>
 							<p class="card-text">{{ Str::limit($a->content, 125) }}</p>
@@ -35,8 +35,36 @@
 				@empty
 				{{-- No Announcement --}}
 				<div class="col w-100">
-					<div class="card bg-transparent border-0">
-						<div class="card-body card-title text-center h3 m-0">No Announcement Yet...</div>
+					<div class="card text-bg-dark">
+						<img src="{{ asset("uploads/announcements/default.png") }}" alt="" class="card-img brightness-1">
+						<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
+							<i class="far fa-folder-open fa-2x"></i>
+							<h3 class="card-title m-0">No Announcement Yet...</h3>
+						</div>
+					</div>
+				</div>
+				@endforelse
+			</div>
+		</div>
+	</section>
+
+	{{-- LOST & FOUND --}}
+	<section class="card floating-header bg-transparent border-0">
+		<h2 class="card-header bg-transparent border-0 display-3">Lost & Found</h2>
+
+		<div class="card-body">
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-0 gy-3 gx-md-3">
+				{{-- Lost Items --}}
+				@forelse($lostItems as $l)
+				@empty
+				{{-- No Lost Item(s) --}}
+				<div class="col w-100">
+					<div class="card text-bg-dark">
+						<img src="{{ asset("uploads/lost-and-found/default.png") }}" alt="" class="card-img brightness-1">
+						<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
+							<i class="fas fa-box-open fa-3x"></i>
+							<h3 class="card-title m-0">No Lost Items</h3>
+						</div>
 					</div>
 				</div>
 				@endforelse
