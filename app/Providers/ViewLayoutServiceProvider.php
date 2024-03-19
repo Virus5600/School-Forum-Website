@@ -9,7 +9,6 @@ use Illuminate\View\View;
 use App\Models\CarouselImage;
 use App\Models\Settings;
 
-use Debugbar;
 use Exception;
 use Log;
 use Schema;
@@ -75,8 +74,8 @@ class ViewLayoutServiceProvider extends ServiceProvider
 	public function boot(): void
 	{
 		// Sets the nonce for the CSP when in dev/local environment.
-		if (config('app.env') !== 'production') {
-			Debugbar::getJavascriptRenderer()->setCspNonce(csp_nonce());
+		if (in_array(strtolower(config('app.env')), ['local', 'testing'])) {
+			\Debugbar::getJavascriptRenderer()->setCspNonce(csp_nonce());
 		}
 
 		try {

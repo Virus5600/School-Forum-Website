@@ -16,10 +16,11 @@ return new class extends Migration
 			$table->string('poster')->default('default.png');
 			$table->string('title');
 			$table->string('slug');
-			$table->string('summary')->nullable();
+			$table->string('summary', 512)->nullable();
 			$table->mediumText('content')->nullable();
 			$table->tinyInteger('is_draft')->default(1);
-			$table->bigInteger('user_id')->unsigned();
+			$table->timestamp('published_at')->nullable();
+			$table->foreignId('author_id')->nullable()->constrained('users');
 			$table->softDeletes();
             $table->timestamps();
         });

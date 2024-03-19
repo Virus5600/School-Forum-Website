@@ -16,16 +16,18 @@ class AnnouncementFactory extends Factory
      */
     public function definition(): array
     {
+		$publishedAt = fake()->dateTimeThisYear();
+
         return [
             "poster" => "default.png",
 			"title" => fake()->articleTitle(),
 			"slug" => fake()->slug(),
-			"summary" => fake()->paragraph(),
+			"summary" => fake()->text(rand(64, 512)),
 			"content" => fake()->paragraphs(3, true),
 			"is_draft" => false,
-			"published_at" => now(),
+			"published_at" => $publishedAt,
 			"author_id" => 1,
-			"created_at" => now()
+			"created_at" => fake()->dateTimeThisYear($publishedAt)
         ];
     }
 

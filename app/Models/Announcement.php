@@ -31,6 +31,8 @@ class Announcement extends Model
 		"deleted_at" => "datetime",
 	];
 
+	public CONST DEFAULT_POSTER = "default.png";
+
 	// Relationship Functions
 	public function author() { return $this->belongsTo(User::class, "author_id", "id"); }
 
@@ -47,12 +49,13 @@ class Announcement extends Model
 	 * @throws Exception if `$type` is not one of the allowed values.
 	 */
 	public function getPoster($type="html", $useDefault=false, $additionalClasses='') {
+		$type = strtolower($type);
 		if (in_array($type, ["html", "url", "filename"]) === false)
 			throw new Exception("Invalid parameter value for \"\$type\": {$type}\nOnly allowed values are: html, url, filename.");
 
-		$file = $this->poster ?? 'default.png';
+		$file = $this->poster ?? self::DEFAULT_POSTER;
 		if ($useDefault)
-			$file = 'default.png';
+			$file = self::DEFAULT_POSTER;
 
 		switch ($type) {
 			case "html":

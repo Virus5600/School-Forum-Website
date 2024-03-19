@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
 			UserTypesTableSeeder::class,
 			UserTypePermissionsTableSeeder::class,
 			UsersTableSeeder::class,
-			CarouselImageSeeder::class,
+			CarouselImagesTableSeeder::class,
+			AnnouncementsTableSeeder::class,
 		]);
 	}
 }

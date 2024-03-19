@@ -12,10 +12,9 @@ class PageController extends Controller
 	// GUEST SIDE //
 	////////////////
 	protected function index() {
-		$announcements = Announcement::factory()
-			->count(rand(0, 10))
-			->published()
-			->make();
+		$announcements = Announcement::orderBy('created_at', 'desc')
+			->limit(4)
+			->get();
 
 		return view('index', [
 			'announcements' => $announcements,
