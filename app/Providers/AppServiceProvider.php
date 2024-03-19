@@ -40,6 +40,8 @@ class AppServiceProvider extends ServiceProvider
 
 			foreach ($classes as $class)
 				$faker->addProvider(new $class($faker));
+
+				return $faker;
 		});
 
 		// For when using `fake()` in factories

@@ -107,7 +107,7 @@ hr:has(+ .card.floating-header) {
 
 		&:hover,
 		&:focus {
-			transform: scale(1.05);
+			transform: scale(1.025);
 			box-shadow: 0 0 10px 2.5px var(--bs-it-secondary);
 		}
 	}
@@ -120,7 +120,7 @@ hr:has(+ .card.floating-header) {
 
 		&:active {
 			transition: 0s ease;
-			transform: scale(1.025);
+			transform: scale(1.0125);
 		}
 	}
 }
