@@ -4,16 +4,16 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-use App\Models\Announcement;
+use App\Models\LostFound;
 
-class AnnouncementsTableSeeder extends Seeder
+class LostFoundTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Announcement::factory()
+        LostFound::factory()
 			->count(10)
 			->create();
     }

@@ -15,6 +15,7 @@ class LostFound extends Model
     use HasFactory, SoftDeletes;
 
 	protected $fillable = [
+		"status",
 		"owner_name",
 		"founder_name",
 		"item_found",

@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'en_PH',
 
     /*
     |--------------------------------------------------------------------------
@@ -193,6 +193,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+		'Carbon' => Carbon\Carbon::class,
         'Image' => Intervention\Image\Facades\Image::class,
 		'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         // 'Example' => App\Facades\Example::class,

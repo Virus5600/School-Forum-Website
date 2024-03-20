@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
 		// For when using `$this->faker` in factories
 		$this->app->singleton(\Faker\Generator::class, function() use ($classes) {
-			$faker = \Faker\Factory::create();
+			$faker = \Faker\Factory::create(config("app.faker_locale", "en_PH"));
 
 			foreach ($classes as $class)
 				$faker->addProvider(new $class($faker));

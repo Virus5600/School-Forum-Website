@@ -13,6 +13,7 @@ return new class extends Migration
 	{
 		Schema::create('lost_founds', function (Blueprint $table) {
 			$table->id();
+			$table->enum("status", ["lost", "found"])->default("lost");
 			$table->string("owner_name")->nullable();
 			$table->string("founder_name")->default("Anonymous User");
 			$table->string("item_found", 512);

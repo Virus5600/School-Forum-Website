@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Announcement;
+use App\Models\LostFound;
 
 class PageController extends Controller
 {
@@ -16,7 +17,10 @@ class PageController extends Controller
 			->limit(4)
 			->get();
 
-		$lostItems = [];
+		$lostItems = LostFound::where("status", "lost")
+			->orderBy("created_at", "desc")
+			->limit(4)
+			->get();
 
 		return view("index", [
 			"announcements" => $announcements,

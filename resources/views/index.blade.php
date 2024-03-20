@@ -24,7 +24,7 @@
 				{{-- Announcement Items --}}
 				@forelse($announcements as $a)
 				<article class="col">
-					<div class="card text-bg-dark clickable">
+					<div class="card text-bg-dark clickable" style="--bs-hoverable-shadow-color: var(--bs-it-tertiary);">
 						<img src="{{ $a->getPoster("url") }}" alt="{{ $a->getPoster("filename") }}" class="card-img brightness-1">
 						<div class="card-img-overlay has-backdrop-blur text-center text-lg-start">
 							<h5 class="card-title display-6">{{ Str::limit(Str::title($a->title), 25) }}</h5>
@@ -56,6 +56,24 @@
 			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-0 gy-3 gx-md-3">
 				{{-- Lost Items --}}
 				@forelse($lostItems as $l)
+				<article class="col">
+					<div class="card text-bg-dark clickable">
+						<img src="{{ $l->getImage("url") }}" alt="{{ $l->getImage("filename") }}" class="card-img brightness-1">
+						<div class="card-img-overlay has-backdrop-blur text-center text-lg-start">
+							<h5 class="card-title display-6">
+								<span class="border-bottom border-white">
+									Lost: <b>{{ Str::limit(Str::title($l->item_found), 20) }}</b>
+								</span>
+							</h5>
+
+							<div class="d-flex flex-column">
+								<p class="card-text m-0">{{ Str::limit("Found by {$l->founder_name}", 50) }}</p>
+								<p class="card-text m-0">{{ Str::limit("Found at {$l->place_found}", 50) }}</p>
+								<p class="card-text m-0">{{ Carbon::parse("{$l->date_found} {$l->time_found}")->format("(D) M d, Y h:i A") }}</p>
+							</div>
+						</div>
+					</div>
+				</article>
 				@empty
 				{{-- No Lost Item(s) --}}
 				<div class="col w-100">
