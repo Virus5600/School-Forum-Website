@@ -31,6 +31,7 @@ class Announcement extends Model
 		"deleted_at" => "datetime",
 	];
 
+	// Constants
 	public CONST DEFAULT_POSTER = "default.png";
 
 	// Relationship Functions
