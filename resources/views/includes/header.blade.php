@@ -23,25 +23,25 @@
 				@endif
 			</li>
 
-			{{-- DOWNLOADS --}}
+			{{-- ANNOUNCEMENTS --}}
 			<li class="nav-item">
 				@if (\Request::is('announcements'))
 				<span class="nav-link active">Announcements</span>
 				@elseif (\Request::is('announcements*'))
-				<a href="{{ route('announcements') }}" class="nav-link active">Announcements</a>
+				<a href="{{ route('announcements.index') }}" class="nav-link active">Announcements</a>
 				@else
-				<a href="{{ route('announcements') }}" class="nav-link">Announcements</a>
+				<a href="{{ route('announcements.index') }}" class="nav-link">Announcements</a>
 				@endif
 			</li>
 
-			{{-- INSTALLATION --}}
+			{{-- LOST & FOUND --}}
 			<li class="nav-item">
-				@if (\Request::is('installation'))
+				@if (\Request::is('lost-and-found'))
 				<span class="nav-link active">Lost & Found</span>
-				@elseif (\Request::is('installation*'))
-				<a href="{{ route('home') }}" class="nav-link active">Lost & Found</a>
+				@elseif (\Request::is('lost-and-found*'))
+				<a href="{{ route('lost-and-found.index') }}" class="nav-link active">Lost & Found</a>
 				@else
-				<a href="{{ route('home') }}" class="nav-link">Lost & Found</a>
+				<a href="{{ route('lost-and-found.index') }}" class="nav-link">Lost & Found</a>
 				@endif
 			</li>
 

@@ -1,23 +1,30 @@
-// Responsive border utilities
 $utilities: map-merge(
 	$utilities,
 	(
+		// Responsive border utilities
 		"border": map-merge(
 			map-get($utilities, "border"),
 			(responsive: true)
-		)
-	)
-);
-
-// Border style utilities
-$utilities: map-merge(
-	$utilities,
-	(
+		),
+		// Border style utilities
 		"border-style": (
 			property: border-style,
 			class: border-style,
 			responsive: true,
 			values: dotted dashed solid double groove ridge inset outset none hidden
+		),
+		// Border color utilities
+		"border-color": map-merge(
+			map-get($utilities, "border-color"),
+			(
+				values: map-merge(
+					map-get(
+						map-get($utilities, "border-color"),
+						"values"
+					),
+					$all-colors
+				)
+			)
 		)
 	)
 );

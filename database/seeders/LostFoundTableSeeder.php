@@ -14,7 +14,7 @@ class LostFoundTableSeeder extends Seeder
     public function run(): void
     {
         LostFound::factory()
-			->count(10)
+			->count(20)
 			->create();
     }
 }

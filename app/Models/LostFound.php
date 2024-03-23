@@ -20,6 +20,7 @@ class LostFound extends Model
 		"founder_name",
 		"item_found",
 		"item_image",
+		"item_description",
 		"place_found",
 		"date_found",
 		"time_found",
@@ -34,7 +35,8 @@ class LostFound extends Model
 	 *
 	 * @return \App\Models\User|null
 	 */
-	public function getOwner() {
+	public function getOwner(): ?User
+	{
 		$user = User::whereConcat(["first_name", " ", "last_name"], "=", $this->owner_name)->first();
 
 		if ($user) return $user;
@@ -46,7 +48,8 @@ class LostFound extends Model
 	 *
 	 * @return \App\Models\User|null
 	 */
-	public function getFounder() {
+	public function getFounder(): ?User
+	{
 		$user = User::whereConcat(["first_name", " ", "last_name"], "=", $this->founder_name)->first();
 
 		if ($user) return $user;
@@ -64,7 +67,8 @@ class LostFound extends Model
 	 *
 	 * @throws Exception if `$type` is not one of the allowed values.
 	 */
-	public function getImage($type="html", $useDefault=false, $additionalClasses='') {
+	public function getImage($type="html", $useDefault=false, $additionalClasses=''): string
+	{
 		$type = strtolower($type);
 		if (in_array($type, ["html", "url", "filename"]) === false)
 			throw new Exception("Invalid parameter value for \"\$type\": {$type}\nOnly allowed values are: html, url, filename.");
@@ -84,5 +88,13 @@ class LostFound extends Model
 			case "filename":
 				return $file;
 		}
+	}
+
+	/**
+	 * Fetches the instructions on how to handle lost and found items.
+	 */
+	public static function getInstructions(): string
+	{
+		return Settings::getValue("lost-found-instructions");
 	}
 }

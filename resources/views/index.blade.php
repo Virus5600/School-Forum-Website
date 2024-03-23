@@ -36,7 +36,7 @@
 				{{-- No Announcement --}}
 				<div class="col w-100">
 					<div class="card text-bg-dark">
-						<img src="{{ asset("uploads/announcements/default.png") }}" alt="" class="card-img brightness-1">
+						<img src="{{ asset("uploads/announcements/default.png") }}" alt="Announcement's default background image." class="card-img brightness-1">
 						<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
 							<i class="far fa-folder-open fa-2x"></i>
 							<h3 class="card-title m-0">No Announcement Yet...</h3>
@@ -50,14 +50,14 @@
 
 	{{-- LOST & FOUND --}}
 	<section class="card floating-header bg-transparent border-0">
-		<h2 class="card-header bg-transparent border-0 display-3">Lost & Found</h2>
+		<div class="card-header header-center header-lg-start bg-transparent border-0 display-4 text-center text-lg-start transition-3">Lost & Found</div>
 
 		<div class="card-body">
 			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-0 gy-3 gx-md-3">
 				{{-- Lost Items --}}
 				@forelse($lostItems as $l)
 				<article class="col">
-					<div class="card text-bg-dark clickable">
+					<a href="{{ route("lost-and-found.show", ["id" => $l->id]) }}" class="card text-bg-dark clickable">
 						<img src="{{ $l->getImage("url") }}" alt="{{ $l->getImage("filename") }}" class="card-img brightness-1">
 						<div class="card-img-overlay has-backdrop-blur text-center text-lg-start">
 							<h5 class="card-title display-6">
@@ -72,13 +72,13 @@
 								<p class="card-text m-0">{{ Carbon::parse("{$l->date_found} {$l->time_found}")->format("(D) M d, Y h:i A") }}</p>
 							</div>
 						</div>
-					</div>
+					</a>
 				</article>
 				@empty
 				{{-- No Lost Item(s) --}}
 				<div class="col w-100">
 					<div class="card text-bg-dark">
-						<img src="{{ asset("uploads/lost-and-found/default.png") }}" alt="" class="card-img brightness-1">
+						<img src="{{ asset("uploads/lost-and-found/default.png") }}" alt="Lost and Found's default background image." class="card-img brightness-1">
 						<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
 							<i class="fas fa-box-open fa-3x"></i>
 							<h3 class="card-title m-0">No Lost Items</h3>

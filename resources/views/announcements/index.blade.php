@@ -12,8 +12,11 @@
 		<h1 class="m-0 p-2 display-1">Announcements</h1>
 	</hgroup>
 
+	{{-- TOP PAGINATOR --}}
+	{{ $announcements->onEachSide(-1)->links() }}
+
 	{{-- ANNOUNCEMENTS --}}
-	<section class="row row-cols-1 row-cols-lg-2 gx-0 gy-3 gx-lg-3">
+	<section class="row row-cols-1 row-cols-lg-2 gx-0 gy-3 gx-lg-3 mb-3">
 		{{-- Announcement Items --}}
 		@forelse($announcements as $a)
 		<article class="col">
@@ -29,7 +32,7 @@
 		{{-- No Announcement --}}
 		<div class="col w-100">
 			<div class="card text-bg-dark">
-				<img src="{{ asset("uploads/announcements/default.png") }}" alt="" class="card-img brightness-1">
+				<img src="{{ asset("uploads/announcements/default.png") }}" alt="Announcement's default background image." class="card-img brightness-1">
 				<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
 					<i class="far fa-folder-open fa-2x"></i>
 					<h3 class="card-title m-0">No Announcement Yet...</h3>
@@ -39,9 +42,7 @@
 		@endforelse
 	</section>
 
-	{{-- CONTENT / PAGINATOR SEPARATOR --}}
-	<hr>
-
+	{{-- BOT PAGINATOR --}}
 	{{ $announcements->onEachSide(-1)->links() }}
 </div>
 @endsection

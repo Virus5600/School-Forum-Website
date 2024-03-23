@@ -22,7 +22,6 @@
 					draggable="false">
 			</hgroup>
 
-			@for ($i = 0; $i < 3; $i++)
 			<section class="card card-body text-bg-it-secondary border-0">
 				{!!
 				Str::of($announcement->content)->markdown([
@@ -30,7 +29,6 @@
 				])
 				!!}
 			</section>
-			@endfor
 		</article>
 
 		{{-- OTHER ANNOUNCEMENTS --}}
@@ -51,7 +49,7 @@
 					@empty
 					{{-- No Announcement --}}
 					<div class="card text-bg-dark">
-						<img src="{{ asset("uploads/announcements/default.png") }}" alt="" class="card-img brightness-1">
+						<img src="{{ asset("uploads/announcements/default.png") }}" alt="Announcement's default background image." class="card-img brightness-1">
 
 						<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
 							<i class="far fa-folder-open fa-2x"></i>

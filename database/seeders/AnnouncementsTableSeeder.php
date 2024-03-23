@@ -14,7 +14,7 @@ class AnnouncementsTableSeeder extends Seeder
     public function run(): void
     {
         Announcement::factory()
-			->count(10)
+			->count(20)
 			->create();
     }
 }

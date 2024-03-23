@@ -19,8 +19,7 @@ class AnnouncementController extends Controller
 		]);
 	}
 
-	public function show(Request $req, $slug)
-	{
+	public function show(Request $req, $slug) {
 		$announcement = Announcement::where("slug", "=", $slug)
 			->where("is_draft", "=", 0)
 			->firstOrFail();

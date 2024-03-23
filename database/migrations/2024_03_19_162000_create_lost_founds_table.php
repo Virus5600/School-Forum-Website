@@ -18,6 +18,7 @@ return new class extends Migration
 			$table->string("founder_name")->default("Anonymous User");
 			$table->string("item_found", 512);
 			$table->string("item_image")->default("default.png");
+			$table->text("item_description")->nullable();
 			$table->string("place_found", 512);
 			$table->date("date_found");
 			$table->time("time_found");

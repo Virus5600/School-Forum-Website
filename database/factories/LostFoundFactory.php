@@ -24,6 +24,7 @@ class LostFoundFactory extends Factory
 			"founder_name" => rand(0, 1) === 0 ? "Anonymous User" : fake()->name(),
 			"item_found" => fake()->word(),
 			"item_image" => "default.png",
+			"item_description" => fake()->sentence(),
 			"place_found" => fake()->city(),
 			"date_found" => fake()->dateTimeBetween(startDate: "-1 year", timezone: "Asia/Manila")->format("Y-m-d"),
 			"time_found" => fake()->dateTimeBetween(startDate: "00:00:00", endDate: "23:59:59", timezone: "Asia/Manila")->format("H:i:s"),
@@ -68,6 +69,16 @@ class LostFoundFactory extends Factory
 	{
 		return $this->state(fn (array $attributes) => [
 			"item_image" => $itemImage,
+		]);
+	}
+
+	/**
+	 * Provides a custom item description for the lost item.
+	 */
+	public function withItemDescription(string $itemDescription): static
+	{
+		return $this->state(fn (array $attributes) => [
+			"item_description" => $itemDescription,
 		]);
 	}
 
