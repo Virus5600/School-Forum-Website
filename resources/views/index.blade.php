@@ -24,13 +24,13 @@
 				{{-- Announcement Items --}}
 				@forelse($announcements as $a)
 				<article class="col">
-					<div class="card text-bg-dark clickable" style="--bs-hoverable-shadow-color: var(--bs-it-tertiary);">
+					<a href="{{ route("announcements.show", ["slug" => $a->slug]) }}" class="card text-bg-dark clickable" style="--bs-hoverable-shadow-color: var(--bs-it-tertiary);">
 						<img src="{{ $a->getPoster("url") }}" alt="{{ $a->getPoster("filename") }}" class="card-img brightness-1">
 						<div class="card-img-overlay has-backdrop-blur text-center text-lg-start">
 							<h5 class="card-title display-6">{{ Str::limit(Str::title($a->title), 25) }}</h5>
 							<p class="card-text">{{ Str::limit($a->content, 125) }}</p>
 						</div>
-					</div>
+					</a>
 				</article>
 				@empty
 				{{-- No Announcement --}}
@@ -92,9 +92,6 @@
 </div>
 @endsection
 
-@section('css')
+@push('css')
 <link rel="stylesheet" type="text/css" href="{{ mix('css/widget/card-widget.css') }}">
-@endsection
-
-@section('scripts')
-@endsection
+@endpush

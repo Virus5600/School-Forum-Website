@@ -1,6 +1,6 @@
 <!-- FOOTER -->
 <div class="container-fluid" data-bs-theme="dark">
-	<div class="row py-3 bg-it-primary">
+	<div class="row py-3 bg-it-primary row-gap-4">
 		<section class="col-12 col-md-3 text-center">
 			<div class="d-flex flex-column">
 				<h5 class="fw-bold mb-3 text-light">Site Pages</h5>

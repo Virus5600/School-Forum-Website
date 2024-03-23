@@ -43,7 +43,7 @@
 
 		{{-- CUSTOM STYLES --}}
 		<link rel="stylesheet" type="text/css" href="{{ mix('views/layouts/public/public.css') }}">
-		@yield('css')
+		@stack('css')
 
 		{{-- TITLE --}}
 		<title>{{ $webName }} | @yield('title')</title>
@@ -80,6 +80,6 @@
 		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}"></script>
 		<script type="text/javascript" src="{{ mix('js/util/fallback-image.js') }}" defer></script>
 		<script type="text/javascript" src="{{ mix('js/util/swal-flash.js') }}"></script>
-		@yield('scripts')
+		@stack('scripts')
 	</body>
 </html>

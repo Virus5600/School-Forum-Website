@@ -1,5 +1,5 @@
 {{-- Navigation Bar --}}
-<nav class="navbar navbar-expand-lg fixed-top shadow-lg px-3 bg-it-primary" id="mainNavbar" data-bs-theme="dark">
+<nav class="navbar navbar-expand-md fixed-top shadow-lg px-3 bg-it-primary" id="mainNavbar" data-bs-theme="dark">
 	{{-- Branding --}}
 	<a href="{{ route('home') }}" class="navbar-brand m-0 link-body-emphasis">
 		<img src="{{ $webLogo }}" alt="{{ $webName }} Logo" class="m-0 p-1 border border-white rounded-circle bg-it-quaternary" draggable="false">
@@ -13,7 +13,7 @@
 
 	{{-- Navbar Contents --}}
 	<div class="collapse navbar-collapse" id="navbarContent">
-		<ul class="navbar-nav nav-underline navbar-nav-scroll text-bg-dark bg-it-primary ms-auto text-center text-lg-start">
+		<ul class="navbar-nav nav-underline navbar-nav-scroll text-bg-dark bg-it-primary ms-auto text-center text-lg-start row-gap-2">
 			{{-- HOME --}}
 			<li class="nav-item">
 				@if (\Request::is('/'))
@@ -25,41 +25,30 @@
 
 			{{-- DOWNLOADS --}}
 			<li class="nav-item">
-				@if (\Request::is('downloads'))
-				<span class="nav-link active">Downloads</span>
-				@elseif (\Request::is('downloads*'))
-				<a href="{{ route('home') }}" class="nav-link active">Downloads</a>
+				@if (\Request::is('announcements'))
+				<span class="nav-link active">Announcements</span>
+				@elseif (\Request::is('announcements*'))
+				<a href="{{ route('announcements') }}" class="nav-link active">Announcements</a>
 				@else
-				<a href="{{ route('home') }}" class="nav-link">Downloads</a>
+				<a href="{{ route('announcements') }}" class="nav-link">Announcements</a>
 				@endif
 			</li>
 
 			{{-- INSTALLATION --}}
 			<li class="nav-item">
 				@if (\Request::is('installation'))
-				<span class="nav-link active">Installations</span>
+				<span class="nav-link active">Lost & Found</span>
 				@elseif (\Request::is('installation*'))
-				<a href="{{ route('home') }}" class="nav-link active">Installations</a>
+				<a href="{{ route('home') }}" class="nav-link active">Lost & Found</a>
 				@else
-				<a href="{{ route('home') }}" class="nav-link">Installations</a>
-				@endif
-			</li>
-
-			{{-- CONTENTS --}}
-			<li class="nav-item">
-				@if (\Request::is('contents'))
-				<span class="nav-link active">Contents</span>
-				@elseif (\Request::is('contents*'))
-				<a href="{{ route('home') }}" class="nav-link active">Contents</a>
-				@else
-				<a href="{{ route('home') }}" class="nav-link">Contents</a>
+				<a href="{{ route('home') }}" class="nav-link">Lost & Found</a>
 				@endif
 			</li>
 
 			{{-- SEPARATOR --}}
 			<li class="nav-item">
 				<div class="vr h-100 d-none d-lg-block bg-it-secondary opacity-75" style="width: 2.5px;"></div>
-				<hr class="w-100 d-block d-lg-none" style="border-width: 2.5px;">
+				<hr class="w-100 d-block d-lg-none my-0" style="border-width: 2.5px;">
 			</li>
 
 			{{-- Additional directories if authenticated --}}

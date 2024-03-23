@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
 	public function boot(): void
 	{
 		// Use Bootstrap as default paginator styling.
-		Paginator::useBootstrap();
+		Paginator::useBootstrapFive();
 	}
 
 	private function implementFakeMethods(): void

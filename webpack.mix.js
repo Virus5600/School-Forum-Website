@@ -58,6 +58,8 @@ mix
 	// WIDGETS
 	// Cards
 	.sass('resources/scss/widget/card-widget.scss', 'public/css/widget')
+	// Pagination
+	.js('resources/js/widget/paginator-widget.js', 'public/js/widget')
 
 	// LAYOUTS
 	// Public Layout

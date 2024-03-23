@@ -3,7 +3,7 @@ require('../../libs/jQuery');
 require('../../libs/slick');
 
 $(() => {
-	$('.carousel').slick({
+	$(`.carousel`).slick({
 		autoplay: true,
 		infinite: true,
 		autoplaySpeed: 5000,

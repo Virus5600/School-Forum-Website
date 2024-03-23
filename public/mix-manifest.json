@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/custom/components/navbar-dynamic.js": "/js/custom/components/navbar-dynamic.js",
+    "/js/widget/paginator-widget.js": "/js/widget/paginator-widget.js",
     "/views/layouts/public/public.js": "/views/layouts/public/public.js",
     "/css/app.css": "/css/app.css",
     "/css/util/image-input.css": "/css/util/image-input.css",

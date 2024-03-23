@@ -1,0 +1,16 @@
+$pagination-bg: $it-quaternary;
+$pagination-color: $it-primary;
+
+$pagination-focus-bg: shade-color($it-quaternary, 10%);
+$pagination-focus-color: $it-primary;
+$pagination-focus-box-shadow: 0 0 0 0.2rem rgba($it-primary, 0.25);
+
+$pagination-hover-bg: shade-color($it-quaternary, 10%);
+$pagination-hover-color: $it-primary;
+
+$pagination-active-bg: $it-primary;
+$pagination-active-border-color: $it-primary;
+
+$pagination-disabled-bg: tint-color($it-secondary, 40%);
+$pagination-disabled-color: tint-color($it-quaternary, 40%);
+$pagination-disabled-border-color: tint-color($it-secondary, 40%);

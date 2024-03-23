@@ -20,4 +20,13 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 
 	// Home Page
 	Route::get('/', 'PageController@index')->name('home');
+
+	// Announcements
+	Route::group(['prefix' => 'announcements'], function() {
+		// Index
+		Route::get('/', 'AnnouncementController@index')->name('announcements');
+
+		// Show
+		Route::get('/{slug}', 'AnnouncementController@show')->name('announcements.show');
+	});
 });
