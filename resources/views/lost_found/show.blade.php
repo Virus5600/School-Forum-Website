@@ -3,7 +3,7 @@
 @section('title', 'Lost & Found - ' . $item->item)
 
 @section('content')
-<div class="container-fluid body-container bg-it-quaternary">
+<div class="container-fluid body-container">
 	{{-- BREADCRUMBS --}}
 	{{ Breadcrumbs::render() }}
 

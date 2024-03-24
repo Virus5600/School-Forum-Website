@@ -20,7 +20,7 @@ return new class extends Migration
 			$table->string('suffix')->nullable();
 			$table->string('email')->unique();
 			$table->string('avatar')->default('default.png');
-			$table->foreignId('user_type_id')->unsigned();
+			$table->foreignId('user_type_id')->constrained('user_types')->cascadeOnDelete();
 			$table->tinyInteger('login_attempts')->default(0);
 			$table->tinyInteger('locked')->default(0);
 			$table->ipAddress('locked_by')->nullable();
@@ -29,8 +29,6 @@ return new class extends Migration
 			$table->rememberToken();
 			$table->softDeletes();
 			$table->timestamps();
-
-			$table->foreign('user_type_id')->references('id')->on('user_types')->onDelete('cascade');
 		});
 	}
 

@@ -26,12 +26,12 @@ class UserTypePermissionsTableSeeder extends Seeder
 		];
 
 		// Editor
-		$typeID = UserType::where('slug', '=', 'editor')->first()->id;
+		$typeID = UserType::where('slug', '=', 'teacher')->first()->id;
 		$perms = [
 		];
 
 		// Writer
-		$typeID = UserType::where('slug', '=', 'writer')->first()->id;
+		$typeID = UserType::where('slug', '=', 'student')->first()->id;
 		$perms = [
 		];
 	}

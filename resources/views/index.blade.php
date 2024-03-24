@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('content')
-<div class="container-fluid body-container bg-it-quaternary">
+<div class="container-fluid body-container">
 	{{-- HERO CONTENT --}}
 	<hgroup class="d-flex flex-column">
 		<h1 class="m-0 p-2 display-1">Welcome to {{ $webName }}!</h1>

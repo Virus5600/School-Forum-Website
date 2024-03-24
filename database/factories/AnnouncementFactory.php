@@ -23,7 +23,7 @@ class AnnouncementFactory extends Factory
 			"title" => fake()->articleTitle(),
 			"slug" => fake()->slug(),
 			"summary" => fake()->text(rand(64, 512)),
-			"content" => fake()->paragraphs(3, true),
+			"content" => fake()->paragraphs(rand(3, 10), true),
 			"is_draft" => false,
 			"published_at" => $publishedAt,
 			"author_id" => 1,

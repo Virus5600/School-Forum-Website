@@ -17,8 +17,8 @@ class UserTypesTableSeeder extends Seeder
 		$userTypes = [
 			'Master Admin',
 			'Admin',
-			'Editor',
-			'Writer'
+			'Teacher',
+			'Student'
 		];
 
 		foreach ($userTypes as $ut) {

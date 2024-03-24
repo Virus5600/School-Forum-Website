@@ -60,7 +60,7 @@
 			</header>
 
 			{{-- CONTENTS --}}
-			<main class="content d-flex flex-column flex-grow-1 my-3 my-lg-5" id="content">
+			<main class="content d-flex flex-column flex-grow-1 my-5 bg-transparent" id="content">
 				<div class="container-fluid content flex-fill m-0">
 					@yield('content')
 				</div>
