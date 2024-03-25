@@ -13,6 +13,12 @@ class PermissionsTableSeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		// ADMIN ACCESS
+		Permission::create([
+			'name' => 'Admin Access',
+			'slug' => 'admin_access'
+		]);
+
 		// SETTINGS
 		$settingsPerm = Permission::create([
 			'name' => 'Settings Tab Access',

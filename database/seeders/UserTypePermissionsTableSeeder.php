@@ -23,11 +23,15 @@ class UserTypePermissionsTableSeeder extends Seeder
 		// Admin
 		$typeID = UserType::where('slug', '=', 'admin')->first()->id;
 		$perms = [
+			'admin_dashboard',
+			'settings_tab_access',
+			'settings_tab_edit'
 		];
 
 		// Editor
 		$typeID = UserType::where('slug', '=', 'teacher')->first()->id;
 		$perms = [
+			'admin_dashboard',
 		];
 
 		// Writer

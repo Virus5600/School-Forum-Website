@@ -33,4 +33,13 @@ body {
 			margin-top: var(--navbar-height);
 		}
 	}
+
+	#content.no-carousel {
+		&:before {
+			content: '';
+			position: relative;
+			display: block;
+			height: calc(var(--navbar-height) * 1.125);
+		}
+	}
 }

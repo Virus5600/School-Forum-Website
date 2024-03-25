@@ -18,8 +18,24 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	// GUEST SIDE //
 	////////////////
 
+	// TEST
+	Route::get('/test', fn() => view('change-password.edit'))->name('test');
+
 	// Home Page
 	Route::get('/', 'PageController@index')->name('home');
+
+	// Authentication
+	Route::group(['middleware' => ['guest']], function() {
+		// Login
+		Route::get('/login', 'AuthenticationController@login')->name('login');
+
+		// Authenticate
+		Route::post('/login', 'AuthenticationController@authenticate')->name('authenticate');
+
+		// Register
+		Route::get('/register', 'AuthenticationController@register')->name('register');
+		Route::post('/register', 'AuthenticationController@store')->name('register.store');
+	});
 
 	// Announcements
 	Route::group(['prefix' => 'announcements'], function() {
@@ -37,5 +53,11 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 
 		// Show
 		Route::get('/{id}', 'LostFoundController@show')->name('lost-and-found.show');
+	});
+
+	////////////////
+	// ADMIN SIDE //
+	////////////////
+	Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'permissions:admin_access']], function() {
 	});
 });

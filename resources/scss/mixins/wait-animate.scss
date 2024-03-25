@@ -18,7 +18,7 @@
 
 	@keyframes #{$name} {
 		@each $frame, $prop in $kf {
-			#{$frame * $duration / ($duration + $waitTime)}% {
+			#{calc($frame * $duration / ($duration + $waitTime))}% {
 				@each $k, $v in $prop {
 					#{$k}: #{$v}
 				}

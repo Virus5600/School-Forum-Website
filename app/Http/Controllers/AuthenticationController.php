@@ -14,18 +14,25 @@ use App\Models\User;
 use DB;
 use Exception;
 use Log;
+use Validator;
 
 class AuthenticationController extends Controller
 {
-	protected function login(Request $req) {
+	// LOGINS
+	protected function login() {
 		return view("login");
 	}
 
 	protected function authenticate(Request $req) {
+		$validator = Validator::make($req->all(), [
+			'username' => ["required", "string"],
+			'password' => ["required", "string"]
+		]);
+
 		$user = User::where('username', '=', $req->username)->first();
 
 		// Identifies whether the user exists or not.
-		if ($user == null) {
+		if ($user == null || $validator->fails()) {
 			return redirect()
 				->back()
 				->with('flash_error', 'Wrong username/password!')
@@ -44,6 +51,8 @@ class AuthenticationController extends Controller
 		// Designate the next action depending on the authentication result
 		if ($authenticated) {
 			if ($user) {
+				$req->session()->regenerate();
+
 				try {
 					DB::beginTransaction();
 
@@ -77,8 +86,10 @@ class AuthenticationController extends Controller
 
 			session(["bearer" => $token->plainTextToken]);
 
+			// Defines what page to redirect to after successful login
+			$intended = $user->userType->slug === "student" ? "home" : "admin.dashboard";
 			return redirect()
-				->intended(route('admin.dashboard'))
+				->intended(route($intended))
 				->with('flash_success', "Logged In!");
 		}
 		else {
@@ -185,6 +196,8 @@ class AuthenticationController extends Controller
 
 			auth()->logout();
 			session()->flush();
+			session()->invalidate();
+			session()->regenerateToken();
 
 			activity('user')
 				->by($user)
@@ -204,5 +217,13 @@ class AuthenticationController extends Controller
 		return redirect()
 			->route("admin.dashboard")
 			->with("flash_error", "Something went wrong, please try again.");
+	}
+
+	// REGISTER
+	protected function register(Request $req) {
+		return view("register");
+	}
+
+	protected function store(Request $req) {
 	}
 }

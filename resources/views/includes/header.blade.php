@@ -82,13 +82,25 @@
 				</div>
 			</li>
 			@else
+			{{-- LOGIN --}}
 			<li class="nav-item">
-				@if (\Request::is('contents'))
-				<span class="nav-link active">Login Portal</span>
-				@elseif (\Request::is('contents*'))
-				<a href="{{ route('home') }}" class="nav-link active">Login Portal</a>
+				@if (\Request::is('login'))
+				<span class="nav-link active">Login</span>
+				@elseif (\Request::is('login*'))
+				<a href="{{ route('login') }}" class="nav-link active">Login</a>
 				@else
-				<a href="{{ route('home') }}" class="nav-link">Login Portal</a>
+				<a href="{{ route('login') }}" class="nav-link">Login</a>
+				@endif
+			</li>
+
+			{{-- REGISTER --}}
+			<li class="nav-item">
+				@if (\Request::is('register'))
+				<span class="nav-link active">Register</span>
+				@elseif (\Request::is('register*'))
+				<a href="{{ route('register') }}" class="nav-link active">Register</a>
+				@else
+				<a href="{{ route('register') }}" class="nav-link">Register</a>
 				@endif
 			</li>
 			@endauth
@@ -97,6 +109,7 @@
 </nav>
 
 {{-- Carousel --}}
+@if (!$noCarousel)
 <section class="container-fluid">
 	<div class="row">
 		<div class="col-12 px-0" id="masthead">
@@ -118,3 +131,4 @@
 		</div>
 	</div>
 </section>
+@endif

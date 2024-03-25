@@ -71,8 +71,12 @@ mix
 	// .sass('resources/scss/views/layouts/admin.scss', 'public/views/layouts/admin')
 
 	// VIEWS
-	// Index (Home) Page
-	// .sass('resources/scss/views/index.scss', 'public/views/index')
+	// Login Page
+	.js('resources/js/views/login.js', 'public/views/login')
+	.sass('resources/scss/views/login.scss', 'public/views/login')
+
+	// Register Page
+	.js('resources/js/views/register.js', 'public/views/register')
 
 	// ADMIN VIEWS
 	// Settings Page

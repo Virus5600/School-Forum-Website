@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+// use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -24,7 +24,7 @@ class AccountNotification implements ShouldQueue
 
 	/**
 	 * Create a new job instance.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function __construct(User $user, $type, $args) {
@@ -35,7 +35,7 @@ class AccountNotification implements ShouldQueue
 
 	/**
 	 * Execute the job.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function handle(): void {
@@ -48,7 +48,7 @@ class AccountNotification implements ShouldQueue
 		// Sends the email to every single one of the recipients
 		foreach ($this->args['recipients'] as $r) {
 			Mail::send(
-				"layouts.emailos.account.{$this->type}",
+				"layouts.emails.account.{$this->type}",
 				[
 					'user' => $this->user,
 					'args' => $this->args,

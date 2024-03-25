@@ -6,7 +6,6 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="Content-Language" content="en-US" />
-		<meta name="csp-nonce" content="{{ csp_nonce() }}">
 
 		{{-- SITE META --}}
 		<meta name="type" content="website">
@@ -49,8 +48,9 @@
 		<title>{{ $webName }} | @yield('title')</title>
 	</head>
 
-	<body class="bg-it-quaternary">
+	<body class="custom-scrollbar apply-to-all bg-it-quaternary">
 		{{-- NOSCRIPT --}}
+		@php ($noCarousel = isset($noCarousel) ? $noCarousel : false)
 		@include('includes.noscript')
 
 		<div class="d-flex flex-column min-vh-100 js-only position-relative">
@@ -60,7 +60,7 @@
 			</header>
 
 			{{-- CONTENTS --}}
-			<main class="content d-flex flex-column flex-grow-1 my-5 bg-transparent" id="content">
+			<main class="content d-flex flex-column flex-grow-1 my-5 bg-transparent {{ $noCarousel ? 'no-carousel' : '' }}" id="content">
 				<div class="container-fluid content flex-fill m-0">
 					@yield('content')
 				</div>

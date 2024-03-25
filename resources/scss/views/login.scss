@@ -1,7 +1,7 @@
 @import "./../mixins/wait-animate";
 
-.dma-tooltip {
-	--bs-tooltip-bg: var(--bs-secondary-bg);
+.it-tooltip {
+	--bs-tooltip-bg: var(--bs-it-secondary);
 	--bs-tooltip-color: var(--bs-white);
 }
 
@@ -49,6 +49,10 @@
 		overflow: hidden;
 		max-height: 1vh;
 
+		#toggle-show-password * {
+			color: var(--bs-dark);
+		}
+
 		&::after {
 			content: "\f245";
 			font-family: "Font Awesome 6 Free";
@@ -88,7 +92,11 @@
 
 	}
 
-	&, & * {
+	& input {
+		color: var(--bs-dark);
+	}
+
+	&, & *:not(input) {
 		text-shadow: 0 0 5px white;
 		color: transparent;
 	}
@@ -97,9 +105,9 @@
 	&.show {
 		opacity: 1;
 
-		&, & * {
+		&, & *:not(input) {
 			text-shadow: initial;
-			color: initial;
+			color: white;
 		}
 	}
 
