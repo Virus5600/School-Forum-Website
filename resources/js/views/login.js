@@ -7,7 +7,7 @@ $(() => {
 	// LOCK/UNLOCK VIEW
 	const loginWrapper = $(`.login-card`);
 	const lockView = $(`.login-card #lock-view`);
-	const loginCard = $(`#login-form`);
+	const loginCard = $(`#login-form, #content`);
 	const loginCardComp = loginCard.find("*");
 
 	lockView.on('click', (e) => {
@@ -82,8 +82,8 @@ $(() => {
 		let obj = $(e.currentTarget);
 		let target = $(obj.attr('data-target'));
 		let icons = {
-			show: obj.find('#show'),
-			hide: obj.find('#hide')
+			show: obj.find('#show, .show'),
+			hide: obj.find('#hide, .hide'),
 		}
 
 		if (target.attr('type') == 'password') {

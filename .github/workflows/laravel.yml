@@ -90,3 +90,5 @@ jobs:
       run: vendor/bin/phpunit --coverage-text
       env:
         DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+        MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+        MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
