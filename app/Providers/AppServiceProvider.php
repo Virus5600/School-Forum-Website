@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
+use URL;
+
 class AppServiceProvider extends ServiceProvider
 {
 	/**
@@ -25,6 +27,16 @@ class AppServiceProvider extends ServiceProvider
 	{
 		// Use Bootstrap as default paginator styling.
 		Paginator::useBootstrapFive();
+
+		// Use HTTPS when not in testing or local/dev environment
+		$envArr = [
+			'local',
+			'development',
+			'testing'
+		];
+		if (!in_array(strtolower(config('app.env')), $envArr)) {
+			URL::forceScheme('https');
+		}
 	}
 
 	private function implementFakeMethods(): void

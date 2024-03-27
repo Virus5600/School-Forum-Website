@@ -18,7 +18,7 @@ class Base extends Policy
 			->addDirective(Directive::BASE, Keyword::SELF)
 			->addDirective(Directive::CONNECT, Keyword::SELF)
 			->addDirective(Directive::DEFAULT, Keyword::SELF)
-			->addDirective(Directive::FORM_ACTION, Keyword::SELF)
+			->addDirective(Directive::FORM_ACTION, "self " . config("app.url"))
 			->addDirective(Directive::IMG, "self data:")
 			->addDirective(Directive::MEDIA, Keyword::SELF)
 			->addDirective(Directive::OBJECT, Keyword::NONE)
