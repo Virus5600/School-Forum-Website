@@ -20,19 +20,18 @@ class AccountNotification implements ShouldQueue, ShouldBeEncrypted
 	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 	private User $user;
-	private $type, $args, $callOnDestruct, $queue;
+	private $type, $args, $callOnDestruct;
 
 	/**
 	 * Create a new job instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(User $user, string $type, array $args, bool $callOnDestruct = false, string $queue = null) {
+	public function __construct(User $user, string $type, array $args, bool $callOnDestruct = false) {
 		$this->user = $user;
 		$this->type = $type;
 		$this->args = $args;
 		$this->callOnDestruct = $callOnDestruct;
-		$this->queue = $queue;
 	}
 
 	/**

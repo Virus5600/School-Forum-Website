@@ -152,7 +152,7 @@ class AuthenticationController extends Controller
 								"recipients" => [$user->email]
 							];
 
-							AccountNotification::dispatchAfterResponse($user, "locked", $args, true, 'account_breach')
+							AccountNotification::dispatchAfterResponse($user, "locked", $args, true)
 								->onQueue("account_breach");
 						}
 
@@ -278,7 +278,7 @@ class AuthenticationController extends Controller
 			];
 
 			// Uses past-tense due to password is now changed
-			AccountNotification::dispatchAfterResponse($user, "changed-password", $args, 'account_update')
+			AccountNotification::dispatchAfterResponse($user, "changed-password", $args)
 				->onQueue("account_update");
 
 			$email = $pr->email;
