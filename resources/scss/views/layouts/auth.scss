@@ -1,0 +1,45 @@
+.it-tooltip {
+	--bs-tooltip-bg: var(--bs-it-secondary);
+	--bs-tooltip-color: var(--bs-white);
+}
+
+.hemisphere {
+	--bg-color: var(--bs-it-quaternary);
+
+	--gradient-length: 5px;
+	--gradient-blur: 5px;
+
+	width: 50%;
+	height: 100vh !important;
+}
+
+#left-hemisphere {
+	@extend .hemisphere;
+
+	width: 75%;
+
+	background-image: var(--bg-img);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-color: var(--bg-color);
+
+	body:not(.no-blur) & {
+		filter: blur(5px);
+	}
+
+	transition: .5s;
+
+	body:not(.no-blur) &.unblur {
+		filter: blur(0px);
+	}
+}
+
+#right-hemisphere {
+	@extend .hemisphere;
+
+	width: 25%;
+
+	background-color: var(--bg-color);
+	box-shadow: 0 0 var(--gradient-blur) var(--gradient-length) var(--bg-color);
+}

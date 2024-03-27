@@ -12,8 +12,29 @@ An attempt to access you account has been made!
 	<a href="{{ route("change-password.edit", [$args['token']]) }}">{{ route("change-password.edit", [$args['token']]) }}</a>
 </p>
 
-@php($ip = $user->locked_by == '::1' ? '192.168.0.1' : $user->locked_by)
-@php ($ipData = json_decode(file_get_contents("https://ip-api.io/json/{$ip}")))
+@php
+$ip = $user->locked_by == '::1' ? '' : $user->locked_by;
+
+if (config('app.env') == 'local' || config('app.env') == 'testing') {
+	$arrContextOptions=array(
+		"ssl"=>array(
+			"verify_peer" => false,
+			"verify_peer_name" => false,
+		),
+	);
+
+	$contents = file_get_contents(
+		"https://ip-api.io/json/{$ip}",
+		false,
+		stream_context_create($arrContextOptions)
+	);
+}
+else {
+	$contents = file_get_contents("https://ip-api.io/json/{$ip}");
+}
+
+$ipData = json_decode($contents);
+@endphp
 
 <label for="data">Your account is being accessed:</label>
 <div style="background-color: lightgray; padding: 1rem;">

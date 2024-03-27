@@ -151,7 +151,9 @@ class AuthenticationController extends Controller
 								"email" => $user->email,
 								"recipients" => [$user->email]
 							];
-							AccountNotification::dispatch($user, "locked", $args);
+
+							AccountNotification::dispatchAfterResponse($user, "locked", $args, true, 'account_breach')
+								->onQueue("account_breach");
 						}
 
 						$user->locked = 1;
@@ -217,6 +219,113 @@ class AuthenticationController extends Controller
 		return redirect()
 			->route("admin.dashboard")
 			->with("flash_error", "Something went wrong, please try again.");
+	}
+
+	// FORGOT PASSWORD
+	protected function forgotPassword(Request $req) {
+		return view("change-password.index", [
+			"identifier" => $req->username ?? ""
+		]);
+	}
+
+	// CHANGE PASSWORD
+	protected function changePassword(Request $req, string $token) {
+		return view("change-password.edit", [
+			"token" => $token
+		]);
+	}
+
+	protected function updatePassword(Request $req, string $token) {
+		$pr = PasswordReset::where('token', '=', $token)->first();
+		$user = $pr->user;
+
+		if ($user == null) {
+			return redirect()
+				->route('login')
+				->with('flash_error', 'User either does not exists or is already deleted');
+		}
+
+		$validator = Validator::make($req->all(), [
+			'password' => array('required', 'regex:/([a-z]*)([0-9])*/i', 'min:8', 'confirmed'),
+			'password_confirmation' => 'required'
+		], [
+			'password.required' => 'The new password is required',
+			'password.regex' => 'Password must contain at least 1 letter and 1 number',
+			'password.min' => 'Password should be at least 8 characters',
+			'password.confirmed' => 'You must confirm your password first',
+			'password_confirmation.required' => 'You must confirm your password first'
+		]);
+
+		if ($validator->fails()) {
+			return redirect()
+				->back()
+				->withErrors($validator);
+		}
+
+		try {
+			DB::beginTransaction();
+
+			$user->password = Hash::make($req->password);
+			$user->login_attempts = 0;
+			$user->locked = 0;
+			$user->locked_by = null;
+
+			$args = [
+				'subject' => 'Password Changed',
+				'recipients' => [$user->email],
+				'email' => $user->email,
+				'password' => $req->password
+			];
+
+			// Uses past-tense due to password is now changed
+			AccountNotification::dispatchAfterResponse($user, "changed-password", $args, 'account_update')
+				->onQueue("account_update");
+
+			$email = $pr->email;
+			$expires_at = $pr->expires_at;
+
+			$user->save();
+			$pr->delete();
+
+			// LOGGER
+			activity('user')
+				->byAnonymous()
+				->on($user)
+				->event('update')
+				->withProperties([
+					'first_name' => $user->first_name,
+					'middle_name' => $user->middle_name,
+					'last_name' => $user->last_name,
+					'suffix' => $user->suffix,
+					'is_avatar_link' => $user->is_avatar_link,
+					'avatar' => $user->avatar,
+					'email' => $user->email,
+					'type_id' => $user->type
+				])
+				->log("Password for '{$user->email}' updated.");
+
+			activity('password-reset')
+				->byAnonymous()
+				->event('delete')
+				->withProperties([
+					'email' => $email,
+					'expires_at' => $expires_at
+				])
+				->log("Password for '{$user->email}' updated.");
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			Log::error($e);
+
+			return redirect()
+				->back()
+				->with('flash_error', 'Something went wrong, please try again later.');
+		}
+
+		return redirect()
+			->route('login')
+			->with('flash_success', "Succesfully updated password");
 	}
 
 	// REGISTER

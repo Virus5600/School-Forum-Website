@@ -1,0 +1,45 @@
+// Lock and Unlock View
+#lock-view {
+	position: relative;
+
+	cursor: pointer;
+	transition: .5s;
+
+	&:hover {
+		opacity: .75;
+	}
+
+	.fa-lock,
+	.fa-lock-open {
+		left: 50%;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		position: absolute;
+
+		transition: 0.25s;
+	}
+
+	&.unlocked {
+		& .fa-lock {
+			opacity: 0;
+			z-index: 0;
+		}
+
+		& .fa-lock-open {
+			opacity: 1;
+			z-index: 1;
+		}
+	}
+
+	&.locked {
+		& .fa-lock {
+			opacity: 1;
+			z-index: 1;
+		}
+
+		& .fa-lock-open {
+			opacity: 0;
+			z-index: 0;
+		}
+	}
+}

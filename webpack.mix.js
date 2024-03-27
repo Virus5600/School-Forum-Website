@@ -66,9 +66,18 @@ mix
 	.js('resources/js/views/layouts/public.js', 'public/views/layouts/public')
 	.sass('resources/scss/views/layouts/public.scss', 'public/views/layouts/public')
 
+	// Auth Layout
+	.js('resources/js/views/layouts/auth.js', 'public/views/layouts/auth')
+	.sass('resources/scss/views/layouts/auth.scss', 'public/views/layouts/auth')
+
 	// Admin Layout
 	// .js('resources/js/views/layouts/admin.js', 'public/views/layouts/admin')
 	// .sass('resources/scss/views/layouts/admin.scss', 'public/views/layouts/admin')
+
+	// INCLUDES
+	// Lock View
+	.sass('resources/scss/views/includes/lock-view.scss', 'public/views/includes/lock-view')
+	.js('resources/js/views/includes/lock-view.js', 'public/views/includes/lock-view')
 
 	// VIEWS
 	// Login Page

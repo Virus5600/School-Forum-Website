@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-// use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,22 +15,24 @@ use Artisan;
 use Log;
 use Mail;
 
-class AccountNotification implements ShouldQueue
+class AccountNotification implements ShouldQueue, ShouldBeEncrypted
 {
 	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 	private User $user;
-	private $type, $args;
+	private $type, $args, $callOnDestruct, $queue;
 
 	/**
 	 * Create a new job instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(User $user, $type, $args) {
+	public function __construct(User $user, string $type, array $args, bool $callOnDestruct = false, string $queue = null) {
 		$this->user = $user;
 		$this->type = $type;
 		$this->args = $args;
+		$this->callOnDestruct = $callOnDestruct;
+		$this->queue = $queue;
 	}
 
 	/**
@@ -76,11 +78,19 @@ class AccountNotification implements ShouldQueue
 	}
 
 	public function __destruct() {
-		Log::info("[AccountNotification] Running Queue");
+		if ($this->callOnDestruct) {
+			Log::info("[AccountNotification] Running Queue");
 
-		Artisan::call('queue:work', [
-			'--stop-when-empty' => true,
-			'--tries' => 3
-		]);
+			$queueArgs = [
+				'--stop-when-empty' => true,
+				'--tries' => 3,
+				'--once' => true
+			];
+
+			if ($this->queue != null)
+				$queueArgs['--queue'] = $this->queue;
+
+			Artisan::call('queue:work', $queueArgs);
+		}
 	}
 }

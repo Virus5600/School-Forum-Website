@@ -41,30 +41,30 @@
 
 		{{-- CUSTOM STYLES --}}
 		<link rel="stylesheet" type="text/css" href="{{ mix('views/layouts/public/public.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ mix('views/login/login.css') }}">
-		<script type="text/javascript" src="{{ mix('views/login/login.js') }}" nonce="{{ csp_nonce() }}"></script>
+		<link rel="stylesheet" type="text/css" href="{{ mix('views/layouts/auth/auth.css') }}">
+		@stack('css')
 
 		{{-- TITLE --}}
 		<title>{{ $webName }} | @yield('title')</title>
 	</head>
 
-	<body>
+	<body class="{{ isset($noBlur) ? ($noBlur ? 'no-blur' : '') : '' }}">
 		{{-- NOSCRIPT --}}
 		@include('includes.noscript')
 
 		<div class="d-flex flex-column min-vh-100 js-only position-relative">
 			<div class="d-flex flex-row flex-grow-1 h-100 bg-it-primary">
 				{{-- BACKGROUND LEFT --}}
-				<div class="w-100 w-md-75 unblur" id="left-hemisphere" style="--bg-img: url('{{ asset("uploads/settings/login-default.png") }}');">
+				<div class="z-0 w-100 w-md-75 unblur" id="left-hemisphere" style="--bg-img: url('{{ asset("uploads/settings/login-default.png") }}');">
 				</div>
 
 				{{-- BACKGROUND RIGHT --}}
-				<div class="d-none d-md-block bg-it-quaternary" id="right-hemisphere">
+				<div class="z-1 d-none d-md-block" id="right-hemisphere">
 				</div>
 			</div>
 
-			{{-- LOGIN CARD --}}
-			<main class="w-75 w-md-50 w-lg-25 position-absolute posabs-center posabs-md-vertical-middle posabs-md-outerright m-md-auto login-card" id="content">
+			{{-- AUTH CARD --}}
+			<main class="z-2 {{ isset($formWidth) ? $formWidth : "w-75 w-md-50 w-lg-25" }} position-absolute {{ isset($position) ? $position : "posabs-center posabs-md-vertical-middle posabs-md-outerright" }} m-md-auto" id="content">
 				@yield('content')
 			</main>
 
@@ -73,7 +73,14 @@
 		</div>
 
 		{{-- SCRIPTS --}}
-		<script type="text/javascript" src="{{ mix('js/util/disable-on-submit.js') }}"></script>
+		<script type="text/javascript" src="{{ mix('views/layouts/auth/auth.js') }}" nonce="{{ csp_nonce() }}"></script>
+		<script type="text/javascript" src="{{ mix('js/util/disable-on-submit.js') }}" nonce="{{ csp_nonce() }}"></script>
+		<script type="text/javascript" nonce="{{ csp_nonce() }}" data-to-remove>
+			$(() => {
+				{{ isset($noBlur) && $noBlur ? 'window.noBlur = true;' : '' }}
+				$(`[data-to-remove]`).remove();
+			});
+		</script>
 		@include('includes.swal-flash')
 		@stack('scripts')
 	</body>

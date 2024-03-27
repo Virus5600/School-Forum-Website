@@ -3,78 +3,75 @@
 @section('title', 'Reset Password')
 
 @section('content')
-<div class="card floating-header bg-it-primary">
-	<div class="card-header header-center header-md-start rounded border-0 bg-it-primary">
+<div class="card floating-header bg-it-primary text-white border-white">
+	<div class="card-header header-center header-md-start border border-white rounded bg-it-primary">
 		<h1 class="card-title d-flex flex-row position-relative h3">
 			<span class="m-auto">Reset Password</span>
 
-			{{-- LOCK/UNLOCK VIEW --}}
-			<span id="lock-view" class="position-absolute posabs-vertical-middle posabs-outerright fs-5 ms-auto my-auto unlocked">
-				{{-- UNLOCK ICON --}}
-				<button class="remove-button-style p-3 fa-lock-open" type="button" data-bs-title="Toggle to lock view" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="it-tooltip" aria-title="Toggle to lock view">
-					<i class="fas fa-lock-open"></i>
-				</button>
-
-				{{-- LOCK ICON --}}
-				<button class="remove-button-style p-3 fa-lock"  type="button" data-bs-title="Toggle to unlock view" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="it-tooltip" aria-title="Toggle to unlock view">
-					<i class="fas fa-lock"></i>
-				</button>
-			</span>
+			@include('includes.auth.lock-view', ['absolutePosition' => false])
 		</h1>
 	</div>
 
-	<form action="@{{ route('change-password.update', [$token]) }}" method="POST" class="card-body">
-		@csrf
+	<div class="card-body" id="form">
+		<form action="{{ route('change-password.update', [$token]) }}" method="POST">
+			@csrf
 
-		<div class="row">
-			{{-- NOTE --}}
-			<div class="col-12">
-				<p class="card-text">
-					Want to test how strong your password is?
-					Check it in <a href="https://nordpass.com/secure-password/">Nord VPN's password tester</a>
-					or in <a href="https://www.uic.edu/apps/strong-password/">University of Illinois' password tester</a>.
-				</p>
-			</div>
-
-			{{-- PASSWORD --}}
-			<div class="col-12 my-2 form-group">
-				<label class="form-label d-none" for="password">Password</label>
-
-				<div class="input-group">
-					<input id="password" type="password" name="password" class="form-control border-end-0 border-style-solid border-secondary" placeholder="Password" required>
-					<button type="button" class="btn btn-it-white border-start-0 border border-style-solid border-secondary toggle-show-password" data-target="#password">
-						<i class="fas fa-eye d-none show" title="Show"></i>
-						<i class="fas fa-eye-slash hide" title="Hide"></i>
-					</button>
+			<div class="row">
+				{{-- NOTE --}}
+				<div class="col-12">
+					<p class="card-text">
+						Want to test how strong your password is?
+						Check it in <a href="https://nordpass.com/secure-password/" class="link-body-emphasis" data-bs-theme="dark">Nord VPN's password tester</a>
+						or in <a href="https://www.uic.edu/apps/strong-password/" class="link-body-emphasis" data-bs-theme="dark">University of Illinois' password tester</a>.
+					</p>
 				</div>
 
-				<span class="small text-danger">{{ $errors->first('password') }}</span>
-			</div>
+				{{-- PASSWORD --}}
+				<div class="col-12 my-2 form-group">
+					<label class="form-label d-none" for="password">Password</label>
 
-			{{-- CONFIRM PASSWORD --}}
-			<div class="col-12 my-2 form-group">
-				<label class="form-label d-none" for="password_confirmation">Confirm Password</label>
+					<div class="input-group">
+						<input id="password" type="password" name="password" class="form-control bg-it-quaternary border-end-0 border-style-none" placeholder="Password" required>
+						<button type="button" class="btn btn-it-quaternary border-start-0 border-style-none toggle-show-password" data-target="#password">
+							<i class="fas fa-eye d-none text-dark show" title="Show"></i>
+							<i class="fas fa-eye-slash text-dark hide" title="Hide"></i>
+						</button>
+					</div>
 
-				<div class="input-group">
-					<input id="password_confirmation" type="password" name="password_confirmation" class="form-control border-end-0 border-style-solid border-secondary" placeholder="Confirm Password" required>
-					<button type="button" class="btn btn-it-white border-start-0 border border-style-solid border-secondary toggle-show-password" data-target="#password_confirmation">
-						<i class="fas fa-eye d-none show" title="Show"></i>
-						<i class="fas fa-eye-slash hide" title="Hide"></i>
-					</button>
+					<span class="small text-danger">{{ $errors->first('password') }}</span>
 				</div>
 
-				<span class="small text-danger">{{ $errors->first('password_confirmation') }}</span>
-			</div>
-		</div>
+				{{-- CONFIRM PASSWORD --}}
+				<div class="col-12 my-2 form-group">
+					<label class="form-label d-none" for="password_confirmation">Confirm Password</label>
 
-		<div class="form-group text-center">
-			<button type="submit" class="btn btn-primary" data-action="update">Submit</button>
-		</div>
-	</form>
+					<div class="input-group">
+						<input id="password_confirmation" type="password" name="password_confirmation" class="form-control bg-it-quaternary border-end-0 border-style-none" placeholder="Confirm Password" required>
+						<button type="button" class="btn btn-it-quaternary border-start-0 border-style-none toggle-show-password" data-target="#password_confirmation">
+							<i class="fas fa-eye d-none text-dark show" title="Show"></i>
+							<i class="fas fa-eye-slash text-dark hide" title="Hide"></i>
+						</button>
+					</div>
+
+					<span class="small text-danger">{{ $errors->first('password_confirmation') }}</span>
+				</div>
+			</div>
+
+			<div class="form-group text-center">
+				<button type="submit" class="btn btn-it-secondary" data-action="update">Submit</button>
+			</div>
+		</form>
+	</div>
 </div>
 @endsection
 
+@push('css')
+	<link rel="stylesheet" type="text/css" href="{{ mix('css/widget/card-widget.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ mix('views/login/login.css') }}">
+@endpush
+
 @push('scripts')
-{{-- PASSWORD TIPS --}}
-@include('includes.password-tips')
+	{{-- PASSWORD TIPS --}}
+	@include('includes.password-tips')
+	<script type="text/javascript" src="{{ mix('views/login/login.js') }}"></script>
 @endpush

@@ -19,7 +19,7 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	////////////////
 
 	// TEST
-	Route::get('/test', fn() => view('change-password.edit'))->name('test');
+	Route::get('/test', fn() => view('layouts.emails.account.locked'))->name('test');
 
 	// Home Page
 	Route::get('/', 'PageController@index')->name('home');
@@ -31,6 +31,13 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 
 		// Authenticate
 		Route::post('/login', 'AuthenticationController@authenticate')->name('authenticate');
+
+		// Forgot Password
+		Route::get('/forgot-password', 'AuthenticationController@forgotPassword')->name('forgot-password');
+
+		// Change Password
+		Route::get('/change-password/{token}', 'AuthenticationController@changePassword')->name('change-password.edit');
+		Route::post('/change-password/{token}/update', 'AuthenticationController@updatePassword')->name('change-password.update');
 
 		// Register
 		Route::get('/register', 'AuthenticationController@register')->name('register');

@@ -3,28 +3,17 @@
 @section('title', 'Login')
 
 @section('content')
-<form class="card bg-it-primary" method="POST" action="{{ route("authenticate") }}" enctype="multipart/form-data" autocomplete="off">
+<form class="card bg-it-primary text-white" method="POST" action="{{ route("authenticate") }}" enctype="multipart/form-data" autocomplete="off">
 	<div class="card-header text-center">
 		<h1 class="card-title d-flex flex-row position-relative h3">
 			<span class="m-auto">LOGIN</span>
 
-			{{-- LOCK/UNLOCK VIEW --}}
-			<span id="lock-view" class="position-absolute posabs-vertical-middle posabs-outerright fs-5 ms-auto my-auto unlocked">
-				{{-- UNLOCK ICON --}}
-				<button class="remove-button-style p-3 fa-lock-open" type="button" data-bs-title="Toggle to lock view" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="it-tooltip" aria-title="Toggle to lock view">
-					<i class="fas fa-lock-open"></i>
-				</button>
-
-				{{-- LOCK ICON --}}
-				<button class="remove-button-style p-3 fa-lock"  type="button" data-bs-title="Toggle to unlock view" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="it-tooltip" aria-title="Toggle to unlock view">
-					<i class="fas fa-lock"></i>
-				</button>
-			</span>
+			@include('includes.auth.lock-view')
 		</h1>
 	</div>
 
 	<div class="card-body">
-		<div id="login-form">
+		<div id="form">
 			{{-- Some Image --}}
 			<div class="text-center d-block d-md-none mb-3">
 				<img src="{{ asset("uploads/settings/default.png") }}" class="img img-fluid w-25 bg-white rounded-circle p-1" draggable="false">
@@ -54,12 +43,14 @@
 				</div>
 
 				<div class="form-group">
-					<a href="#" class="w-100 text-center">Forgot Password.</a>
+					<a href="{{ route('forgot-password') }}" id="redirectToForgotPassword" class="w-100 text-center link-body-emphasis" data-bs-theme="dark">
+						Forgot Password.
+					</a>
 				</div>
 			</div>
 
 			<div class="d-flex flex-column justify-content-center">
-				<a href="{{ route('register') }}" id="redirectToRegister" class="text-center">
+				<a href="{{ route('register') }}" id="redirectToRegister" class="text-center link-body-emphasis" data-bs-theme="dark">
 					Don't have an account yet?
 				</a>
 			</div>
@@ -76,9 +67,15 @@
 </form>
 @endsection
 
+@push('css')
+	<link rel="stylesheet" type="text/css" href="{{ mix('views/login/login.css') }}" nonce="{{ csp_nonce() }}">
+@endpush
+
 @push('scripts')
+	<script type="text/javascript" src="{{ mix('views/login/login.js') }}" nonce="{{ csp_nonce() }}"></script>
 	@if (Session::has('flash_error') || Session::has('flash_info'))
-	<script type="text/javascript" id="for-removal" nonce="{{ csp_nonce() }}">
+	<script type="text/javascript" id="for-removal" nonce="{{ csp_nonce() }}" defer>
+		window.isDirty = true;
 		$(document).ready(() => {
 			setTimeout(() => {
 				$(`#lock-view`)[0].click();

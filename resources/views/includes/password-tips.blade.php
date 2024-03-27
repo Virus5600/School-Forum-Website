@@ -1,4 +1,4 @@
-<div class="alert alert-info alert-dismissible position-absolute top-0 end-0 m-3 d-flex align-items-center fade" role="alert" id="password-tips">
+<div class="alert alert-info alert-dismissible w-100 w-md-auto position-absolute top-0 start-50 translate-middle-x start-md-0 translate-md-start m-md-3 ms-md-0 d-flex align-items-center z-3 rounded-end-md-pill fade" role="alert" id="password-tips">
 	<i class="fas fa-info-circle fa-3x me-2 flex-shrink-0"></i>
 
 	<div class="d-flex flex-column fs-2xs">
@@ -14,7 +14,7 @@
 		<button type="button" class="btn btn-info fs-2xs mx-auto text-light" data-bs-dismiss="alert" aria-label="Close">Understood</button>
 	</div>
 
-	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	<button type="button" class="btn-close start-unset start-md-0" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 @push('scripts')
