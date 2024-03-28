@@ -78,10 +78,11 @@
 /* HOVER CAM END */
 
 .input-avatar {
-	min-width: 10rem!important;
-	min-height: 10rem!important;
-	max-height: 10rem!important;
-	cursor: pointer!important;
+	--input-avatar-size: 10rem;
+	min-width: var(--input-avatar-size) !important;
+	min-height: var(--input-avatar-size) !important;
+	max-height: var(--input-avatar-size) !important;
+	cursor: pointer !important;
 
 	img {
 		object-position: center;

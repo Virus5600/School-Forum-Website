@@ -8,6 +8,58 @@ $utilities: map-merge(
 		"height": map-merge(
 			map-get($utilities, "height"),
 			(responsive: true)
-		)
+		),
+		"min-viewport-width": map-merge(
+			map-get($utilities, "min-viewport-width"),
+			(
+				responsive: true,
+				values: (
+					25: 25vw,
+					50: 50vw,
+					75: 75vw,
+					100: 100vw
+				)
+			)
+		),
+		"min-viewport-height": map-merge(
+			map-get($utilities, "min-viewport-height"),
+			(
+				responsive: true,
+				values: (
+					25: 25vh,
+					50: 50vh,
+					75: 75vh,
+					100: 100vh
+				)
+			)
+		),
+		"max-viewport-width": map-merge(
+			map-get($utilities, "min-viewport-width"),
+			(
+				responsive: true,
+				property: max-width,
+				class: max-vw,
+				values: (
+					25: 25vw,
+					50: 50vw,
+					75: 75vw,
+					100: 100vw
+				)
+			)
+		),
+		"max-viewport-height": map-merge(
+			map-get($utilities, "min-viewport-height"),
+			(
+				responsive: true,
+				property: max-height,
+				class: max-vh,
+				values: (
+					25: 25vh,
+					50: 50vh,
+					75: 75vh,
+					100: 100vh
+				)
+			)
+		),
 	)
 );

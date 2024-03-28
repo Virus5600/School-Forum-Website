@@ -111,6 +111,11 @@ $scrollbar-bg: $it-quaternary;
 	/* APPLYING CUSTOM SB TO ALL */
 	&.apply-to-all * {
 		@extend .custom-scrollbar;
+
+		&.scroll-bg-transparent,
+		.scroll-bg-transparent {
+			--custom-scrollbar-bg: transparent;
+		}
 	}
 }
 /* CUSTOM SCROLLBAR END */

@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Validation\Rule;
 
 use Laravel\Sanctum\HasApiTokens;
 
@@ -24,6 +25,7 @@ class User extends Authenticatable
 		'last_name',
 		'suffix',
 		'email',
+		'gender',
 		'avatar',
 		'user_type_id',
 		'login_attempts',
@@ -172,5 +174,74 @@ class User extends Authenticatable
 		if ($user == null)
 			return "javascript:SwalFlash.info(`Cannot Find Item`, `Item may already be deleted or an anonymous user.`, true, false, `center`, false);";
 		return route('admin.users.show', [$id]);
+	}
+
+	// VALIDATOR RELATED FUNCTIONS
+	/**
+	 * Get the validation rules for the specified fields. If no fields are specified,
+	 * all fields will be returned.
+	 *
+	 * @param array $fields The fields to get the validation rules for. If not specified, all fields will be returned.
+	 *
+	 * @return array The validation rules for the specified fields.
+	 */
+	public static function getValidationRules(...$fields): array
+	{
+		$rules = [
+			'avatar' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:32768'],
+			'first_name' => ['required', 'string'],
+			'middle_name' => ['string'],
+			'last_name' => ['required', 'string'],
+			'suffix' => ['string', 'max:50'],
+			'gender' => ['required', 'string', Rule::in(['male', 'female', 'others'])],
+			'username' => ['required', 'unique:users,username', 'string'],
+			'email' => ['required', 'unique:users,email', 'email'],
+			'password' => ['required', 'string', 'min:8', 'confirmed'],
+		];
+
+		if ($fields == null || count($fields) <= 0)
+			return $rules;
+
+		$toRet = [];
+		foreach ($fields as $field) {
+			if (array_key_exists($field, $rules))
+				$toRet[$field] = $rules[$field];
+		}
+
+		return $toRet;
+	}
+
+	/**
+	 * Get the validation messages for all the fields.
+	 *
+	 * @return array The validation messages for all the fields.
+	 */
+	public static function getValidationMessages(): array
+	{
+		return [
+			'avatar.image' => 'Avatar must be an image',
+			'avatar.mimes' => 'Avatar must be a file of type: jpg, jpeg, png, webp',
+			'avatar.max' => 'Avatar must not exceed 32MB',
+			'first_name.required' => 'First name is required',
+			'first_name.string' => 'First name must be a string',
+			'middle_name.string' => 'Middle name must be a string',
+			'last_name.required' => 'Last name is required',
+			'last_name.string' => 'Last name must be a string',
+			'suffix.string' => 'Suffix must be a string',
+			'suffix.max' => 'Suffix must not exceed 50 characters',
+			'gender.required' => 'Gender is required',
+			'gender.string' => 'Please select a valid choice',
+			'gender.in' => 'Please select a valid choice',
+			'username.required' => 'Username is required',
+			'username.unique' => 'Username is already taken',
+			'username.string' => 'Username must be a string',
+			'email.required' => 'Email is required',
+			'email.unique' => 'Email is already taken',
+			'email.email' => 'Email must be a valid email address',
+			'password.required' => 'Password is required',
+			'password.string' => 'Password must be a string',
+			'password.min' => 'Password must be at least 8 characters long',
+			'password.confirmed' => 'Passwords do not match',
+		];
 	}
 }

@@ -46,9 +46,11 @@
 
 		{{-- TITLE --}}
 		<title>{{ $webName }} | @yield('title')</title>
+
+		@php($noBlur = isset($noBlur) ? $noBlur : false)
 	</head>
 
-	<body class="{{ isset($noBlur) ? ($noBlur ? 'no-blur' : '') : '' }}">
+	<body class="{{ $noBlur ? 'no-blur' : '' }} custom-scrollbar apply-to-all">
 		{{-- NOSCRIPT --}}
 		@include('includes.noscript')
 
@@ -64,7 +66,7 @@
 			</div>
 
 			{{-- AUTH CARD --}}
-			<main class="z-2 {{ isset($formWidth) ? $formWidth : "w-75 w-md-50 w-lg-25" }} position-absolute {{ isset($position) ? $position : "posabs-center posabs-md-vertical-middle posabs-md-outerright" }} m-md-auto" id="content">
+			<main class="z-2 max-vh-75 {{ isset($formWidth) ? $formWidth : "w-75 w-md-50 w-lg-25" }} position-absolute {{ isset($position) ? $position : "posabs-center posabs-md-vertical-middle posabs-md-outerright" }} m-md-auto {{ isset($additionalClasses) ? $additionalClasses : "" }}" id="content">
 				@yield('content')
 			</main>
 
@@ -73,11 +75,13 @@
 		</div>
 
 		{{-- SCRIPTS --}}
+		@if (!$noBlur)
 		<script type="text/javascript" src="{{ mix('views/layouts/auth/auth.js') }}" nonce="{{ csp_nonce() }}"></script>
+		@endif
 		<script type="text/javascript" src="{{ mix('js/util/disable-on-submit.js') }}" nonce="{{ csp_nonce() }}"></script>
 		<script type="text/javascript" nonce="{{ csp_nonce() }}" data-to-remove>
 			$(() => {
-				{{ isset($noBlur) && $noBlur ? 'window.noBlur = true;' : '' }}
+				{{ $noBlur ? 'window.noBlur = true;' : '' }}
 				$(`[data-to-remove]`).remove();
 			});
 		</script>

@@ -77,13 +77,14 @@ textarea {
 	}
 }
 
+$requiredColor: white;
 
 .required-after,
 .required-end {
 	&:after {
 		margin-left: .25rem;
 		content: "*";
-		color: red;
+		color: $requiredColor;
 	}
 }
 
@@ -93,6 +94,6 @@ textarea {
 	&:before {
 		margin-right: .25rem;
 		content: "*";
-		color: red;
+		color: $requiredColor;
 	}
 }

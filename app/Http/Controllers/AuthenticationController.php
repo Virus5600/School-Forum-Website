@@ -334,5 +334,17 @@ class AuthenticationController extends Controller
 	}
 
 	protected function store(Request $req) {
+		$validator = Validator::make(
+			$req->all(),
+			User::getValidationRules(),
+			User::getValidationMessages()
+		);
+
+		if ($validator->fails() || true) {
+			return redirect()
+				->back()
+				->withErrors($validator)
+				->withInput($req->all());
+		}
 	}
 }

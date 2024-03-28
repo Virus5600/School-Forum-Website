@@ -5,6 +5,15 @@ $new-colors: (
 	"it-quaternary": $it-quaternary
 );
 
+$newGrays: () !default;
+
+@each $gray, $value in $grays {
+	$newGrays: map-merge(
+		$newGrays,
+		("gray-#{$gray}": $value)
+	);
+}
+
 // Merge the new colors with the existing colors
 $all-colors: map-merge-multiple(
 	$new-colors,
@@ -17,7 +26,8 @@ $all-colors: map-merge-multiple(
 	$yellows,
 	$greens,
 	$teals,
-	$cyans
+	$cyans,
+	$newGrays,
 );
 
 // Add the new colors to the $all-colors map

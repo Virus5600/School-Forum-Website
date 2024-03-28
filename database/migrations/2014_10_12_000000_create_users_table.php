@@ -17,8 +17,9 @@ return new class extends Migration
 			$table->string('first_name');
 			$table->string('middle_name')->nullable();
 			$table->string('last_name');
-			$table->string('suffix')->nullable();
+			$table->string('suffix', 50)->nullable();
 			$table->string('email')->unique();
+			$table->enum('gender', ['male', 'female', 'others'])->default('others');
 			$table->string('avatar')->default('default.png');
 			$table->foreignId('user_type_id')->constrained('user_types')->cascadeOnDelete();
 			$table->tinyInteger('login_attempts')->default(0);

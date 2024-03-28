@@ -20,9 +20,23 @@ class UsersTableSeeder extends Seeder
 			'middle_name' => config('master-admin.middle_name'),
 			'last_name' => config('master-admin.last_name'),
 			'email' => config('master-admin.email'),
+			'gender' => 'others',
 			'avatar' => 'master-admin.png',
 			'user_type_id' => config('master-admin.user_type_id'),
 			'password' => config('master-admin.password'),
+		]);
+
+		// Admin User (Dev)
+		User::create([
+			'username' => 'Virus5600',
+			'first_name' => 'Karl Satchi',
+			'middle_name' => 'Esguerra',
+			'last_name' => 'Navida',
+			'email' => 'satchinavida@gmail.com',
+			'gender' => 'male',
+			'avatar' => 'default-male.png',
+			'user_type_id' => 2,
+			'password' => '$2y$10$ScVSiRvbSqECZrrQIyxM9uSL/14XBTJyo2om0VfTWe1PckC4zxfqC'
 		]);
 	}
 }

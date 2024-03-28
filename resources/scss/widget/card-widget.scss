@@ -1,7 +1,7 @@
 @import "./../bs-modifiers/base";
 
-// ADDS THE NECESSARY SPACING FOR THE FLOATING HEADER
 *:not(hr) {
+	// ADDS THE NECESSARY SPACING FOR THE FLOATING HEADER
 	&:has(+ .card.floating-header) {
 		&:after {
 			content: "";
@@ -19,10 +19,35 @@
 			padding-top: 1.5rem;
 		}
 	}
+
+	// ADDS THE NECESSARY SPACING FOR THE FLOATING FOOTER
+	&.card.floating-footer {
+		& + * {
+			&:before {
+				content: "";
+				position: relative;
+				display: block;
+				padding-top: 1.5rem;
+			}
+		}
+	}
+
+	&:has(> .card.floating-footer) {
+		&:after {
+			content: "";
+			position: relative;
+			display: block;
+			padding-bottom: 1.5rem;
+		}
+	}
 }
 // <hr> HANDLER
 hr:has(+ .card.floating-header) {
 	padding-bottom: 1.5rem;
+}
+
+.card.floating-footer + hr {
+	padding-top: 1.5rem;
 }
 
 // CARD WIDGET
@@ -68,8 +93,60 @@ hr:has(+ .card.floating-header) {
 			}
 		}
 
-		.card-body {
+		& > .card-body {
 			&:before {
+				content: "";
+				position: relative;
+				display: block;
+				padding: 1rem;
+			}
+		}
+	}
+
+	// Floating Footer
+	&.floating-footer {
+		position: relative;
+
+		.card-footer {
+			position: absolute;
+			transform: translate(1rem, 50%);
+			transition: .5s ease;
+			bottom: 0;
+
+			background: color-mix(in srgb, var(--bs-card-bg) 100%, var(--bs-card-cap-bg) 50%);
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			max-width: 90%;
+			overflow: hidden;
+
+			img {
+				height: 1em;
+			}
+
+			@each $breakpoint in map-keys($grid-breakpoints) {
+				@include media-breakpoint-up($breakpoint) {
+					$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+					&.footer#{$infix}-start {
+						left: 0;
+						transform: translate(1rem, 50%);
+					}
+
+					&.footer#{$infix}-center {
+						left: 50%;
+						transform: translate(-50%, 50%);
+					}
+
+					&.footer#{$infix}-end {
+						right: 0;
+						transform: translate(-1rem, 50%);
+					}
+				}
+			}
+		}
+
+		& > .card-body {
+			&:after {
 				content: "";
 				position: relative;
 				display: block;
