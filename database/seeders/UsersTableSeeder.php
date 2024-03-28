@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
 			'gender' => 'male',
 			'avatar' => 'default-male.png',
 			'user_type_id' => 2,
-			'password' => '$2y$10$ScVSiRvbSqECZrrQIyxM9uSL/14XBTJyo2om0VfTWe1PckC4zxfqC'
+			'password' => 'password'
 		]);
 	}
 }
