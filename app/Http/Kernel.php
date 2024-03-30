@@ -77,5 +77,6 @@ class Kernel extends HttpKernel
         // CUSTOM MIDDLEWARES
 		'check.admin' => \App\Http\Middleware\MasterAdminExists::class,
 		'permissions' => \App\Http\Middleware\Permissions::class,
+		'verification' => \App\Http\Middleware\AccountVerified::class,
     ];
 }

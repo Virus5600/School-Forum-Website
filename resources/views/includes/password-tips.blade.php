@@ -1,4 +1,4 @@
-<div class="alert alert-info alert-dismissible w-100 w-md-auto position-absolute top-0 start-50 translate-middle-x start-md-0 translate-md-start m-md-3 ms-md-0 d-flex align-items-center z-3 rounded-end-md-pill fade" role="alert" id="password-tips">
+<div class="alert alert-info alert-dismissible w-100 w-md-auto position-absolute top-0 start-50 translate-middle-x start-md-0 translate-md-start m-md-3 ms-md-0 d-flex align-items-center z-3 rounded-end-md-pill fade" role="alert" id="password-tips" style="left: -100% !important;">
 	<i class="fas fa-info-circle fa-3x me-2 flex-shrink-0"></i>
 
 	<div class="d-flex flex-column fs-2xs">

@@ -166,7 +166,17 @@ class UserFactory extends Factory
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'is_verified' => 0,
         ]);
     }
+
+	/**
+	 * Indicate that the model's email address should be verified.
+	 */
+	public function verified(): static
+	{
+		return $this->state(fn (array $attributes) => [
+			'is_verified' => 1,
+		]);
+	}
 }

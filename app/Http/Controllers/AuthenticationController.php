@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Laravel\Sanctum\Sanctum;
+use Laravel\Sanctum\PersonalAccessToken;
 
 use App\Jobs\AccountNotification;
 
+use App\Models\AccountVerification;
 use App\Models\PasswordReset;
 use App\Models\User;
+use App\Models\UserType;
 
 use DB;
 use Exception;
+use Hash;
+use Image;
 use Log;
 use Validator;
 
@@ -80,14 +84,14 @@ class AuthenticationController extends Controller
 
 			$token = $user->createToken('authenticated');
 			if ($expiration = config('sanctum.expiration')) {
-				$model = Sanctum::$personalAccessTokenModel;
-				$model::where('created_at', '<', now()->subMinutes($expiration))->delete();
+				PersonalAccessToken::where('created_at', '<', now()->subMinutes($expiration))->delete();
 			}
 
 			session(["bearer" => $token->plainTextToken]);
 
 			// Defines what page to redirect to after successful login
 			$intended = $user->userType->slug === "student" ? "home" : "admin.dashboard";
+			$intended = $user->is_verified === 0 ? "verification.index" : $intended;
 			return redirect()
 				->intended(route($intended))
 				->with('flash_success', "Logged In!");
@@ -340,11 +344,227 @@ class AuthenticationController extends Controller
 			User::getValidationMessages()
 		);
 
-		if ($validator->fails() || true) {
+		if ($validator->fails()) {
 			return redirect()
 				->back()
 				->withErrors($validator)
 				->withInput($req->all());
 		}
+
+		$cleanData = (object) $validator->validated();
+
+		try {
+			DB::beginTransaction();
+
+			// FILE HANDLING
+			$defaultAvatar = 'default.png';
+			if ($req->exists('avatar')) {
+				// Convert to WEBP format
+				$avatarName = $cleanData->username . '-avatar-' . time() . '.webp';
+				$avatarPath = public_path('uploads/users/' . $avatarName);
+
+				$avatar = Image::make($cleanData->avatar);
+				$avatar->encode('webp', 75)
+					->save("{$avatarPath}");
+
+				$cleanData->avatar = $avatarName;
+			}
+			else {
+				$cleanData->avatar = $defaultAvatar;
+			}
+
+			// Actual creation of the user
+			$user = User::create([
+				'username' => $cleanData->username,
+				'first_name' => $cleanData->first_name,
+				'middle_name' => $cleanData->middle_name,
+				'last_name' => $cleanData->last_name,
+				'suffix' => $cleanData->suffix,
+				'email' => $cleanData->email,
+				'gender' => $cleanData->gender,
+				'avatar' => $cleanData->avatar,
+				'user_type_id' => UserType::where('slug', '=', 'student')->first()->id,
+				'password' => Hash::make($cleanData->password)
+			]);
+
+			// Account Verification
+			$user->accountVerification()->create([
+				'token' => substr(bin2hex(random_bytes(32)), 0, 16),
+				'expires_at' => now()->addDay()
+			]);
+
+			// MAILER
+			$reqArgs = $validator->validated();
+			$reqArgs['password'] = $cleanData->password;
+			$reqArgs['avatar'] = $cleanData->avatar;
+			$args = [
+				'subject' => 'Account Created',
+				'req' => $reqArgs,
+				'email' => $cleanData->email,
+				'recipients' => [$cleanData->email],
+				'code' => $user->accountVerification->token
+			];
+			AccountNotification::dispatchAfterResponse(
+				user: $user,
+				type: "creation",
+				args: $args,
+				callOnDestruct: true
+			)->onQueue("account_creation");
+
+			// Logger
+			activity('user')
+				->byAnonymous()
+				->on($user)
+				->event('create')
+				->withProperties([
+					'first_name' => $cleanData->first_name,
+					'middle_name' => $cleanData->middle_name,
+					'last_name' => $cleanData->last_name,
+					'suffix' => $cleanData->suffix,
+					'avatar' => $cleanData->avatar,
+					'email' => $cleanData->email,
+					'type_id' => $user->type
+				])
+				->log("User '{$cleanData->email}' created.");
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			Log::error($e);
+
+			return redirect()
+				->back()
+				->withInput()
+				->with('flash_error', 'Something went wrong, please try again later.');
+		}
+
+		return redirect()
+			->route('login')
+			->with('flash_success', 'Account created! Please check your email for verification.');
+	}
+
+	// VERIFICATION
+	protected function verification(Request $req) {
+		return view("authenticated.verification");
+	}
+
+	protected function resendVerification(Request $req) {
+		$validator = Validator::make(
+			["token" => hash('sha256', explode('|', $req->bearer, 2)[1])],
+			['token' => ['required', 'string', 'exists:personal_access_tokens,token']],
+			[
+				'token.required' => 'You must be logged in to resend the verification email.',
+				'token.string' => 'Invalid token.',
+				'token.exists' => 'Invalid token.'
+			]
+		);
+
+		if ($validator->fails()) {
+			return response()->json([
+				"message" => $this->formatErrors($validator),
+				"status" => 400
+			], 400);
+		}
+
+		try {
+			DB::beginTransaction();
+
+			// Fetch the user
+			$user = PersonalAccessToken::where('token', '=', $validator->validated()['token'])
+				->first()
+				->tokenable;
+
+			// Generate a new token
+			$user->accountVerification->generateToken();
+
+			// Send the email
+			$args = [
+				'subject' => 'Account Verification',
+				'recipients' => [$user->email],
+				'email' => $user->email,
+				'code' => $user->accountVerification->token
+			];
+
+			AccountNotification::dispatchAfterResponse($user, "verification", $args)
+				->onQueue("account_verification");
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			Log::error($e);
+
+			return response()->json([
+				"message" => "Something went wrong, please try again later.",
+				"status" => 500
+			], 500);
+		}
+	}
+
+	protected function verify(Request $req) {
+		$validator = Validator::make($req->all(), [
+			'code' => ['required', 'string', 'exists:account_verifications,token']
+		], [
+			'code.required' => 'The verification code is required.',
+			'code.string' => 'Invalid verification code.',
+			'code.exists' => 'Invalid verification code.'
+		]);
+
+		if ($validator->fails()) {
+			return redirect()
+				->back()
+				->withInput()
+				->withErrors($validator);
+		}
+
+		try {
+			DB::beginTransaction();
+
+			$token = $validator->validated()['code'];
+			$verification = AccountVerification::where('token', '=', $token)->first();
+
+			if ($verification->isValid($token)) {
+				$user = $verification->user;
+				$user->is_verified = 1;
+				$user->save();
+
+				$verification->delete();
+
+				activity('user')
+					->byAnonymous()
+					->on($user)
+					->event('update')
+					->withProperties([
+						'first_name' => $user->first_name,
+						'middle_name' => $user->middle_name,
+						'last_name' => $user->last_name,
+						'suffix' => $user->suffix,
+						'avatar' => $user->avatar,
+						'email' => $user->email,
+						'type_id' => $user->type
+					])
+					->log("User '{$user->email}' verified.");
+
+				DB::commit();
+
+				return redirect()
+					->route('home')
+					->with('flash_success', 'Account verified! You can now login.');
+			}
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			Log::error($e);
+
+			return redirect()
+				->back()
+				->withInput()
+				->with('flash_error', 'Something went wrong, please try again later.');
+		}
+
+		return redirect()
+			->back()
+			->withInput()
+			->with('flash_error', 'Invalid verification code.');
 	}
 }

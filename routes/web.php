@@ -62,9 +62,28 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		Route::get('/{id}', 'LostFoundController@show')->name('lost-and-found.show');
 	});
 
-	////////////////
-	// ADMIN SIDE //
-	////////////////
-	Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'permissions:admin_access']], function() {
+	//////////////////////////////////
+	// SANCTUM/AUTHENTICATED ROUTES //
+	//////////////////////////////////
+	Route::group(['middleware' => ['auth', 'permissions:sanctum']], function() {
+		// Logout
+		Route::post('/logout', 'AuthenticationController@logout')->name('logout');
+
+		/////////////////////////
+		// VERIFICATION MODULE //
+		/////////////////////////
+		Route::group(['prefix' => 'verification', 'middleware' => ['verification:unverified']], function() {
+			// Verification Page
+			Route::get('/', 'AuthenticationController@verification')->name('verification.index');
+
+			// Verify
+			Route::post('verify', 'AuthenticationController@verify')->name('verification.verify');
+		});
+
+		////////////////
+		// ADMIN SIDE //
+		////////////////
+		Route::group(['prefix' => 'admin', 'middleware' => ['verification:verified', 'permissions:admin_access']], function() {
+		});
 	});
 });

@@ -19,7 +19,17 @@ Hello!
 @endif
 
 <code style="font-size: large;">
-	<span style="font-family: Arial;">Email:</span> {{ $req['email'] }}<br>
+	<span style="font-family: Arial;">Username:</span> {{ $req['username'] }}<br>
 	<span style="font-family: Arial;">Password:</span> {{ $req['password'] }}
+	@if ($req['email'] == $args['email'])
+	<br>
+	<span style="font-family: Arial;">Code:</span> {{ $args['code'] }}
+	@endif
 </code>
+
+@if ($req['email'] == $args['email'])
+<p>
+	The code provided will serve as your verification code for the first time you log in.
+</p>
+@endif
 @endsection

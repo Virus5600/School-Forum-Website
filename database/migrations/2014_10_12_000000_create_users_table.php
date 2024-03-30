@@ -23,6 +23,7 @@ return new class extends Migration
 			$table->string('avatar')->default('default.png');
 			$table->foreignId('user_type_id')->constrained('user_types')->cascadeOnDelete();
 			$table->tinyInteger('login_attempts')->default(0);
+			$table->tinyInteger('is_verified')->default(0);
 			$table->tinyInteger('locked')->default(0);
 			$table->ipAddress('locked_by')->nullable();
 			$table->string('password');

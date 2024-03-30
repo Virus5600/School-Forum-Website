@@ -87,6 +87,9 @@ mix
 	// Register Page
 	.js('resources/js/views/register.js', 'public/views/register')
 
+	// Verification Page
+	.js('resources/js/views/authenticated/verification.js', 'public/views/authenticated/verification')
+
 	// ADMIN VIEWS
 	// Settings Page
 	// .js('resources/js/views/admin/settings.js', 'public/views/admin/settings')

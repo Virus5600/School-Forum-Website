@@ -78,7 +78,6 @@
 
 		{{-- CUSTOM SCRIPTS --}}
 		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}"></script>
-		<script type="text/javascript" src="{{ mix('js/util/fallback-image.js') }}" defer></script>
 		<script type="text/javascript" src="{{ mix('js/util/swal-flash.js') }}"></script>
 		@stack('scripts')
 	</body>

@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-md fixed-top shadow-lg px-3 bg-it-primary" id="mainNavbar" data-bs-theme="dark">
 	{{-- Branding --}}
 	<a href="{{ route('home') }}" class="navbar-brand m-0 link-body-emphasis">
-		<img src="{{ $webLogo }}" alt="{{ $webName }} Logo" class="m-0 p-1 border border-white rounded-circle bg-it-quaternary" draggable="false">
+		<img src="{{ $webLogo }}" alt="{{ $webName }} Logo" class="m-0" draggable="false">
 		{{ $webName }}
 	</a>
 
@@ -58,23 +58,23 @@
 				<div class="dropdown my-auto">
 					{{-- Dropdown Trigger --}}
 					<a href="#" role="button" class="nav-link dropdown-toggle fs-6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						{!! auth()->user()->getAvatar(false, true, false) !!}
+						{!! auth()->user()->getAvatar(type: 'html', additionalClasses: 'avatar avatar-5 rounded-circle') !!}
 						{{ auth()->user()->getName() }}
 					</a>
 
-					<div class="dropdown-menu dropdown-menu-end text-center text-lg-end">
+					<div class="dropdown-menu dropdown-menu-end text-center text-lg-end text-bg-dark bg-it-primary" style="--bs-dropdown-link-hover-bg: var(--bs-it-secondary)">
 						{{-- DASHBOARD --}}
-						<a href="{{ route('admin.dashboard') }}" class="dropdown-item">Dashboard</a>
+						<a href="@{{ route('admin.dashboard') }}" class="dropdown-item transition-2">Dashboard</a>
 
 						<div class="dropdown-divider"></div>
 
 						{{-- VERSIONS --}}
-						<a href="{{ route('admin.versions.index') }}" class="dropdown-item">Versions</a>
+						<a href="@{{ route('admin.versions.index') }}" class="dropdown-item transition-2">Versions</a>
 
 						<div class="dropdown-divider"></div>
 
 						{{-- LOGOUT --}}
-						<form action="{{ route('logout') }}" method="POST" class="dropdown-item">
+						<form action="{{ route('logout') }}" method="POST" class="dropdown-item transition-2">
 							@csrf
 							<button type="submit" class="remove-button-style w-100 text-center text-lg-end">Logout</button>
 						</form>

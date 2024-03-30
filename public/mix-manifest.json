@@ -7,6 +7,7 @@
     "/views/includes/lock-view/lock-view.js": "/views/includes/lock-view/lock-view.js",
     "/views/login/login.js": "/views/login/login.js",
     "/views/register/register.js": "/views/register/register.js",
+    "/views/authenticated/verification/verification.js": "/views/authenticated/verification/verification.js",
     "/css/app.css": "/css/app.css",
     "/css/util/image-input.css": "/css/util/image-input.css",
     "/css/util/custom-switch.css": "/css/util/custom-switch.css",

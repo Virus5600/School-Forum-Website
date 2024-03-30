@@ -7,10 +7,11 @@ class SwalFlash {
 			throw Error('SwalFlash is a static class and cannot be instantiated');
 	}
 
-	static error(title, msg = undefined, has_icon = undefined, toast = undefined, pos = undefined, has_timer = undefined, duration = undefined) {
+	static error(title, msg = undefined, plain_text = false, has_icon = undefined, toast = undefined, pos = undefined, has_timer = undefined, duration = undefined) {
 		SwalFlash.#sendEvent(`flash_error`, {
 			flash_error: title,
 			message: msg,
+			plain_text: plain_text,
 			has_icon: has_icon,
 			is_toast: toast,
 			position: pos,
@@ -19,10 +20,11 @@ class SwalFlash {
 		});
 	}
 
-	static info(title, msg = undefined, has_icon = undefined, toast = undefined, pos = undefined, has_timer = undefined, duration = undefined) {
+	static info(title, msg = undefined, plain_text = false, has_icon = undefined, toast = undefined, pos = undefined, has_timer = undefined, duration = undefined) {
 		SwalFlash.#sendEvent(`flash_info`, {
 			flash_info: title,
 			message: msg,
+			plain_text: plain_text,
 			has_icon: has_icon,
 			is_toast: toast,
 			position: pos,
@@ -31,10 +33,11 @@ class SwalFlash {
 		});
 	}
 
-	static success(title, msg = undefined, has_icon = undefined, toast = undefined, pos = undefined, has_timer = undefined, duration = undefined) {
+	static success(title, msg = undefined, plain_text = false, has_icon = undefined, toast = undefined, pos = undefined, has_timer = undefined, duration = undefined) {
 		SwalFlash.#sendEvent(`flash_success`, {
 			flash_success: title,
 			message: msg,
+			plain_text: plain_text,
 			has_icon: has_icon,
 			is_toast: toast,
 			position: pos,
@@ -61,7 +64,7 @@ window.addEventListener('flash_error', (e) => {
 		background: `#dc3545`,
 		customClass: {
 			title: `text-white text-center`,
-			content: `text-white text-center`,
+			htmlContainer: `text-white text-center`,
 			popup: `px-3`
 		},
 	}
@@ -80,7 +83,7 @@ window.addEventListener('flash_info', (e) => {
 		background: `#17a2b8`,
 		customClass: {
 			title: `text-white text-center`,
-			content: `text-white text-center`,
+			htmlContainer: `text-white text-center`,
 			popup: `px-3`
 		},
 	}
@@ -99,7 +102,7 @@ window.addEventListener('flash_success', (e) => {
 		background: `#28a745`,
 		customClass: {
 			title: `text-white text-center`,
-			content: `text-white text-center`,
+			htmlContainer: `text-white text-center`,
 			popup: `px-3`
 		},
 	}
@@ -108,14 +111,18 @@ window.addEventListener('flash_success', (e) => {
 });
 
 const __setSwalFlashOptions = (options, flash, type) => {
+	let plainText = false;
+	if (flash.plain_text != undefined)
+		plainText = flash.plain_text == true ? true : false;
+
 	if (flash.has_icon != undefined)
 		options["icon"] = `${type}`;
 
 	if (flash.message != undefined)
-		options["html"] = `${flash.message}`;
+		options[plainText ? "text" : "html"] = `${flash.message}`;
 
 	if (flash.position != undefined)
-	 	options["position"] = flash.position;
+		options["position"] = flash.position;
 
 	if (flash.is_toast != undefined)
 		options["toast"] = flash.is_toast;

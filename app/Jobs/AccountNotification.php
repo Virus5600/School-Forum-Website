@@ -78,7 +78,7 @@ class AccountNotification implements ShouldQueue, ShouldBeEncrypted
 
 	public function __destruct() {
 		if ($this->callOnDestruct) {
-			Log::info("[AccountNotification] Running Queue");
+			Log::info("[AccountNotification] Running Queue ({$this->queue})");
 
 			$queueArgs = [
 				'--stop-when-empty' => true,

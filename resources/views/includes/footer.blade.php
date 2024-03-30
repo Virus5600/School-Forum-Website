@@ -24,7 +24,7 @@
 				<a href="{{ route('home') }}" class="ms-md-auto w-100 w-md-50 w-lg-25 text-decoration-none" aria-label="Defensive Measures Guide">
 					<div class="d-flex-flex-row align-items-end">
 						<div class="d-flex flex-column align-items-center">
-							<img src="{{ $webLogo }}" alt="{{ $webName }}" class="p-2 img img-fluid border rounded-circle bg-it-quaternary w-25 w-md-50 w-lg-100">
+							<img src="{{ $webLogo }}" alt="{{ $webName }}" class="img img-fluid w-25 w-md-50 w-lg-100">
 							<h4 class="link-body-emphasis">{{ $webName }}</h4>
 						</div>
 					</div>

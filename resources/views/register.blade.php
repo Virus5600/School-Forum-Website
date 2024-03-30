@@ -17,34 +17,50 @@
 					<h2 class="card-title">Avatar</h2>
 
 					{{-- IMAGE INPUT --}}
-					<div class="image-input-scope" id="avatar-scope" data-settings="#image-input-settings" data-fallback-img="{{ asset('uploads/users/default-male.png') }}">
+					<div class="image-input-scope drag-drop rounded" id="avatar-scope" data-settings="#image-input-settings" data-fallback-img="{{ asset('uploads/users/default-male.png') }}">
 						{{-- FILE IMAGE --}}
 						<div class="form-group text-center image-input collapse show avatar_holder" id="avatar-image-input-wrapper">
 							<div class="h-100 row py-2 mx-1">
-								<div class="col-12 col-lg-8 justify-content-start">
+								<div class="col-12 col-lg-8 form-control justify-content-start position-relative w-auto bg-transparent {{ $errors->count() > 0 ? ($errors->has('avatar') ? 'is-invalid' : 'is-valid') : '' }}">
 									<label class="form-label font-weight-bold sr-only" for="avatar">User Image</label>
 
+									{{-- HOVER CAM --}}
 									<div class="hover-cam mx-auto input-avatar rounded-circle overflow-hidden border border-lg-0" style="--input-avatar-size: 15rem;">
-										<img src="{{ asset('uploads/users/default-male.png') }}" class="hover-zoom img-fluid input-avatar" id="avatar-file-container" alt="User Avatar" data-default-src="{{ asset('uploads/users/default-male.png') }}" style="--input-avatar-size: 15rem;">
+										<img src="{{ asset('uploads/users/default-male.png') }}" class="hover-zoom img-fluid input-avatar" id="avatar-file-container" alt="User Avatar" data-default-src="{{ asset('uploads/users/default-male.png') }}">
 										<span class="icon text-center image-input-float" id="avatar" tabindex="0">
 											<i class="fas fa-camera text-white hover-icon-2x" tabindex="-1"></i>
 										</span>
+
+										{{-- DRAG-DROP OVERLAY --}}
+										<div class="drag-drop-overlay animated rounded-circle overflow-hidden border-0">
+											<i class="fas fa-upload 2x text-white"></i>
+										</div>
 									</div>
 
+
+									{{-- ACTUAL INPUTS --}}
 									<input type="file" tabindex="-1" name="avatar" class="d-none sr-only" accept=".jpg,.jpeg,.png,.webp" data-target-image-container="#avatar-file-container" data-target-name-container="#avatar-name" >
 									<h6 id="avatar-name" class="text-truncate w-50 mx-auto text-center" data-default-name="default.png">default.png</h6>
 								</div>
 
 								<div class="col-12 col-lg-4 text-lg-start text-gray-200 vstack gap-3 justify-content-center align-items-center">
+									<hr class="d-block d-lg-none w-100 border-3 opacity-75">
+
+									<small class="p text-center">
+										<b>INSTRUCTIONS:</b>
+										<br>Click the camera icon to upload an image.
+									</small>
+
 									<small class="pb-0 mb-0">
 										<b>ALLOWED FORMATS:</b>
 										<br>JPEG, JPG, PNG, WEBP
 									</small>
-									<small class="pt-0 mt-0"><b>MAX SIZE:</b> 5MB</small><br>
+									<small class="pt-0 mt-0"><b>MAX SIZE:</b> 5MB</small>
+									<button type="button" class="btn btn-it-primary btn-sm image-input-reset" data-target-image-container="#avatar-file-container" data-target-name-container="#avatar-name">Remove Image</button>
 
 									{{-- AVATAR ERROR --}}
 									@error('avatar')
-									<span class="small badge text-bg-danger">{{ $message }}</span>
+									<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
 									@enderror
 								</div>
 							</div>
@@ -76,38 +92,54 @@
 
 					<div class="row">
 						{{-- FIRST NAME --}}
-						<div class="col-12 col-lg-4">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="first_name" class="form-label required-after">First Name</label>
 
-								<input type="text" class="form-control py-1" name="first_name" id="first_name" required>
+								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('first_name') ? 'is-invalid' : 'is-valid') : '' }}" name="first_name" id="first_name" value="{{ old('first_name') }}" required>
+
+								@error('first_name')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 
 						{{-- MIDDLE NAME --}}
-						<div class="col-12 col-lg-3">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="middle_name" class="form-label">Middle Name</label>
 
-								<input type="text" class="form-control py-1" name="middle_name" id="middle_name">
+								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('middle_name') ? 'is-invalid' : 'is-valid') : '' }}" name="middle_name" id="middle_name" value="{{ old('middle_name') }}">
+
+								@error('middle_name')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 
 						{{-- LAST NAME --}}
-						<div class="col-12 col-lg-3">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="last_name" class="form-label required-after">Last Name</label>
 
-								<input type="text" class="form-control py-1" name="last_name" id="last_name" required>
+								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('last_name') ? 'is-invalid' : 'is-valid') : '' }}" name="last_name" id="last_name" value="{{ old('last_name') }}" required>
+
+								@error('last_name')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 
 						{{-- SUFFIX --}}
-						<div class="col-12 col-lg-2">
+						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="suffix" class="form-label">Suffix</label>
 
-								<input type="text" class="form-control py-1" name="suffix" id="suffix">
+								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('suffix') ? 'is-invalid' : 'is-valid') : '' }}" name="suffix" id="suffix" value="{{ old('suffix') }}">
+
+								@error('suffix')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 
@@ -116,14 +148,18 @@
 							<div class="form-group">
 								<label for="gender" class="form-label required-after">Gender</label>
 
-								<select class="form-select py-1" name="gender" id="gender" required>
+								<select class="form-select py-1 {{ $errors->count() > 0 ? ($errors->has('gender') ? 'is-invalid' : 'is-valid') : '' }}" name="gender" id="gender" pattern="male|female|others" required>
 									@if (!old('gender'))
-									<option class="d-none">Select Gender</option>
+									<option class="d-none" value>Select Gender</option>
 									@endif
 									<option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
 									<option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
 									<option value="others" {{ old('gender') === 'others' ? 'selected' : '' }}>Others</option>
 								</select>
+
+								@error('gender')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 					</div>
@@ -157,7 +193,11 @@
 							<div class="form-group">
 								<label for="username" class="form-label required-after">Username</label>
 
-								<input type="text" class="form-control py-1" name="username" id="username" required>
+								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('username') ? 'is-invalid' : 'is-valid') : '' }}" name="username" id="username" value="{{ old('username') }}" required>
+
+								@error('username')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 
@@ -166,7 +206,11 @@
 							<div class="form-group">
 								<label for="email" class="form-label required-after">Email</label>
 
-								<input type="email" class="form-control py-1" name="email" id="email" required>
+								<input type="email" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('email') ? 'is-invalid' : 'is-valid') : '' }}" name="email" id="email" value="{{ old('email') }}" required>
+
+								@error('email')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 
@@ -176,12 +220,16 @@
 								<label for="password" class="form-label required-after">Password</label>
 
 								<div class="input-group">
-									<input id="password" type="password" name="password" class="form-control bg-light border-end-0 border-style-none" required>
-									<button type="button" class="btn btn-light border-start-0 border-style-none" id="toggle-show-password" aria-label="Show Password" data-target="#password">
+									<input id="password" type="password" name="password" class="form-control bg-light border-style-solid" required>
+									<button type="button" class="btn btn-light border border-start-0 border-style-solid border-dark-subtle toggle-show-password" aria-label="Show Password" data-target="#password">
 										<i id="show" class="fas fa-eye d-none text-dark" title="Show"></i>
 										<i id="hide" class="fas fa-eye-slash text-dark" title="Hide"></i>
 									</button>
 								</div>
+
+								@error('password')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 
@@ -191,12 +239,16 @@
 								<label for="password_confirmation" class="form-label required-after">Confirm Password</label>
 
 								<div class="input-group">
-									<input id="password_confirmation" type="password" name="password_confirmation" class="form-control bg-light border-end-0 border-style-none" required>
-									<button type="button" class="btn btn-light border-start-0 border-style-none" id="toggle-show-password" aria-label="Show Password" data-target="#password_confirmation">
+									<input id="password_confirmation" type="password" name="password_confirmation" class="form-control bg-light border-style-solid" required>
+									<button type="button" class="btn btn-light border border-start-0 border-style-solid border-dark-subtle toggle-show-password" aria-label="Show Password" data-target="#password_confirmation">
 										<i id="show" class="fas fa-eye d-none text-dark" title="Show"></i>
 										<i id="hide" class="fas fa-eye-slash text-dark" title="Hide"></i>
 									</button>
 								</div>
+
+								@error('password_confirmation')
+								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
+								@enderror
 							</div>
 						</div>
 					</div>
@@ -226,6 +278,14 @@
 
 @push('scripts')
 	@include('includes.password-tips')
+
+	{{-- Re-add image in image-inputs --}}
+	@if ($errors->count() > 0 || session()->has('error'))
+	<script type="text/javascript" nonce="{{ csp_nonce() }}" data-ii-to-remove>
+		window.imageInputError = true;
+	</script>
+	@endif
+
 	<script type="text/javascript" src="{{ mix('views/login/login.js') }}" nonce="{{ csp_nonce() }}"></script>
 	<script type="text/javascript" src="{{ mix('js/util/image-input.js') }}" nonce="{{ csp_nonce() }}"></script>
 	<script type="text/javascript" src="{{ mix('js/util/swal-flash.js')  }}" nonce="{{ csp_nonce() }}"></script>

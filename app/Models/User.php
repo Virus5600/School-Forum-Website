@@ -29,6 +29,7 @@ class User extends Authenticatable
 		'avatar',
 		'user_type_id',
 		'login_attempts',
+		'is_verified',
 		'locked',
 		'locked_by',
 		'password',
@@ -60,6 +61,7 @@ class User extends Authenticatable
 	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }
 	public function userPerms() { return $this->belongsToMany('App\Models\Permission', 'user_permissions'); }
 	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
+	public function accountVerification() { return $this->hasOne('App\Models\AccountVerification'); }
 
     // Custom Functions
 	public function permissions() {
@@ -133,14 +135,14 @@ class User extends Authenticatable
 		if (in_array($type, ["html", "url", "filename"]) === false)
 			throw new Exception("Invalid parameter value for \"\$type\": {$type}\nOnly allowed values are: html, url, filename.");
 
-		$file = $this->filename;
+		$file = $this->avatar;
 		if ($useDefault)
 			$file = 'default.png';
 
 		switch ($type) {
 			case "html":
-				$caption = $this->caption ?? $this->filename;
-				return "<img src=\"" . asset("/uploads/users/{$this->filename}") . "\" class=\"mx-auto {$additionalClasses}\" alt=\"{$caption}\">";
+				$caption = $this->caption ?? $this->avatar;
+				return "<img src=\"" . asset("/uploads/users/{$this->avatar}") . "\" class=\"mx-auto {$additionalClasses}\" alt=\"{$caption}\">";
 
 			case "url":
 				return asset("/uploads/users/{$file}");
@@ -188,11 +190,11 @@ class User extends Authenticatable
 	public static function getValidationRules(...$fields): array
 	{
 		$rules = [
-			'avatar' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:32768'],
+			'avatar' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:32768', 'nullable'],
 			'first_name' => ['required', 'string'],
-			'middle_name' => ['string'],
+			'middle_name' => ['string', 'nullable'],
 			'last_name' => ['required', 'string'],
-			'suffix' => ['string', 'max:50'],
+			'suffix' => ['string', 'max:50', 'nullable'],
 			'gender' => ['required', 'string', Rule::in(['male', 'female', 'others'])],
 			'username' => ['required', 'unique:users,username', 'string'],
 			'email' => ['required', 'unique:users,email', 'email'],

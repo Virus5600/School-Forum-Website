@@ -1,5 +1,7 @@
 $(() => {
 	$(`input[type='password']`).one(`focus`, () => {
-		$(`#password-tips`).addClass('show');
+		$(`#password-tips`)
+			.css('left', '')
+			.addClass('show');
 	});
 });

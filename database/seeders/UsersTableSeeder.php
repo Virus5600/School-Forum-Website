@@ -24,6 +24,7 @@ class UsersTableSeeder extends Seeder
 			'avatar' => 'master-admin.png',
 			'user_type_id' => config('master-admin.user_type_id'),
 			'password' => config('master-admin.password'),
+			'is_verified' => 1,
 		]);
 
 		// Admin User (Dev)
@@ -36,7 +37,8 @@ class UsersTableSeeder extends Seeder
 			'gender' => 'male',
 			'avatar' => 'default-male.png',
 			'user_type_id' => 2,
-			'password' => 'password'
+			'password' => 'password',
+			'is_verified' => 1,
 		]);
 	}
 }
