@@ -13,7 +13,11 @@ function confirmLeave(urlTo, title = "Are you sure?", message = "You might have 
 		html: `<h4>${title}</h4><p>${message}</p>`,
 		showDenyButton: true,
 		confirmButtonText: 'Yes',
-		denyButtonText: 'No'
+		denyButtonText: 'No',
+		customClass: {
+			confirmButton: 'override-style btn btn-danger',
+			denyButton: 'override-style btn btn-secondary',
+		},
 	}).then((result) => {
 		if (result.isConfirmed) {
 			window.location.href = urlTo;
@@ -40,7 +44,11 @@ async function confirmLeaveApi(title = "Are you sure?", message = "You might hav
 		html: `<h4>${title}</h4><p>${message}</p>`,
 		showDenyButton: true,
 		confirmButtonText: 'Yes',
-		denyButtonText: 'No'
+		denyButtonText: 'No',
+		customClass: {
+			confirmButton: 'override-style btn btn-danger',
+			denyButton: 'override-style btn btn-secondary',
+		},
 	}).then((result) => {
 		return result;
 	});
@@ -54,6 +62,18 @@ document.addEventListener('DOMContentLoaded', function () {
 			e.stopPropagation();
 
 			confirmFormSubmit(form, form.dataset.clFormTitle, form.dataset.clFormMessage);
+		});
+	});
+}, {once: true});
+
+// Automatically add event listeners to all items with the data-cl-leave attribute.
+document.addEventListener('DOMContentLoaded', function () {
+	document.querySelectorAll(`[data-cl-leave]`).forEach((item) => {
+		item.addEventListener('click', (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+
+			confirmLeave(item.dataset.clLeaveHref, item.dataset.clLeaveTitle, item.dataset.clLeaveMessage);
 		});
 	});
 }, {once: true});

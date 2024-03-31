@@ -361,11 +361,11 @@ class AuthenticationController extends Controller
 			if ($req->exists('avatar')) {
 				// Convert to WEBP format
 				$avatarName = $cleanData->username . '-avatar-' . time() . '.webp';
-				$avatarPath = public_path('uploads/users/' . $avatarName);
-
-				$avatar = Image::make($cleanData->avatar);
-				$avatar->encode('webp', 75)
-					->save("{$avatarPath}");
+				$this->convertToWEBP(
+					$avatarName,
+					$cleanData->avatar,
+					'uploads/users'
+				);
 
 				$cleanData->avatar = $avatarName;
 			}

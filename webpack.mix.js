@@ -71,8 +71,8 @@ mix
 	.sass('resources/scss/views/layouts/auth.scss', 'public/views/layouts/auth')
 
 	// Admin Layout
-	// .js('resources/js/views/layouts/admin.js', 'public/views/layouts/admin')
-	// .sass('resources/scss/views/layouts/admin.scss', 'public/views/layouts/admin')
+	.js('resources/js/views/layouts/admin.js', 'public/views/layouts/admin')
+	.sass('resources/scss/views/layouts/admin.scss', 'public/views/layouts/admin')
 
 	// INCLUDES
 	// Lock View
@@ -91,6 +91,10 @@ mix
 	.js('resources/js/views/authenticated/verification.js', 'public/views/authenticated/verification')
 
 	// ADMIN VIEWS
+	// Lost and Found Page
+	// - Create
+	.js('resources/js/views/authenticated/admin/lost-and-found/create.js', 'public/views/authenticated/admin/lost-and-found')
+
 	// Settings Page
 	// .js('resources/js/views/admin/settings.js', 'public/views/admin/settings')
 

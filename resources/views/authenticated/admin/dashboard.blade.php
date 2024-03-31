@@ -1,6 +1,6 @@
-@extends('layouts.public')
+@extends('layouts.admin')
 
-@section('title', 'Home')
+@section('title', 'Dashboard')
 
 @section('content')
 @endsection

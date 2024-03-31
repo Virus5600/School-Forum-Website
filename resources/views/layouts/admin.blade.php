@@ -7,9 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="Content-Language" content="en-US" />
 
-		{{-- CUSTOM META --}}
-		@yield('meta')
-
 		{{-- SITE META --}}
 		<meta name="type" content="website">
 		<meta name="title" content="{{ $webName }}">
@@ -17,6 +14,7 @@
 		<meta name="image" content="{{ asset('uploads/settings/meta-banner.png') }}">
 		<meta name="keywords" content="{{ env('APP_KEYW') }}">
 		<meta name="application-name" content="{{ $webName }}">
+		@stack('meta')
 
 		{{-- TWITTER META --}}
 		<meta name="twitter:card" content="summary_large_image">
@@ -53,7 +51,7 @@
 		<title>{{ $webName }} | @yield('title')</title>
 	</head>
 
-	<body class="custom-scrollbar apply-to-all">
+	<body class="custom-scrollbar apply-to-all bg-light">
 		{{-- NOSCRIPT --}}
 		@include('includes.noscript')
 
@@ -71,7 +69,7 @@
 						@include('includes.admin.sidebar')
 
 						{{-- CONTENT --}}
-						<div class="container-fluid content flex-fill m-0 pt-2 pb-5 min-h-100">
+						<div class="container-fluid content flex-fill m-0 pt-2 pb-5 min-h-100 bg-it-quaternary">
 							@yield('content')
 						</div>
 					</div>
@@ -84,13 +82,8 @@
 		{{-- COMMON LIBS --}}
 		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}"></script>
 		<script type="text/javascript" src="{{ mix('js/util/confirm-leave.js') }}" defer></script>
-		<script type="text/javascript" src="{{ mix('js/util/dirty-form.js') }}" defer></script>
-		<script type="text/javascript" src="{{ mix('js/util/disable-on-submit.js') }}" defer></script>
-		<script type="text/javascript" src="{{ mix('js/util/fallback-image.js') }}" defer></script>
-		<script type="text/javascript" src="{{ mix('js/util/swal-flash.js') }}"></script>
-		<script type="text/javascript" src="{{ mix('js/util/text-counter.js') }}" defer></script>
 
 		<script type="text/javascript" src="{{ mix('views/layouts/admin/admin.js') }}"></script>
-		@yield('scripts')
+		@stack('scripts')
 	</body>
 </html>

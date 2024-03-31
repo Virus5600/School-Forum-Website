@@ -23,6 +23,17 @@
 				@endif
 			</li>
 
+			{{-- DISCUSSION --}}
+			<li class="nav-item">
+				@if (\Request::is('discussions'))
+				<span class="nav-link active">Discussions</span>
+				@elseif (\Request::is('discussions*'))
+				<a href="{{ route('discussions.index') }}" class="nav-link active">Discussions</a>
+				@else
+				<a href="{{ route('discussions.index') }}" class="nav-link">Discussions</a>
+				@endif
+			</li>
+
 			{{-- ANNOUNCEMENTS --}}
 			<li class="nav-item">
 				@if (\Request::is('announcements'))
@@ -64,12 +75,7 @@
 
 					<div class="dropdown-menu dropdown-menu-end text-center text-lg-end text-bg-dark bg-it-primary" style="--bs-dropdown-link-hover-bg: var(--bs-it-secondary)">
 						{{-- DASHBOARD --}}
-						<a href="@{{ route('admin.dashboard') }}" class="dropdown-item transition-2">Dashboard</a>
-
-						<div class="dropdown-divider"></div>
-
-						{{-- VERSIONS --}}
-						<a href="@{{ route('admin.versions.index') }}" class="dropdown-item transition-2">Versions</a>
+						<a href="{{ route('admin.dashboard') }}" class="dropdown-item transition-2">Dashboard</a>
 
 						<div class="dropdown-divider"></div>
 

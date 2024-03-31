@@ -14,9 +14,7 @@
 			<label for="code" class="form-label">Verification Code</label>
 			<input type="text" id="code" name="code" class="form-control required-after" value="{{ old('code') }}" required>
 
-			@error('code')
-			<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-			@enderror
+			<x-forms.validation-error field="code"/>
 		</div>
 	</div>
 

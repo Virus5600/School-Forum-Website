@@ -18,9 +18,6 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	// GUEST SIDE //
 	////////////////
 
-	// TEST
-	Route::get('/test', fn() => view('layouts.emails.account.locked'))->name('test');
-
 	// Home Page
 	Route::get('/', 'PageController@index')->name('home');
 
@@ -42,6 +39,12 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		// Register
 		Route::get('/register', 'AuthenticationController@register')->name('register');
 		Route::post('/register', 'AuthenticationController@store')->name('register.store');
+	});
+
+	// Discussions
+	Route::group(['prefix' => 'discussions'], function() {
+		// Index
+		// Route::get('/', )->name('discussions.index');
 	});
 
 	// Announcements
@@ -84,6 +87,39 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		// ADMIN SIDE //
 		////////////////
 		Route::group(['prefix' => 'admin', 'middleware' => ['verification:verified', 'permissions:admin_access']], function() {
+			// Dashboard
+			Route::get('/', 'PageController@dashboard')->name('admin.dashboard');
+
+			// Lost and Found
+			Route::group(['prefix' => 'lost-and-found', 'middleware' => ['permissions:lost_and_found_tab_access']], function() {
+				// Index
+				Route::get('/', 'LostFoundController@adminIndex')->name('admin.lost-and-found.index');
+
+				// Create
+				Route::group(['prefix' => 'create'], function() {
+					// Index
+					Route::get('/', 'LostFoundController@adminCreate')->name('admin.lost-and-found.create');
+
+					// Store
+					Route::post('/store', 'LostFoundController@adminStore')->name('admin.lost-and-found.store');
+				});
+
+				// ITEM RELATED //
+				Route::group(['prefix' => '{id}'], function() {
+					// Show
+					Route::get('/', 'LostFoundController@adminShow')->name('admin.lost-and-found.show');
+
+					// Edit
+					Route::get('/edit', 'LostFoundController@adminEdit')->name('admin.lost-and-found.edit');
+
+					// Update
+					Route::put('/update', 'LostFoundController@adminUpdate')->name('admin.lost-and-found.update');
+
+					// Delete
+					Route::delete('/delete', 'LostFoundController@adminDestroy')->name('admin.lost-and-found.destroy');
+				});
+
+			});
 		});
 	});
 });

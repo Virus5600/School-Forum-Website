@@ -50,18 +50,18 @@ class User extends Authenticatable
 		'last_auth' => 'datetime',
 	];
 
-    // protected $with = [
-	// 	'userType.permissions',
-	// 	'userPerm'
-	// ];
+    protected $with = [
+		'userType.permissions',
+		'userPerm'
+	];
 
     // Relationships
-	public function userType() { return $this->belongsTo('App\Models\UserType'); }
+	public function accountVerification() { return $this->hasOne('App\Models\AccountVerification'); }
+	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
 	protected function passwordReset() { return $this->belongsTo('App\Models\PasswordReset'); }
+	public function userType() { return $this->belongsTo('App\Models\UserType'); }
 	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }
 	public function userPerms() { return $this->belongsToMany('App\Models\Permission', 'user_permissions'); }
-	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
-	public function accountVerification() { return $this->hasOne('App\Models\AccountVerification'); }
 
     // Custom Functions
 	public function permissions() {
@@ -183,14 +183,14 @@ class User extends Authenticatable
 	 * Get the validation rules for the specified fields. If no fields are specified,
 	 * all fields will be returned.
 	 *
-	 * @param array $fields The fields to get the validation rules for. If not specified, all fields will be returned.
+	 * @param string $fields The fields to get the validation rules for. If not specified, all fields will be returned.
 	 *
 	 * @return array The validation rules for the specified fields.
 	 */
 	public static function getValidationRules(...$fields): array
 	{
 		$rules = [
-			'avatar' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:32768', 'nullable'],
+			'avatar' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:5120', 'nullable'],
 			'first_name' => ['required', 'string'],
 			'middle_name' => ['string', 'nullable'],
 			'last_name' => ['required', 'string'],
@@ -223,7 +223,7 @@ class User extends Authenticatable
 		return [
 			'avatar.image' => 'Avatar must be an image',
 			'avatar.mimes' => 'Avatar must be a file of type: jpg, jpeg, png, webp',
-			'avatar.max' => 'Avatar must not exceed 32MB',
+			'avatar.max' => 'Avatar must not exceed 5MB',
 			'first_name.required' => 'First name is required',
 			'first_name.string' => 'First name must be a string',
 			'middle_name.string' => 'Middle name must be a string',

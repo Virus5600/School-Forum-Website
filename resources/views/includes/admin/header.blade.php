@@ -1,8 +1,8 @@
 {{-- Navigation Bar (TOP) --}}
-<nav class="navbar navbar-expand-lg shadow-lg px-3 bg-body-tertiary font-minecraftia" style="z-index: 1000;">
+<nav class="navbar navbar-expand-lg shadow-lg px-3 text-bg-dark bg-it-primary font-minecraftia" style="z-index: 1000;" data-bs-theme="dark">
 	<div class="container-fluid">
 		{{-- Branding --}}
-		<a href="{{ route('admin.dashboard') }}" class="navbar-brand mx-auto mx-lg-0 py-0 h-auto d-none d-lg-block">
+		<a href="{{ route('admin.dashboard') }}" class="navbar-brand mx-auto mx-lg-0 py-0 h-auto d-none d-lg-block text-light">
 			<img src="{{ $webLogo }}" alt="Defensive Measures Icon" style="max-height: 3.25rem;" class="m-0 p-0 me-2">
 			{{ $webName }}
 		</a>
@@ -14,13 +14,15 @@
 					<div class="dropdown my-auto">
 						{{-- Dropdown Trigger --}}
 						<a href="#" role="button" class="nav-link dropdown-toggle fs-6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{!! auth()->user()->getAvatar(false, true, false) !!}
+							{!! auth()->user()->getAvatar(type: 'html', additionalClasses: 'avatar avatar-5 rounded-circle me-2') !!}
 							{{ auth()->user()->getName() }}
 						</a>
 
-						<div class="dropdown-menu dropdown-menu-end text-end" style="z-index: 1001;">
+						<div class="dropdown-menu dropdown-menu-end bg-it-primary text-end" style="z-index: 1001;" data-bs-theme="dark">
 							<a href="{{ route('home') }}" class="dropdown-item">View Home Page</a>
+
 							<div class="dropdown-divider"></div>
+
 							<form action="{{ route('logout') }}" method="POST" class="dropdown-item">
 								@csrf
 								<button type="submit" class="remove-button-style w-100 text-end">Logout</button>

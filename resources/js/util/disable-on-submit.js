@@ -1,8 +1,8 @@
 $(() => {
 	// Change submit to either "Updating" or "Submitting" after click
-	$(document).on('click', 'form:not([data-dos-not-affected]) [type=submit], form:not([data-dos-not-affected]) [data-action]', (e) => {
+	$(document).on('click', 'form:not([data-dos-not-affected]) [type=submit], form:not([data-dos-not-affected]) [data-dos-action]', (e) => {
 		let btn = $(e.currentTarget);
-		let action = btn.attr('data-action');
+		let action = btn.attr('data-dos-action');
 		let parentForm = btn.closest("form");
 
 		// Checks if there's a 'needs-validation' class

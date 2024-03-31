@@ -20,7 +20,7 @@ class LostFoundFactory extends Factory
 
         return [
 			"status" => $hasFounder ? "found" : "lost",
-			"owner_name" => $hasFounder ? null : fake()->name(),
+			"owner_name" => $hasFounder ? fake()->name() : null,
 			"founder_name" => rand(0, 1) === 0 ? "Anonymous User" : fake()->name(),
 			"item_found" => fake()->word(),
 			"item_image" => "default.png",

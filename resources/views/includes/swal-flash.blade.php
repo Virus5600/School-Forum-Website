@@ -11,7 +11,7 @@
 		background: `#dc3545`,
 		customClass: {
 			title: `text-white text-center`,
-			content: `text-white text-center`,
+			htmlContainer: `text-white text-center`,
 			popup: `px-3`
 		},
 	});
@@ -27,7 +27,7 @@
 		background: `#17a2b8`,
 		customClass: {
 			title: `text-white text-center`,
-			content: `text-white text-center`,
+			htmlContainer: `text-white text-center`,
 			popup: `px-3`
 		},
 	});
@@ -43,7 +43,7 @@
 		background: `#28a745`,
 		customClass: {
 			title: `text-white text-center`,
-			content: `text-white text-center`,
+			htmlContainer: `text-white text-center`,
 			popup: `px-3`
 		},
 	});

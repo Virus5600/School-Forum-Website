@@ -9,3 +9,11 @@
 		padding-bottom: .25rem;
 	}
 }
+
+button.swal2-styled {
+	&.override-style {
+		color: var(--bs-btn-color);
+		background-color: var(--bs-btn-bg);
+		border-color: var(--bs-btn-border);
+	}
+}

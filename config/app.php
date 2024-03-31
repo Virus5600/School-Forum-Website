@@ -160,6 +160,7 @@ return [
          * Package Service Providers...
          */
 		Intervention\Image\ImageServiceProvider::class,
+		Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
 
         /*
          * Application Service Providers...

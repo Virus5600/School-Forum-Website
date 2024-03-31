@@ -31,7 +31,7 @@ class PageController extends Controller
 	////////////////
 	// ADMIN SIDE //
 	////////////////
-	// protected function dashboard(Request $req) {
-	// 	return view("admin.dashboard");
-	// }
+	protected function dashboard(Request $req) {
+		return view("authenticated.admin.dashboard");
+	}
 }

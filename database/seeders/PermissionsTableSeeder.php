@@ -19,6 +19,48 @@ class PermissionsTableSeeder extends Seeder
 			'slug' => 'admin_access'
 		]);
 
+		// LOST AND FOUND
+		$lostFoundPerm = Permission::create([
+			'name' => 'Lost and Found Tab Access',
+			'slug' => 'lost_and_found_tab_access'
+		]);
+
+		Permission::create([
+			'parent_permission' => $lostFoundPerm->id,
+			'name' => 'Lost and Found Tab Create',
+			'slug' => 'lost_and_found_tab_create'
+		]);
+
+		Permission::create([
+			'parent_permission' => $lostFoundPerm->id,
+			'name' => 'Lost and Found Tab Edit',
+			'slug' => 'lost_and_found_tab_edit'
+		]);
+
+		Permission::create([
+			'parent_permission' => $lostFoundPerm->id,
+			'name' => 'Lost and Found Tab Status',
+			'slug' => 'lost_and_found_tab_status'
+		]);
+
+		Permission::create([
+			'parent_permission' => $lostFoundPerm->id,
+			'name' => 'Lost and Found Tab Archive',
+			'slug' => 'lost_and_found_tab_archive'
+		]);
+
+		Permission::create([
+			'parent_permission' => $lostFoundPerm->id,
+			'name' => 'Lost and Found Tab Unarchive',
+			'slug' => 'lost_and_found_tab_unarchive'
+		]);
+
+		Permission::create([
+			'parent_permission' => $lostFoundPerm->id,
+			'name' => 'Lost and Found Tab Delete',
+			'slug' => 'lost_and_found_tab_delete'
+		]);
+
 		// SETTINGS
 		$settingsPerm = Permission::create([
 			'name' => 'Settings Tab Access',

@@ -1,3 +1,10 @@
+@import "../bs-modifiers/base";
+@import "../bs-modifiers/theme-colors";
+
+:root {
+	--required-color: white;
+}
+
 .remove-button-style {
 	color: inherit;
 	border: none;
@@ -77,14 +84,12 @@ textarea {
 	}
 }
 
-$requiredColor: white;
-
 .required-after,
 .required-end {
 	&:after {
 		margin-left: .25rem;
 		content: "*";
-		color: $requiredColor;
+		color: var(--required-color);
 	}
 }
 
@@ -94,6 +99,29 @@ $requiredColor: white;
 	&:before {
 		margin-right: .25rem;
 		content: "*";
-		color: $requiredColor;
+		color: var(--required-color);
+	}
+}
+
+// REQUIRED CUSTOM COLORS
+@each $color, $value in $theme-colors {
+	// Inherit Classes
+	.required-affect-all.required-#{$color} {
+		.required, .required-before, .required-start,
+		.required-after, .required-end {
+			--required-color: #{$value};
+		}
+	}
+
+	// Direct Classes
+	.required, .required-before, .required-start {
+		&.required-#{$color}:before {
+			--required-color: #{$value};
+		}
+	}
+	.required-after, .required-end {
+		&.required-#{$color}:after {
+			--required-color: #{$value};
+		}
 	}
 }

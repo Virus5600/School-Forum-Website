@@ -8,8 +8,8 @@
 
 /* サイドバースタート */
 .sidebar-toggler {
-	color: rgba(0,0,0,.5);
-	border-color: rgba(0,0,0,.1);
+	color: var(--bs-body-color);
+	border-color: var(--bs-body-color);
 	padding: .25rem .75rem;
 	font-size: 1.25rem;
 	line-height: 1;
@@ -27,6 +27,14 @@
 	position: sticky;
 	top: 0;
 	z-index: 500;
+}
+
+.dropdown {
+	.dropdown-item:hover {
+		transition: .25s;
+		color: var(--bs-light);
+		background-color: var(--bs-it-secondary);
+	}
 }
 
 .content {
@@ -52,7 +60,7 @@
 	white-space: nowrap;
 
 	position: fixed;
-	z-index: 500;
+	z-index: 475;
 
 	display: flex;
 	flex-direction: column;
@@ -72,7 +80,7 @@
 		& > span,
 		& > a {
 			transition: 0.25s;
-			color: white;
+			color: var(--bs-body-color);
 
 			padding-top: 0.5rem;
 			padding-bottom: 0.5rem;
@@ -80,11 +88,11 @@
 			padding-right: 1rem;
 
 			&:hover {
-				background-color: #EAEAEA;
+				background-color: var(--bs-it-secondary);
 
 				&:not(span) {
-					background-color: var(--bs-light) !important;
-					color: var(--bs-dark);
+					background-color: var(--bs-it-secondary) !important;
+					color: var(--bs-light);
 				}
 			}
 		}
@@ -132,6 +140,8 @@
 
 		position: sticky;
 		top: var(--navbar-height);
+
+		z-index: 500;
 
 		&~ .content {
 			max-width: calc(100vw - 15rem);

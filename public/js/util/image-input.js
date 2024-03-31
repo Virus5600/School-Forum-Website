@@ -1,8 +1,16 @@
 function openInput(obj) {
+	if (obj instanceof HTMLElement)
+		obj = $(obj);
+
 	$("input[name=" + obj.attr("id") + "]:not([readonly])").trigger("click");
 }
 
 function swapImgFile(obj) {
+	/**
+	 * Defines the max file size for the image input. Default is 3 MB
+	 */
+	const maxFileSize = 3 * 1024 * 1024;
+
 	let targetImgContainer = $($(obj).attr('data-target-image-container'));
 	let targetNameContainer = $($(obj).attr('data-target-name-container'));
 
@@ -17,7 +25,7 @@ function swapImgFile(obj) {
 		if (!obj.files[0].type.match(/image.+/) || !obj.files[0].type.match(allowed)) {
 			SwalFlash.error('Invalid file type', `Only images are allowed (${allowedTypes.join(", ").toUpperCase()})`, true);
 			$(obj).val('');
-			sessionStorage.setItem(`image-input-${obj.name}`, '');
+			sessionStorage.removeItem(`image-input-${obj.name}`);
 			return false;
 		}
 
@@ -26,7 +34,14 @@ function swapImgFile(obj) {
 		reader.onload = function(e) {
 			targetImgContainer.attr("src", e.target.result);
 			targetNameContainer.html(obj.files[0].name);
-			sessionStorage.setItem(`image-input-${obj.name}`, `${obj.files[0].name}~${e.target.result}`);
+
+			if (obj.files[0].size > maxFileSize) {
+				sessionStorage.setItem(`image-input-${obj.name}`, `${obj.files[0].name}~${e.target.result}`);
+				if (SwalFlash)
+					SwalFlash.warning('File size too large', `The file size of ${obj.files[0].name} exceeds the limit of 3 MB`, true);
+				else
+					alert('The file size of ' + obj.files[0].name + ' exceeds the limit of 3 MB');
+			}
 		}
 
 		reader.readAsDataURL(obj.files[0]);
@@ -49,7 +64,7 @@ $($('.image-input-scope input[type=file]').attr('data-target-image-container')).
 	$(obj).attr("src", $(obj).attr('data-default-src'));
 });
 
-$(function() {
+$(() => {
 	// Profile Image Changing
 	$(document).on("click", ".image-input-scope .image-input-float", function(e) {
 		openInput($(this));

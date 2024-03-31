@@ -59,9 +59,7 @@
 									<button type="button" class="btn btn-it-primary btn-sm image-input-reset" data-target-image-container="#avatar-file-container" data-target-name-container="#avatar-name">Remove Image</button>
 
 									{{-- AVATAR ERROR --}}
-									@error('avatar')
-									<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-									@enderror
+									<x-forms.validation-error field="avatar"/>
 								</div>
 							</div>
 						</div>
@@ -98,9 +96,7 @@
 
 								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('first_name') ? 'is-invalid' : 'is-valid') : '' }}" name="first_name" id="first_name" value="{{ old('first_name') }}" required>
 
-								@error('first_name')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="first_name"/>
 							</div>
 						</div>
 
@@ -111,9 +107,7 @@
 
 								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('middle_name') ? 'is-invalid' : 'is-valid') : '' }}" name="middle_name" id="middle_name" value="{{ old('middle_name') }}">
 
-								@error('middle_name')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="middle_name"/>
 							</div>
 						</div>
 
@@ -124,9 +118,7 @@
 
 								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('last_name') ? 'is-invalid' : 'is-valid') : '' }}" name="last_name" id="last_name" value="{{ old('last_name') }}" required>
 
-								@error('last_name')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="last_name"/>
 							</div>
 						</div>
 
@@ -137,9 +129,7 @@
 
 								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('suffix') ? 'is-invalid' : 'is-valid') : '' }}" name="suffix" id="suffix" value="{{ old('suffix') }}">
 
-								@error('suffix')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="suffix"/>
 							</div>
 						</div>
 
@@ -157,9 +147,7 @@
 									<option value="others" {{ old('gender') === 'others' ? 'selected' : '' }}>Others</option>
 								</select>
 
-								@error('gender')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="gender"/>
 							</div>
 						</div>
 					</div>
@@ -195,9 +183,7 @@
 
 								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('username') ? 'is-invalid' : 'is-valid') : '' }}" name="username" id="username" value="{{ old('username') }}" required>
 
-								@error('username')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="username"/>
 							</div>
 						</div>
 
@@ -208,9 +194,7 @@
 
 								<input type="email" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('email') ? 'is-invalid' : 'is-valid') : '' }}" name="email" id="email" value="{{ old('email') }}" required>
 
-								@error('email')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="email"/>
 							</div>
 						</div>
 
@@ -227,9 +211,7 @@
 									</button>
 								</div>
 
-								@error('password')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="password"/>
 							</div>
 						</div>
 
@@ -246,9 +228,7 @@
 									</button>
 								</div>
 
-								@error('password_confirmation')
-								<span class="small badge text-bg-danger w-100 fs-2xs">{{ $message }}</span>
-								@enderror
+								<x-forms.validation-error field="password_confirmation"/>
 							</div>
 						</div>
 					</div>
@@ -265,6 +245,9 @@
 
 			{{-- RESET BUTTON --}}
 			<button type="reset" class="btn btn-dark text-white">Reset</button>
+
+			{{-- GO BACK --}}
+			<a href="{{ route('login') }}" class="btn btn-secondary text-white">Back to Login</a>
 		</div>
 	</div>
 </form>
