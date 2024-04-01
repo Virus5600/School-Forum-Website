@@ -58,6 +58,7 @@ class User extends Authenticatable
     // Relationships
 	public function accountVerification() { return $this->hasOne('App\Models\AccountVerification'); }
 	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
+	public function discussions() { return $this->hasMany('App\Models\Discussion', 'posted_by'); }
 	protected function passwordReset() { return $this->belongsTo('App\Models\PasswordReset'); }
 	public function userType() { return $this->belongsTo('App\Models\UserType'); }
 	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }

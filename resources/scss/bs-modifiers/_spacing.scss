@@ -1,0 +1,119 @@
+$spacers: map-merge(
+	$spacers,
+	(
+		5: $spacer * 2.25,
+		6: $spacer * 3,
+		7: $spacer * 4.5,
+		8: $spacer * 5.25,
+		9: $spacer * 6,
+		10: $spacer * 7.5,
+	)
+);
+
+$utilities: map-merge(
+	$utilities,
+	(
+		// MARGIN - Positive Margin
+		"margin": map-merge(
+			map-get($utilities, "margin"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"margin-x": map-merge(
+			map-get($utilities, "margin-x"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"margin-y": map-merge(
+			map-get($utilities, "margin"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"margin-top": map-merge(
+			map-get($utilities, "margin-top"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"margin-end": map-merge(
+			map-get($utilities, "margin-end"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"margin-bottom": map-merge(
+			map-get($utilities, "margin-bottom"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"margin-start": map-merge(
+			map-get($utilities, "margin-start"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		// MARGIN - Negative Margin
+		"negative-margin": map-merge(
+			map-get($utilities, "negative-margin"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"negative-margin-x": map-merge(
+			map-get($utilities, "negative-margin-x"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"negative-margin-y": map-merge(
+			map-get($utilities, "negative-margin-y"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"negative-margin-top": map-merge(
+			map-get($utilities, "negative-margin-top"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"negative-margin-end": map-merge(
+			map-get($utilities, "negative-margin-end"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"negative-margin-bottom": map-merge(
+			map-get($utilities, "negative-margin-bottom"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+		"negative-margin-start": map-merge(
+			map-get($utilities, "negative-margin-start"),
+			(values: map-merge($spacers, (auto: auto))),
+		),
+
+		// PADDING
+		"padding": map-merge(
+			map-get($utilities, "padding"),
+			(values: $spacers),
+		),
+		"padding-x": map-merge(
+			map-get($utilities, "padding-x"),
+			(values: $spacers),
+		),
+		"padding-y": map-merge(
+			map-get($utilities, "padding-y"),
+			(values: $spacers),
+		),
+		"padding-top": map-merge(
+			map-get($utilities, "padding-top"),
+			(values: $spacers),
+		),
+		"padding-end": map-merge(
+			map-get($utilities, "padding-end"),
+			(values: $spacers),
+		),
+		"padding-bottom": map-merge(
+			map-get($utilities, "padding-bottom"),
+			(values: $spacers),
+		),
+		"padding-start": map-merge(
+			map-get($utilities, "padding-start"),
+			(values: $spacers),
+		),
+
+		// GAPS
+		"gap": map-merge(
+			map-get($utilities, "gap"),
+			(values: $spacers),
+		),
+		"row-gap": map-merge(
+			map-get($utilities, "row-gap"),
+			(values: $spacers),
+		),
+		"column-gap": map-merge(
+			map-get($utilities, "column-gap"),
+			(values: $spacers),
+		)
+	)
+);

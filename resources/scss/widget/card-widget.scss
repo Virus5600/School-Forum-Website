@@ -2,7 +2,7 @@
 
 *:not(hr) {
 	// ADDS THE NECESSARY SPACING FOR THE FLOATING HEADER
-	&:has(+ .card.floating-header) {
+	&:has(+ .card.floating-header:not(.no-buffer, .no-header-buffer, .no-outer-buffer)) {
 		&:after {
 			content: "";
 			position: relative;
@@ -11,7 +11,7 @@
 		}
 	}
 
-	&:has(> .card.floating-header:first-child) {
+	&:has(> .card.floating-header:first-child:not(.no-buffer, .no-header-buffer, .no-outer-buffer)) {
 		&:before {
 			content: "";
 			position: relative;
@@ -21,7 +21,7 @@
 	}
 
 	// ADDS THE NECESSARY SPACING FOR THE FLOATING FOOTER
-	&.card.floating-footer {
+	&.card.floating-footer:not(.no-buffer, .no-footer-buffer, .no-outer-buffer) {
 		& + * {
 			&:before {
 				content: "";
@@ -32,7 +32,7 @@
 		}
 	}
 
-	&:has(> .card.floating-footer) {
+	&:has(> .card.floating-footer:not(.no-buffer, .no-footer-buffer, .no-outer-buffer)) {
 		&:after {
 			content: "";
 			position: relative;
@@ -42,11 +42,11 @@
 	}
 }
 // <hr> HANDLER
-hr:has(+ .card.floating-header) {
+hr:has(+ .card.floating-header:not(.no-buffer, .no-header-buffer)) {
 	padding-bottom: 1.5rem;
 }
 
-.card.floating-footer + hr {
+.card.floating-footer:not(.no-buffer, .no-footer-buffer) + hr {
 	padding-top: 1.5rem;
 }
 
@@ -56,7 +56,7 @@ hr:has(+ .card.floating-header) {
 	&.floating-header {
 		position: relative;
 
-		.card-header {
+		& > .card-header {
 			position: absolute;
 			transform: translate(1rem, -50%);
 			transition: .5s ease;
@@ -93,7 +93,7 @@ hr:has(+ .card.floating-header) {
 			}
 		}
 
-		& > .card-body {
+		&:not(.no-buffer, .no-header-buffer, .no-inner-buffer) > .card-body {
 			&:before {
 				content: "";
 				position: relative;
@@ -107,7 +107,7 @@ hr:has(+ .card.floating-header) {
 	&.floating-footer {
 		position: relative;
 
-		.card-footer {
+		& > .card-footer {
 			position: absolute;
 			transform: translate(1rem, 50%);
 			transition: .5s ease;
@@ -145,7 +145,7 @@ hr:has(+ .card.floating-header) {
 			}
 		}
 
-		& > .card-body {
+		&:not(.no-buffer, .no-footer-buffer, .no-inner-buffer) > .card-body {
 			&:after {
 				content: "";
 				position: relative;

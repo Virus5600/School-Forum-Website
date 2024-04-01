@@ -44,7 +44,7 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	// Discussions
 	Route::group(['prefix' => 'discussions'], function() {
 		// Index
-		// Route::get('/', )->name('discussions.index');
+		Route::get('/', 'DiscussionController@index')->name('discussions.index');
 	});
 
 	// Announcements

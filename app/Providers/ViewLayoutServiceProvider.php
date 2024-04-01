@@ -80,11 +80,11 @@ class ViewLayoutServiceProvider extends ServiceProvider
 
 		try {
 			// Website information.
-			if (Schema::hasTable("settings"))
+			if (Schema::hasTable("settings") && Settings::count() > 0)
 				$this->attachWebsiteInfo();
 
 			// Header Carousel
-			if (Schema::hasTable("carousel_images"))
+			if (Schema::hasTable("carousel_images") && CarouselImage::count() > 0)
 				view()->composer(
 					'layouts.public',
 					fn($view) => $this->getHeaderCarousel($view)

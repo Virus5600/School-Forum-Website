@@ -16,8 +16,8 @@
 	<hr class="my-5">
 
 	{{-- ANNOUNCEMENTS --}}
-	<section class="card floating-header bg-transparent border-0">
-		<div class="card-header header-center header-lg-start bg-transparent border-0 display-4 text-center text-lg-start transition-3">Announcements</div>
+	<section class="card floating-header floating-footer bg-transparent border-0 mb-10">
+		<h2 class="card-header header-center header-lg-start bg-transparent border-0 display-4 text-center text-lg-start transition-3">Announcements</h2>
 
 		<div class="card-body">
 			<div class="row row-cols-1 row-cols-lg-2 gx-0 gy-3 gx-lg-3">
@@ -46,11 +46,15 @@
 				@endforelse
 			</div>
 		</div>
+
+		<div class="card-footer footer-center footer-lg-end bg-transparent border-0 text-center text-lg-end transition-3">
+			<a href="{{ route('announcements.index') }}" class="link-body-emphasis fs-5 fw-normal">See More...</a>
+		</div>
 	</section>
 
 	{{-- LOST & FOUND --}}
-	<section class="card floating-header bg-transparent border-0">
-		<div class="card-header header-center header-lg-start bg-transparent border-0 display-4 text-center text-lg-start transition-3">Lost & Found</div>
+	<section class="card floating-header floating-footer no-inner-buffer bg-transparent border-0 my-10">
+		<h2 class="card-header header-center header-lg-start bg-transparent border-0 display-4 text-center text-lg-start transition-3">Lost & Found</h2>
 
 		<div class="card-body">
 			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-0 gy-3 gx-md-3">
@@ -87,6 +91,42 @@
 				</div>
 				@endforelse
 			</div>
+		</div>
+
+		<div class="card-footer footer-center footer-lg-end bg-transparent border-0 text-center text-lg-end transition-3">
+			<a href="{{ route('lost-and-found.index') }}" class="link-body-emphasis fs-5 fw-normal">See More...</a>
+		</div>
+	</section>
+
+	{{-- POPULAR DISCUSSIONS --}}
+	<section class="card floating-header floating-footer no-inner-buffer bg-transparent border-0 my-10">
+		<h2 class="card-header header-center header-lg-start bg-transparent border-0 display-4 text-center text-lg-start transition-3">Popular Discussions</h2>
+
+		<div class="card-body">
+			<div class="row flex-wrap row-gap-3">
+				@forelse ($discussions as $category => $items)
+				<article class="col-12 col-lg-6">
+					<div class="card h-100">
+						<h3 class="card-header bg-it-primary text-light fw-normal transition-3">{{ ucwords($category) }}</h3>
+
+						<div class="card-body p-0">
+							<div class="list-group list-group-flush border-bottom">
+								@foreach ($items as $item)
+								<a href="@{{ route('discussions.show', [$item->id]) }}" class="list-group-item list-group-item-action fw-normal fs-4">
+									{{ Str::limit($item->title, 25) }}
+								</a>
+								@endforeach
+							</div>
+						</div>
+					</div>
+				</article>
+				@empty
+				@endforelse
+			</div>
+		</div>
+
+		<div class="card-footer footer-center footer-lg-end bg-transparent border-0 text-center text-lg-end transition-3">
+			<a href="#" class="link-body-emphasis fs-5 fw-normal">See More...</a>
 		</div>
 	</section>
 </div>
