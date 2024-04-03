@@ -11,7 +11,7 @@ class Discussion extends Model
 	use HasFactory, SoftDeletes;
 
 	protected $fillable = [
-		'category',
+		'category_id',
 		'title',
 		'content',
 		'posted_by'
@@ -23,8 +23,13 @@ class Discussion extends Model
 		'deleted_at' => 'datetime',
 	];
 
+	protected $with = [
+		'category',
+	];
+
 	// Relationships
-	public function postedBy() { return $this->belongsTo('App\Models\User'); }
+	public function category() { return $this->belongsTo('App\Models\DiscussionCategory', 'category_id'); }
+	public function postedBy() { return $this->belongsTo('App\Models\User', 'posted_by'); }
 
 	// VALIDATOR RELATED FUNCTIONS
 	/**

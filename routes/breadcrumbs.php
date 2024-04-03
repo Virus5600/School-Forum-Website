@@ -11,6 +11,12 @@ Breadcrumbs::for(
 	fn(Trail $trail) => $trail->push("Home", route("home"))
 );
 
+// DISCUSSIONS
+Breadcrumbs::for(
+	"discussions.index",
+	fn(Trail $trail) => $trail->push("Discussions", route("discussions.index"))
+);
+
 // ANNOUNCEMENTS
 Breadcrumbs::for(
 	"announcements.index",

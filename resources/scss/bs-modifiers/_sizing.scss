@@ -9,6 +9,30 @@ $utilities: map-merge(
 			map-get($utilities, "height"),
 			(responsive: true)
 		),
+		"viewport-width": map-merge(
+			map-get($utilities, "viewport-width"),
+			(
+				responsive: true,
+				values: (
+					25: 25vw,
+					50: 50vw,
+					75: 75vw,
+					100: 100vw
+				)
+			)
+		),
+		"viewport-height": map-merge(
+			map-get($utilities, "viewport-height"),
+			(
+				responsive: true,
+				values: (
+					25: 25vw,
+					50: 50vw,
+					75: 75vw,
+					100: 100vw
+				)
+			)
+		),
 		"min-viewport-width": map-merge(
 			map-get($utilities, "min-viewport-width"),
 			(

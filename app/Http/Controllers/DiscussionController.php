@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Discussion;
+use App\Models\DiscussionCategory;
+
+use DB;
+use Exception;
+use Log;
+use Validator;
 
 class DiscussionController extends Controller
 {
@@ -12,15 +17,27 @@ class DiscussionController extends Controller
 	private function fetchParams(): array { return $this->includeParams(self::ADMIN_QUERY_PARAMS); }
 
 	// GUEST / PUBLIC SIDE
-	public function index() {
-		$categories = Discussion::select(['category'])
-			->distinct()
-			->pluck('category')
-			->toArray();
+	public function index(Request $req) {
+		$hasCat = false;
+		if ($req->has("category")) {
+			$validator = Validator::make($req->only('category'), [
+				'category' => ['required', 'string', 'max:100'],
+			]);
 
-		dd($categories);
+			$hasCat = !$validator->fails();
+		}
 
-		$discussions = Discussion::latest()->paginate(10);
+		$query = DiscussionCategory::query();
+
+		if ($hasCat)
+			$query->where("name", $validator->validated()["category"]);
+
+		$discussions = $query->has('discussions')
+			->with(
+			"discussions",
+			"discussions.postedBy"
+		)->orderBy("name", "asc")
+			->paginate(10);
 
 		return view('discussions.index', [
 			"discussions" => $discussions,

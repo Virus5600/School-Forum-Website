@@ -121,6 +121,16 @@
 					</div>
 				</article>
 				@empty
+				{{-- No Discussion --}}
+				<div class="col w-100">
+					<div class="card text-bg-dark">
+						<img src="{{ asset("uploads/discussions/default.png") }}" alt="Lost and Found's default background image." class="card-img brightness-1">
+						<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
+							<i class="fas fa-comments fa-3x"></i>
+							<h3 class="card-title m-0">No Discussions Yet...</h3>
+						</div>
+					</div>
+				</div>
 				@endforelse
 			</div>
 		</div>

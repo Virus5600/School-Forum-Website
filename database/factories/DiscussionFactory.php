@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use App\Models\DiscussionCategory;
 use App\Models\User;
 
 use Exception;
@@ -21,7 +22,7 @@ class DiscussionFactory extends Factory
     public function definition(): array
     {
         return [
-            'category' => rand(0, 1) == 0 ? fake()->word() : 'general discussion',
+            'category_id' => rand(0, 1) == 0 ? fake()->numberBetween(1, DiscussionCategory::count()) : 1,
 			'title' => fake()->sentence(),
 			'content' => fake()->paragraphs(3, true),
 			'posted_by' => fake()->numberBetween(1, User::count())
@@ -34,17 +35,20 @@ class DiscussionFactory extends Factory
 	public function general(): static
 	{
 		return $this->state(fn (array $attributes) => [
-			'category' => 'general discussion'
+			'category_id' => 1
 		]);
 	}
 
 	/**
 	 * Provides a discussion with a provided category.
 	 */
-	public function category(string $category): static
+	public function category(int $id): static
 	{
+		if (DiscussionCategory::find($id) === null)
+			throw new Exception("Category with ID {$id} does not exist.");
+
 		return $this->state(fn (array $attributes) => [
-			'category' => $category
+			'category_id' => $id
 		]);
 	}
 
@@ -79,5 +83,19 @@ class DiscussionFactory extends Factory
 		return $this->state(fn (array $attributes) => [
 			'posted_by' => $userId
 		]);
+	}
+
+	public function randomDates(): static
+	{
+		return $this->state(function (array $attributes) {
+			$createdAt = fake()->dateTimeBetween('-1 day', 'now', 'Asia/Manila');
+			$updatedAt = fake()->dateTimeBetween($createdAt, 'now', 'Asia/Manila');
+			$edited = fake()->boolean();
+
+			return [
+				'created_at' => $createdAt,
+				'updated_at' => $edited ? $updatedAt : $createdAt,
+			];
+		});
 	}
 }

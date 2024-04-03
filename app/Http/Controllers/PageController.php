@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Announcement;
 use App\Models\Discussion;
+use App\Models\DiscussionCategory;
 use App\Models\LostFound;
 
 use DB;
@@ -29,12 +30,17 @@ class PageController extends Controller
 			->get();
 
 		// Forum Items
-		$cols = ['category', 'created_at', 'updated_at'];
-		$trendingCategoriesRaw = Discussion::select(...$cols)
-			->selectRaw('COUNT(category) as category_count')
-			->groupBy(...$cols)
-			->orderBy('category_count', 'desc')
-			->orderBy('category', 'desc')
+		$trendingCategoriesRaw = DiscussionCategory::has('discussions')
+			->select([
+				"discussion_categories.name as category",
+				DB::raw("MAX(discussion_categories.id) as id"),
+				DB::raw("COUNT(discussions.id) as category_count"),
+				DB::raw("MAX(discussions.created_at) as created_at"),
+				DB::raw("MAX(discussions.updated_at) as updated_at"),
+			])
+			->leftJoin("discussions", "discussion_categories.id", "=", "discussions.category_id")
+			->groupBy("discussion_categories.name")
+			->orderBy("category_count", "desc")
 			->get()
 			->toArray();
 
@@ -63,6 +69,7 @@ class PageController extends Controller
 						$v['created_at'] : $v['updated_at'];
 
 				$trendingCategories[$v['category']] = [
+					'id' => $v['id'],
 					'amount' => $v['category_count'],
 					'updated_at' => $lastTouched
 				];
@@ -77,7 +84,7 @@ class PageController extends Controller
 
 		$discussions = [];
 		foreach ($trendingCategories as $k => $v) {
-			$discussions[$k] = Discussion::where('category', '=', $k)
+			$discussions[$k] = Discussion::where('category_id', '=', $v['id'])
 				->orderBy('created_at', 'desc')
 				->orderBy('updated_at', 'desc')
 				->limit(3)

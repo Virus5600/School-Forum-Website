@@ -16,6 +16,7 @@ class DiscussionsTableSeeder extends Seeder
     {
         Discussion::factory()
 			->count(25)
+			->randomDates()
 			->create();
     }
 }

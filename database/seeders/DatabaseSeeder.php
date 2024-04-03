@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 			CarouselImagesTableSeeder::class,
 			AnnouncementsTableSeeder::class,
 			LostFoundTableSeeder::class,
+			DiscussionCategoriesTableSeeder::class,
 			DiscussionsTableSeeder::class,
 		]);
 	}
