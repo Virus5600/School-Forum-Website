@@ -107,12 +107,20 @@
 				@forelse ($discussions as $category => $items)
 				<article class="col-12 col-lg-6">
 					<div class="card h-100">
-						<h3 class="card-header bg-it-primary text-light fw-normal transition-3">{{ ucwords($category) }}</h3>
+						<h3 class="card-header bg-it-primary text-light fw-normal transition-3 d-flex justify-content-between">
+							<a href="{{ route('discussions.index', [$category]) }}" class="text-decoration-none link-body-emphasis" data-bs-theme="dark">
+								{{ ucwords($category) }}
+							</a>
+
+							<a href="{{ route('discussions.index', [$category]) }}" target="_blank" rel="noreferrer" class="text-decoration-none link-body-emphasis" data-bs-theme="dark">
+								<i class="fas fa-up-right-from-square fa-xs"></i>
+							</a>
+						</h3>
 
 						<div class="card-body p-0">
 							<div class="list-group list-group-flush border-bottom">
 								@foreach ($items as $item)
-								<a href="@{{ route('discussions.show', [$item->id]) }}" class="list-group-item list-group-item-action fw-normal fs-4">
+								<a href="@{{ route('discussions.show', [$item->id]) }}" class="list-group-item list-group-item-action fw-normal fs-4 link-body-emphasis transition-3">
 									{{ Str::limit($item->title, 25) }}
 								</a>
 								@endforeach
@@ -136,7 +144,7 @@
 		</div>
 
 		<div class="card-footer footer-center footer-lg-end bg-transparent border-0 text-center text-lg-end transition-3">
-			<a href="#" class="link-body-emphasis fs-5 fw-normal">See More...</a>
+			<a href="{{ route('discussions.index') }}" class="link-body-emphasis fs-5 fw-normal">See More...</a>
 		</div>
 	</section>
 </div>

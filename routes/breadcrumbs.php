@@ -17,6 +17,13 @@ Breadcrumbs::for(
 	fn(Trail $trail) => $trail->push("Discussions", route("discussions.index"))
 );
 
+// DISCUSSIONS > CATEGORY
+Breadcrumbs::for(
+	"discussions.category.show",
+	fn(Trail $trail, string $name) => $trail->parent("discussions.index")
+		->push(ucwords($name), route("discussions.category.show", $name))
+);
+
 // ANNOUNCEMENTS
 Breadcrumbs::for(
 	"announcements.index",
