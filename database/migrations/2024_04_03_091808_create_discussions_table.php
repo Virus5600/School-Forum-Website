@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('discussions', function (Blueprint $table) {
             $table->id();
 			$table->foreignId('category_id')->default(1)->constrained('discussion_categories')->cascadeOnDelete();
+			$table->string('slug', 128)->unique();
 			$table->string('title', 100);
 			$table->text('content', 8192);
 			$table->foreignId('posted_by')->nullable()->constrained('users')->nullOnDelete();

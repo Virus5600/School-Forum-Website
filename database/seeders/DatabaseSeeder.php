@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
 			LostFoundTableSeeder::class,
 			DiscussionCategoriesTableSeeder::class,
 			DiscussionsTableSeeder::class,
+			DiscussionRepliesTableSeeder::class,
 		]);
 	}
 }

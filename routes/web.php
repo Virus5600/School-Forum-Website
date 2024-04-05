@@ -48,9 +48,14 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 
 		// Categories
 		Route::group(['prefix' => 'category'], function() {
-			Route::get('/', 'DiscussionCategoryController@index')->name('discussions.category.index');
+			// Index
+			Route::get('/', 'DiscussionCategoryController@index')->name('discussions.categories.index');
 
-			Route::get('/{name}', 'DiscussionController@index')->name('discussions.category.show');
+			// Show
+			Route::get('/{name}', 'DiscussionCategoryController@show')->name('discussions.categories.show');
+
+			// Show (Discussion)
+			Route::get('/{category}/{slug}', 'DiscussionController@show')->name('discussions.show');
 		});
 	});
 

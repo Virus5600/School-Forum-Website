@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 use App\Models\DiscussionCategory;
 use App\Models\User;
@@ -21,9 +22,11 @@ class DiscussionFactory extends Factory
      */
     public function definition(): array
     {
+		$title = fake()->sentence();
         return [
             'category_id' => rand(0, 1) == 0 ? fake()->numberBetween(1, DiscussionCategory::count()) : 1,
-			'title' => fake()->sentence(),
+			'slug' => Str::of($title . " " . now()->timestamp)->slug('-'),
+			'title' => $title,
 			'content' => fake()->paragraphs(3, true),
 			'posted_by' => fake()->numberBetween(1, User::count())
         ];
@@ -58,6 +61,7 @@ class DiscussionFactory extends Factory
 	public function title(string $title): static
 	{
 		return $this->state(fn (array $attributes) => [
+			'slug' => Str::of($title . " " . now()->timestamp)->slug('-'),
 			'title' => $title
 		]);
 	}

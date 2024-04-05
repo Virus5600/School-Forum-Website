@@ -50,16 +50,12 @@ class User extends Authenticatable
 		'last_auth' => 'datetime',
 	];
 
-    protected $with = [
-		'userType.permissions',
-		'userPerm'
-	];
-
     // Relationships
 	public function accountVerification() { return $this->hasOne('App\Models\AccountVerification'); }
 	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
 	public function discussions() { return $this->hasMany('App\Models\Discussion', 'posted_by'); }
 	protected function passwordReset() { return $this->belongsTo('App\Models\PasswordReset'); }
+	public function replies() { return $this->hasMany('App\Models\DiscussionReplies', 'replied_by'); }
 	public function userType() { return $this->belongsTo('App\Models\UserType'); }
 	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }
 	public function userPerms() { return $this->belongsToMany('App\Models\Permission', 'user_permissions'); }

@@ -3,6 +3,7 @@
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as Trail;
 
+use App\Models\Discussion;
 use App\Models\LostFound;
 
 // HOME
@@ -19,9 +20,30 @@ Breadcrumbs::for(
 
 // DISCUSSIONS > CATEGORY
 Breadcrumbs::for(
-	"discussions.category.show",
-	fn(Trail $trail, string $name) => $trail->parent("discussions.index")
-		->push(ucwords($name), route("discussions.category.show", $name))
+	"discussions.categories.index",
+	fn(Trail $trail) => $trail->parent("discussions.index")
+		->push("Categories", route("discussions.categories.index"))
+);
+
+// DISCUSSIONS > CATEGORY > SHOW (CATEGORY)
+Breadcrumbs::for(
+	"discussions.categories.show",
+	fn(Trail $trail, string $name) => $trail->parent("discussions.categories.index")
+		->push(Str::limit(ucwords($name), 25), route("discussions.categories.show", $name))
+);
+
+// DISCUSSIONS > CATEGORY > SHOW (DISCUSSION)
+Breadcrumbs::for(
+	"discussions.show",
+	function (Trail $trail, string $category, string $slug) {
+		$title = Discussion::select("title")
+			->where("slug", $slug)
+			->firstOrFail()
+			->title;
+
+		$trail->parent("discussions.categories.show", $category)
+			->push(Str::limit($title, 10), route("discussions.show", [$category, $slug]));
+	}
 );
 
 // ANNOUNCEMENTS

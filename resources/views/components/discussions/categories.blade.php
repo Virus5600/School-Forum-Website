@@ -29,6 +29,6 @@
 	</div>
 
 	<div class="card-footer bg-it-secondary text-center">
-		<a href="{{ route('discussions.index', [$value->name]) }}" class="link-body-emphasis" data-bs-theme="dark">See More...</a>
+		<a href="{{ route('discussions.categories.show', [$value->name]) }}" class="link-body-emphasis" data-bs-theme="dark">See More...</a>
 	</div>
 </section>
