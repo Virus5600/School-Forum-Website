@@ -65,7 +65,7 @@ class Permissions
 				->log("User {$user->email} attempted to access <a href='{$req->fullUrl()}'>{$req->getRequestUri()}</a>");
 
 				return redirect()
-					->route('admin.dashboard')
+					->route($user->hasPermission('admin_access') ? 'admin.dashboard' : 'home')
 					->with('flash_info', 'Access Denied')
 					->with('has_icon', 'true')
 					->with('message', 'Redirected back to previous page.')

@@ -1,0 +1,17 @@
+:root {
+	--hf-highlight-color: #ffffff;
+	--hf-highlight-border-color: #acb0b4;
+	--hf-highlight-bg-color: #7f8387;
+}
+
+.hf-outline-only :target {
+	box-shadow: 0 0 5px 3px var(--hf-highlight-bg-color) !important;
+}
+
+.hf-all:target {
+	color: var(--hf-highlight-color) !important;
+	border-color: var(--hf-highlight-border-color) !important;
+	background-color: var(--hf-highlight-bg-color) !important;
+
+	@extend .hf-outline-only;
+}

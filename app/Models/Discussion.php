@@ -31,7 +31,7 @@ class Discussion extends Model
 	// Relationships
 	public function category() { return $this->belongsTo('App\Models\DiscussionCategory', 'category_id'); }
 	public function postedBy() { return $this->belongsTo('App\Models\User', 'posted_by'); }
-	public function replies() { return $this->hasMany('App\Models\DiscussionReplies', 'discussion_id'); }
+	public function comments() { return $this->hasMany('App\Models\DiscussionReplies', 'discussion_id'); }
 
 	// VALIDATOR RELATED FUNCTIONS
 	/**

@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.public', ['noCarousel' => true])
 
 @section('title', 'Discussions - ' . ucwords($category->name) . ' Category')
 

@@ -123,7 +123,7 @@ class LostFoundController extends Controller
 
 		if ($validator->fails()) {
 			return redirect()
-				->back('admin.lost-and-found.create')
+				->back()
 				->withErrors($validator)
 				->withInput();
 		}
@@ -162,7 +162,8 @@ class LostFoundController extends Controller
 			DB::commit();
 		} catch (Exception $e) {
 			DB::rollback();
-			Log::error($e->getMessage());
+			Log::error($e);
+
 			return redirect()
 				->back('admin.lost-and-found.create')
 				->with('flash_error', 'An error occurred while creating the item.');

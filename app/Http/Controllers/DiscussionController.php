@@ -40,9 +40,9 @@ class DiscussionController extends Controller
 		]);
 	}
 
-	public function show(Request $req, string $category, string $slug) {
+	public function show(Request $req, string $name, string $slug) {
 		// Fetch Category
-		$category = DiscussionCategory::where("name", Str::lower($category))
+		$category = DiscussionCategory::where("name", Str::lower($name))
 			->firstOrFail();
 
 		// Fetch Discussion
@@ -52,15 +52,12 @@ class DiscussionController extends Controller
 		// FINAL MODIFICATION
 		$discussion = $discussion
 			->with([
-				"category",
-				"postedBy",
-				"replies" => [
-					"replies" => [
-						"repliedBy:id,username,avatar"
-					],
-					"repliedBy"
-				]
+				"postedBy:id,username,avatar",
+				"comments" => [
+					"repliedBy:id,username,avatar"
+				],
 			])
+			->withCount("comments")
 			->firstOrFail();
 
 		return view('discussions.show', [

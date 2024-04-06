@@ -38,6 +38,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/animations.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/custom-scrollbar.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/highlight-fragment.css') }}">
 		<script type="text/javascript" src="{{ mix('js/app.js') }}" data-auto-add-css="false"></script>
 
 		{{-- CUSTOM STYLES --}}
@@ -48,7 +49,7 @@
 		<title>{{ $webName }} | @yield('title')</title>
 	</head>
 
-	<body class="custom-scrollbar apply-to-all bg-it-quaternary">
+	<body class="custom-scrollbar apply-to-all bg-it-quaternary hf-outline-only">
 		{{-- NOSCRIPT --}}
 		@php ($noCarousel = isset($noCarousel) ? $noCarousel : false)
 		@include('includes.noscript')

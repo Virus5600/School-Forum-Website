@@ -9,7 +9,7 @@
 		<div class="list-group list-group-flush border-bottom transition-3">
 			@foreach ($value->discussions->splice(0, 5) as $d)
 			<div class="hstack justify-content-between list-group-item list-group-item-action">
-				<a href="@{{ route('discussions.show', $d->id) }}" class="fw-normal fs-6 text-wrap">
+				<a href="{{ route('discussions.show', [$value->name, $d->slug]) }}" class="fw-normal fs-6 text-wrap">
 					{{ Str::limit($d->title, 25) }}
 				</a>
 

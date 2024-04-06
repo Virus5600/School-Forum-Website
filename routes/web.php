@@ -51,11 +51,38 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 			// Index
 			Route::get('/', 'DiscussionCategoryController@index')->name('discussions.categories.index');
 
-			// Show
-			Route::get('/{name}', 'DiscussionCategoryController@show')->name('discussions.categories.show');
+			// Show (Category)
+			Route::group(['prefix' => '{name}'], function() {
+				// Show
+				Route::get('/', 'DiscussionCategoryController@show')->name('discussions.categories.show');
 
-			// Show (Discussion)
-			Route::get('/{category}/{slug}', 'DiscussionController@show')->name('discussions.show');
+				// Show (Discussion)
+				Route::group(['prefix' => '{slug}'], function() {
+					// Show
+					Route::get('/', 'DiscussionController@show')->name('discussions.show');
+
+					// Comments
+					Route::group(['prefix' => 'comment'], function() {
+						// Store
+						Route::post('/store', 'DiscussionRepliesController@store')->name('discussions.comments.store');
+
+						// Comment Modification
+						Route::group(['prefix' => '{id}'], function() {
+							// Edit
+							Route::group(['prefix' => 'edit'], function() {
+								// Edit Page
+								Route::get('/', 'DiscussionRepliesController@edit')->name('discussions.comments.edit');
+
+								// Update
+								Route::patch('/update', 'DiscussionRepliesController@update')->name('discussions.comments.update');
+							});
+
+							// Delete
+							Route::delete('/delete', 'DiscussionRepliesController@delete')->name('discussions.comments.delete');
+						});
+					});
+				});
+			});
 		});
 	});
 

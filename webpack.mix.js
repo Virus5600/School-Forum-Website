@@ -52,6 +52,7 @@ mix
 	.sass('resources/scss/util/animations.scss', 'public/css/util')
 	.sass('resources/scss/util/custom-scrollbar.scss', 'public/css/util')
 	.sass('resources/scss/util/custom-switch.scss', 'public/css/util')
+	.sass('resources/scss/util/highlight-fragment.scss', 'public/css/util')
 	.sass('resources/scss/util/image-input.scss', 'public/css/util')
 	.sass('resources/scss/util/text-counter.scss', 'public/css/util')
 
@@ -80,6 +81,9 @@ mix
 	.js('resources/js/views/includes/lock-view.js', 'public/views/includes/lock-view')
 
 	// VIEWS
+	// Discussions
+	.js('resources/js/views/discussions/show-text-editor.js', 'public/views/discussions')
+
 	// Login Page
 	.js('resources/js/views/login.js', 'public/views/login')
 	.sass('resources/scss/views/login.scss', 'public/views/login')

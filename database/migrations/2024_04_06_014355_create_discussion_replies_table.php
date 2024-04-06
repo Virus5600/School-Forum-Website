@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('discussion_replies', function (Blueprint $table) {
             $table->id();
 			$table->foreignId('discussion_id')->constrained("discussions")->cascadeOnDelete();
-			$table->foreignId('replied_to')->nullable()->constrained('discussion_replies')->cascadeOnDelete();
 			$table->foreignId('replied_by')->constrained('users')->cascadeOnDelete();
 			$table->text('content', 8192);
             $table->timestamps();

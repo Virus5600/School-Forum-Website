@@ -46,6 +46,14 @@ Breadcrumbs::for(
 	}
 );
 
+// DISCUSSIONS > CATEGORY > SHOW (DISCUSSION) > COMMENT (EDIT)
+Breadcrumbs::for(
+	"discussions.comments.edit",
+	fn(Trail $trail, string $category, string $slug, int $id) => $trail
+		->parent("discussions.show", $category, $slug)
+		->push("Edit Comment", route("discussions.comments.edit", [$category, $slug, $id]))
+);
+
 // ANNOUNCEMENTS
 Breadcrumbs::for(
 	"announcements.index",

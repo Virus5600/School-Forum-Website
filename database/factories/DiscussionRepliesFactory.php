@@ -22,13 +22,8 @@ class DiscussionRepliesFactory extends Factory
     {
 		$discussionId = Discussion::inRandomOrder()->first()->id;
 
-		if (rand(0, 1)) {
-			$repliedTo = DiscussionReplies::inRandomOrder()->first()?->id ?? null;
-		}
-
         return [
 			'discussion_id' => $discussionId,
-			'replied_to' => $repliedTo ?? null,
 			'replied_by' => User::inRandomOrder()->first()->id,
 			'content' => fake()->paragraphs(rand(1, 3), true),
         ];
@@ -40,17 +35,7 @@ class DiscussionRepliesFactory extends Factory
 	public function discussionId(int $discussionId): static
 	{
 		return $this->state(fn (array $attributes) => [
-			'discussion_id' => $discussionId,
-		]);
-	}
-
-	/**
-	 * Provides a reply with a specific reply ID.
-	 */
-	public function repliedTo(int $repliedTo): static
-	{
-		return $this->state(fn (array $attributes) => [
-			'replied_to' => $repliedTo,
+			'discussion_id' => $discussionId
 		]);
 	}
 

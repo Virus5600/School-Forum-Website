@@ -19,9 +19,10 @@ class DiscussionRepliesTableSeeder extends Seeder
 
 		foreach ($discussions as $discussion) {
 			if (rand(0, 1)) {
-				for ($i = 0; $i < rand(1, 5); $i++) {
-					$discussion->replies()->save(
+				for ($i = 0; $i < rand(0, 10); $i++) {
+					$discussion->comments()->save(
 						DiscussionReplies::factory()
+							->discussionId($discussion->id)
 							->randomDates()
 							->make()
 					);
