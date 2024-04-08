@@ -61,7 +61,9 @@ $(() => {
 		});
 
 		// RETAIN FOCUS ON CARD IF INPUT HAS VALUE
-		window.isDirty = false
+		if (![true, false, 'true', 'false'].includes(window.isDirty))
+			window.isDirty = false;
+
 		var isDirty = global.isDirty;
 		$(`#content input`).on('keyup', (e) => {
 			if (!isDirty) {

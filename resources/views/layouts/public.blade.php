@@ -6,6 +6,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="Content-Language" content="en-US" />
+		@stack('meta')
 
 		{{-- SITE META --}}
 		<meta name="type" content="website">
@@ -49,7 +50,7 @@
 		<title>{{ $webName }} | @yield('title')</title>
 	</head>
 
-	<body class="custom-scrollbar apply-to-all bg-it-quaternary hf-outline-only">
+	<body class="custom-scrollbar apply-to-all bg-it-quaternary hf-outline-only hf-flash">
 		{{-- NOSCRIPT --}}
 		@php ($noCarousel = isset($noCarousel) ? $noCarousel : false)
 		@include('includes.noscript')

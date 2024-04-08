@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
+use App\Enums\VoteType;
+
 use App\Models\DiscussionCategory;
+use App\Models\VotedDiscussion;
 
 class DiscussionController extends Controller
 {
@@ -56,12 +59,71 @@ class DiscussionController extends Controller
 				"comments" => [
 					"repliedBy:id,username,avatar"
 				],
+				"votes"
 			])
 			->withCount("comments")
 			->firstOrFail();
 
+		// Vote Status
+		$status = null;
+		if (auth()->check())
+			$status = VotedDiscussion::where('discussion_id', '=', $discussion->id)
+				->where('voted_by', '=', auth()->user()->id)
+				->first();
+
+		// Identify the status.
+		if ($status) {
+			$status = $status->type;
+		}
+
+		// Provide the actions
+		$action = [
+			"upvote" => "upvote",
+			"downvote" => "downvote",
+		];
+
+		switch ($status) {
+			case VoteType::UPVOTE->value:
+				$action['upvote'] = "unvote";
+				$action['downvote'] = "swap-to-downvote";
+				break;
+			case VoteType::DOWNVOTE->value:
+				$action['upvote'] = "swap-to-upvote";
+				$action['downvote'] = "unvote";
+				break;
+		}
+
 		return view('discussions.show', [
 			"discussion" => $discussion,
+			"upvoteAction" => $action['upvote'],
+			"downvoteAction" => $action['downvote'],
 		]);
+	}
+
+	// API FUNCTIONS
+	public function upvote(Request $req) {
+		$validator = $this->validateVoteParams('discussion', $req->except('_token', 'bearer', '_method'));
+
+		if ($validator->fails()) {
+			return response()->json([
+				"message" => $this->formatErrors($validator),
+				"status" => 422
+			], 422);
+		}
+
+		return VotedDiscussion::processVote($validator->validate(), VoteType::UPVOTE);
+	}
+
+	public function downvote(Request $req) {
+		$validator = $this->validateVoteParams('discussion', $req->except('_token', 'bearer', '_method'));
+
+		if ($validator->fails()) {
+			return response()->json([
+				"message" => $this->formatErrors($validator),
+				"status" => 422
+			], 422);
+		}
+
+		return VotedDiscussion::processVote($validator->validate(), VoteType::DOWNVOTE);
 	}
 }

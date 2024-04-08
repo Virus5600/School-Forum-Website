@@ -1,0 +1,79 @@
+:root {
+	--vote-backdrop-percent: 37.5;
+
+	--upvote-color: var(--bs-danger);
+	--upvote-backdrop-color: hsl(from var(--upvote-color) h s calc(l + calc(var(--vote-backdrop-percent) / 100)));
+
+	--downvote-color: var(--bs-primary);
+	--downvote-backdrop-color: hsl(from var(--downvote-color) h s calc(l + calc(var(--vote-backdrop-percent) / 100)));
+}
+
+.base {
+	fill: none;
+	stroke-width: 2.5rem;
+	stroke: var(--bs-dark);
+
+	transition: 1s ease-in-out fill,
+		.2s ease-in-out stroke;
+}
+
+.upvote {
+	// Default
+	& > svg path {
+		@extend .base;
+	}
+
+	// Hovered
+	&:hover {
+		& > svg path {
+			stroke: var(--upvote-color);
+		}
+	}
+
+	// Active/Selected
+	&.active,
+	&:active {
+		& > svg path {
+			fill: var(--upvote-color);
+			stroke: var(--upvote-color);
+		}
+	}
+}
+
+
+.downvote {
+	// Default
+	& > svg path {
+		@extend .base;
+	}
+
+	// Hovered
+	&:hover {
+		& > svg path {
+			stroke: var(--downvote-color);
+		}
+	}
+
+	// Active/Selected
+	&.active,
+	&:active {
+		& > svg path {
+			fill: var(--downvote-color);
+			stroke: var(--downvote-color);
+		}
+	}
+}
+
+*:not(.not-affected) {
+	&:has(> .upvote.active) {
+		& > * {
+			background-color: var(--upvote-backdrop-color);
+		}
+	}
+
+	&:has(> .downvote.active) {
+		& > * {
+			background-color: var(--downvote-backdrop-color);
+		}
+	}
+}

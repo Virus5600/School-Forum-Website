@@ -16,4 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => "App\Http\Controllers", 'middleware' => ['permissions:sanctum']], function() {
 	// Resend Verification
 	Route::post('/resend', 'AuthenticationController@resendVerification')->name('verification.resend');
+
+	// Discussion Related
+	Route::group(['prefix' => 'discussions'], function() {
+		// Upvote (Discussion)
+		Route::patch('/upvote', 'DiscussionController@upvote')->name('api.discussions.upvote');
+
+		// Downvote (Discussion)
+		Route::patch('/downvote', 'DiscussionController@downvote')->name('api.discussions.downvote');
+	});
 });

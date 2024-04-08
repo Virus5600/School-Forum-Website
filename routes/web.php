@@ -61,8 +61,8 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 					// Show
 					Route::get('/', 'DiscussionController@show')->name('discussions.show');
 
-					// Comments
-					Route::group(['prefix' => 'comment'], function() {
+					// Comments (AUTHENTICATION REQUIRED)
+					Route::group(['prefix' => 'comment', 'middleware' => ['auth']], function() {
 						// Store
 						Route::post('/store', 'DiscussionRepliesController@store')->name('discussions.comments.store');
 

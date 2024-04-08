@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\UploadedFile;
-
+use Illuminate\Validation\Validator as Validated;
 use Intervention\Image\Image as IImage;
 
 use Image;
+use InvalidArgumentException;
+use Validator;
 
 class Controller extends BaseController
 {
@@ -23,10 +24,10 @@ class Controller extends BaseController
 	 * Format the errors from the validator into a format that allows
 	 * XHR requests to easily parse the errors.
 	 *
-	 * @param Validator $validator
+	 * @param Validated $validator
 	 * @return array
 	 */
-	protected function formatErrors(Validator $validator): array
+	protected function formatErrors(Validated $validator): array
     {
         $errors = $validator->errors()->getMessages();
         $obj = $validator->failed();
@@ -58,8 +59,19 @@ class Controller extends BaseController
 		return $params;
 	}
 
+	/**
+	 * Converts any image type into a WEBP image format.
+	 *
+	 * @param string $filename
+	 * @param UploadedFile $image
+	 * @param string $saveToPath
+	 * @param int $quality
+	 */
 	protected function convertToWEBP(string $filename, UploadedFile $image, string $saveToPath, $quality = 75): IImage
 	{
+		// Handles the quality value. Max is 100.
+		$quality = $quality > 100 ? 100 : ($quality < 0 ? 0 : $quality);
+
 		$path = public_path("{$saveToPath}/{$filename}");
 
 		$image = Image::make($image);
@@ -67,5 +79,41 @@ class Controller extends BaseController
 			->save($path);
 
 		return $image;
+	}
+
+	/**
+	 * Creates a validator instance that will validates any up/downvote
+	 * API request parameters. The `$type` parameter defines whether this
+	 * is for a Discussion (`discussion`) or DiscussionReply (`comment`) model.
+	 *
+	 * @param string $type
+	 * @param array $params
+	 */
+	protected function validateVoteParams(string $type, array $params): Validated
+	{
+		if (in_array($type, ['discussion', 'comment']))
+			$type = ucwords($type);
+		else
+			throw new InvalidArgumentException("{$type} is not a valid argument. Use either \"discussion\" or \"comment\".");
+
+		return Validator::make(
+			$params,
+			[
+				'id' => ['required', 'numeric', 'exists:discussions,id'],
+				'userID' => ['required', 'numeric', 'exists:users,id'],
+				'action' => ['required', 'string', 'in:upvote,downvote,swap-to-upvote,swap-to-downvote,unvote']
+			],
+			[
+				'id.required' => "{$type} ID is required",
+				'id.numeric' => "Invalid ID format",
+				'id.exists' => "{$type} entry does not exists",
+				'userID.required' => "User ID is required",
+				'userID.numeric' => "Invalid ID format",
+				'userID.exists' => "User entry does not exists",
+				'action.required' => "Action is required",
+				'action.string' => "Invalid action format",
+				'action.in' => "Invalid action. Must be one of the following: upvote, downvote, swap-to-upvote, swap-to-downvote, unvote"
+			]
+		);
 	}
 }

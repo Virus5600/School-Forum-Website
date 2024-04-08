@@ -73,25 +73,22 @@ if ($page > 0 && is_int($page)) {
 	<li class="list-group-item d-flex flex-row justify-content-between border-top-0 border-end-0 border-bottom-0 border-start-1">
 		<div class="btn-group" role="group" aria-label="Reply Actions">
 			{{-- UPVOTE --}}
-			<button type="button" class="btn btn-sm icon-link icon-link-hover border-0 upvote" style="--bs-icon-link-transform: translateY(-.25rem);">
-				<i class="fas fa-caret-up bi"></i>
+			<button type="button" class="btn btn-sm icon-link icon-link-hover border border-start-0 rounded-start-pill upvote" style="--bs-icon-link-transform: translateY(-.25rem);">
+				<i class="fas fa-up-long bi"></i>
 				{{ $likes }}
 			</button>
 
-			{{-- DIVIDER --}}
-			<div class="vr"></div>
-
 			{{-- DOWNVOTE --}}
-			<button type="button" class="btn btn-sm icon-link icon-link-hover border-0 downvote" style="--bs-icon-link-transform: translateY(.25rem);">
-				<i class="fas fa-caret-down bi"></i>
+			<button type="button" class="btn btn-sm icon-link icon-link-hover border border-end-0 rounded-end-pill downvote" style="--bs-icon-link-transform: translateY(.25rem);">
+				<i class="fas fa-down-long bi"></i>
 			</button>
 		</div>
 
 		{{-- REPLY --}}
-		<button type="button" class="btn btn-sm border-0 icon-link icon-link-hover" style="--bs-icon-link-transform: scale(-1.125, 1.125);">
+		<a href="#comment-form" type="button" class="btn btn-sm border rounded-pill icon-link icon-link-hover" style="--bs-icon-link-transform: scale(-1.25, 1.25);">
 			<i class="far fa-comment-dots fa-flip-horizontal bi"></i>
 			Reply
-		</button>
+		</a>
 	</li>
 	@endauth
 </ul>

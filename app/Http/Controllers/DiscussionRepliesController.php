@@ -27,7 +27,7 @@ class DiscussionRepliesController extends Controller
 				->back()
 				->withErrors($validator)
 				->withInput()
-				->withFragment('form');
+				->withFragment('comment-form');
 		}
 
 		$cleanData = (object) $validator->validated();

@@ -85,25 +85,22 @@
 						<li class="list-group-item d-flex flex-row justify-content-between border-0">
 							<div class="btn-group" role="group" aria-label="Comment Actions">
 								{{-- UPVOTE --}}
-								<button type="button" class="btn btn-sm icon-link icon-link-hover border-0 upvote" style="--bs-icon-link-transform: translateY(-.25rem);">
-									<i class="fas fa-caret-up bi"></i>
-									{{ rand(-100, 100) }}
+								<button type="button" id="upvote-{{ $discussion->id }}" class="btn btn-sm icon-link icon-link-hover border border-end-0 rounded-start-pill upvote {{ $upvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(-.25rem);" data-vote-id="{{ $discussion->id }}" data-vote-route="{{ route('api.discussions.upvote') }}" data-vote-action="{{ $upvoteAction }}">
+									<i class="fas fa-up-long bi"></i>
+									<span id="vote-count-{{ $discussion->id }}">{{ $discussion->getVoteCount() }}</span>
 								</button>
 
-								{{-- DIVIDER --}}
-								<div class="vr"></div>
-
 								{{-- DOWNVOTE --}}
-								<button type="button" class="btn btn-sm icon-link icon-link-hover border-0 downvote" style="--bs-icon-link-transform: translateY(.25rem);">
-									<i class="fas fa-caret-down bi"></i>
+								<button type="button" id="downvote-{{ $discussion->id }}" class="btn btn-sm icon-link icon-link-hover border border-start-0 rounded-end-pill downvote {{ $downvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(.25rem);" data-vote-id="{{ $discussion->id }}" data-vote-route="{{ route('api.discussions.downvote') }}" data-vote-action="{{ $downvoteAction }}">
+									<i class="fas fa-down-long bi"></i>
 								</button>
 							</div>
 
-							{{-- REPLY --}}
-							<button type="button" class="btn btn-sm border-0 icon-link icon-link-hover" style="--bs-icon-link-transform: scale(-1.125, 1.125);">
+							{{-- COMMENT --}}
+							<a href="#comment-form" type="button" class="btn btn-sm border rounded-pill icon-link icon-link-hover" style="--bs-icon-link-transform: scale(-1.25, 1.25);">
 								<i class="far fa-comment-dots fa-flip-horizontal bi"></i>
 								Comments {{ $discussion->comments_count > 0 ? $discussion->comments_count : "" }}
-							</button>
+							</a>
 						</li>
 						@endauth
 					</ul>
@@ -139,7 +136,7 @@
 
 	{{-- COMMENT FORM --}}
 	@auth
-	<div class="card mt-5" id="form">
+	<div class="card mt-5" id="comment-form">
 		<div class="card-body">
 			<form action="{{ route('discussions.comments.store', [$discussion->category->name, $discussion->slug]) }}" method="POST">
 				@csrf
@@ -171,6 +168,19 @@
 </div>
 @endsection
 
+@if (auth()->check())
+@push('meta')
+<meta name="token" content="{{ csrf_token() }}"/>
+<meta name="bearer" content="{{ session()->get('bearer') }}"/>
+<meta name="uid" content="{{ auth()->user()->id }}"/>
+@endpush
+@endif
+
+@push('css')
+<link rel="stylesheet" href="{{ mix('views/discussions/general.css') }}" nonce="{{ csp_nonce() }}">
+@endpush
+
 @push('scripts')
-<script type="text/javascript" src="{{ mix('views/discussions/show-text-editor.js') }}"></script>
+<script type="text/javascript" src="{{ mix('views/discussions/show-text-editor.js') }}" nonce="{{ csp_nonce() }}"></script>
+<script type="text/javascript" src="{{ mix('views/discussions/voting-fn.js') }}" nonce="{{ csp_nonce() }}"></script>
 @endpush

@@ -17,7 +17,7 @@ $(() => {
 		],
 		minHeight: `150px`,
 		height: `auto`,
-		autoFocus: false,
+		autofocus: false,
 
 		// Event handlers
 		events: {

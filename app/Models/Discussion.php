@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Enums\VoteType;
+
 class Discussion extends Model
 {
 	use HasFactory, SoftDeletes;
@@ -30,8 +32,19 @@ class Discussion extends Model
 
 	// Relationships
 	public function category() { return $this->belongsTo('App\Models\DiscussionCategory', 'category_id'); }
-	public function postedBy() { return $this->belongsTo('App\Models\User', 'posted_by'); }
 	public function comments() { return $this->hasMany('App\Models\DiscussionReplies', 'discussion_id'); }
+	public function postedBy() { return $this->belongsTo('App\Models\User', 'posted_by'); }
+	public function votes() { return $this->hasMany('App\Models\VotedDiscussion'); }
+
+	// Custom Functions
+	public function getVoteCount(): int
+	{
+		$updatedCount = $this->votes->sum(function($vote) {
+			return $vote->type == VoteType::UPVOTE->value ? 1 : -1;
+		});
+
+		return $updatedCount;
+	}
 
 	// VALIDATOR RELATED FUNCTIONS
 	/**

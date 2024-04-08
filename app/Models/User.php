@@ -59,6 +59,7 @@ class User extends Authenticatable
 	public function userType() { return $this->belongsTo('App\Models\UserType'); }
 	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }
 	public function userPerms() { return $this->belongsToMany('App\Models\Permission', 'user_permissions'); }
+	public function votes() { return $this->hasMany('App\Models\VotedDiscussion', 'voted_by'); }
 
     // Custom Functions
 	public function permissions() {

@@ -16,7 +16,6 @@ use App\Models\UserType;
 use DB;
 use Exception;
 use Hash;
-use Image;
 use Log;
 use Validator;
 

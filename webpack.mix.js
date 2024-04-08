@@ -83,6 +83,8 @@ mix
 	// VIEWS
 	// Discussions
 	.js('resources/js/views/discussions/show-text-editor.js', 'public/views/discussions')
+	.js('resources/js/views/discussions/voting-fn.js', 'public/views/discussions')
+	.sass('resources/scss/views/discussions/general.scss', 'public/views/discussions')
 
 	// Login Page
 	.js('resources/js/views/login.js', 'public/views/login')
