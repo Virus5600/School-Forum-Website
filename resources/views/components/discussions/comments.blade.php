@@ -68,18 +68,23 @@ if ($page > 0 && is_int($page)) {
 	</li>
 
 	{{-- COMMENT ACTIONS --}}
+	@php
+	$action = $comment->getStatusAction(auth()->user()->id);
+	$upvoteAction = $action['upvote'];
+	$downvoteAction = $action['downvote'];
+	@endphp
+
 	@auth
-	@php ($likes = rand(-100, 100))
 	<li class="list-group-item d-flex flex-row justify-content-between border-top-0 border-end-0 border-bottom-0 border-start-1">
 		<div class="btn-group" role="group" aria-label="Reply Actions">
 			{{-- UPVOTE --}}
-			<button type="button" class="btn btn-sm icon-link icon-link-hover border border-start-0 rounded-start-pill upvote" style="--bs-icon-link-transform: translateY(-.25rem);">
+			<button type="button" id="upvote-comment-{{ $comment->id }}" class="btn btn-sm icon-link icon-link-hover border border-start-0 rounded-start-pill upvote {{ $upvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(-.25rem);" data-vote-id="{{ $comment->id }}" data-vote-route="{{ route('api.discussions.comments.upvote') }}" data-vote-action="{{ $upvoteAction }}">
 				<i class="fas fa-up-long bi"></i>
-				{{ $likes }}
+				<span id="vote-count-comment-{{ $comment->id }}">{{ $comment->getVoteCount() }}</span>
 			</button>
 
 			{{-- DOWNVOTE --}}
-			<button type="button" class="btn btn-sm icon-link icon-link-hover border border-end-0 rounded-end-pill downvote" style="--bs-icon-link-transform: translateY(.25rem);">
+			<button type="button" id="downvote-comment-{{ $comment->id }}" class="btn btn-sm icon-link icon-link-hover border border-end-0 rounded-end-pill downvote {{ $downvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(.25rem);" data-vote-id="{{ $comment->id }}" data-vote-route="{{ route('api.discussions.comments.downvote') }}" data-vote-action="{{ $downvoteAction }}">
 				<i class="fas fa-down-long bi"></i>
 			</button>
 		</div>

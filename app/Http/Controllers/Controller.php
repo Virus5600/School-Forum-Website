@@ -91,15 +91,18 @@ class Controller extends BaseController
 	 */
 	protected function validateVoteParams(string $type, array $params): Validated
 	{
-		if (in_array($type, ['discussion', 'comment']))
+		if (in_array($type, ['discussion', 'comment'])) {
+			$table = $type === 'comment' ? "discussion_replies" : "{$type}s";
 			$type = ucwords($type);
-		else
+		}
+		else {
 			throw new InvalidArgumentException("{$type} is not a valid argument. Use either \"discussion\" or \"comment\".");
+		}
 
 		return Validator::make(
 			$params,
 			[
-				'id' => ['required', 'numeric', 'exists:discussions,id'],
+				'id' => ['required', 'numeric', "exists:{$table},id"],
 				'userID' => ['required', 'numeric', 'exists:users,id'],
 				'action' => ['required', 'string', 'in:upvote,downvote,swap-to-upvote,swap-to-downvote,unvote']
 			],

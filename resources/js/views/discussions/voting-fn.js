@@ -37,41 +37,45 @@ $(() => {
 
 	const responseHandler = (response) => {
 		const { action, message, newAction, status, updatedData } = response;
-		const {id, updatedCount} = updatedData ?? {id: null, updatedCount: null};
+		const { id, updatedCount, voteType } = updatedData ?? {id: null, updatedCount: null};
 
 		// If the response is successful
 		if (status === 200) {
 			// Update the vote count
-			$(`#vote-count-${id}`).text(updatedCount);
+			$(`#vote-count-${voteType}-${id}`).text(updatedCount);
 
 			// Update the vote action
-			$(`#upvote-${id}`).attr(`data-vote-action`, newAction.upvote);
-			$(`#downvote-${id}`).attr(`data-vote-action`, newAction.downvote);
+			$(`#upvote-${voteType}-${id}`).attr(`data-vote-action`, newAction.upvote);
+			$(`#downvote-${voteType}-${id}`).attr(`data-vote-action`, newAction.downvote);
 
 			// Check action whether its upvote/downvote, swap, or unvote and apply style
 			// changes accordingly.
 			let actualAction = action.replace(/.*-/, ``),
 				otherAction = actualAction === `upvote` ? `downvote` : `upvote`;
 
+			console.log({
+				actualAction: `#${actualAction}-${voteType}-${id}`,
+				otherAction: `#${otherAction}-${voteType}-${id}`
+			})
 			switch (action.replace(/-.*/, '')) {
 				case `upvote`:
 				case `downvote`:
 					// Update the vote action class
-					$(`#${action}-${id}`).addClass(`active`);
+					$(`#${actualAction}-${voteType}-${id}`).addClass(`active`);
 
 					// If the other action is active, remove the active class
-					$(`#${otherAction}-${id}`).removeClass(`active`);
+					$(`#${otherAction}-${voteType}-${id}`).removeClass(`active`);
 					break;
 
 				case `swap`:
 					// Update the vote action class
-					$(`#${actualAction}-${id}`).addClass(`active`);
-					$(`#${otherAction}-${id}`).removeClass(`active`);
+					$(`#${actualAction}-${voteType}-${id}`).addClass(`active`);
+					$(`#${otherAction}-${voteType}-${id}`).removeClass(`active`);
 					break;
 
 				case `unvote`:
 					// Update the vote action class
-					$(`#upvote-${id}, #downvote-${id}`).removeClass(`active`);
+					$(`#upvote-${voteType}-${id}, #downvote-${voteType}-${id}`).removeClass(`active`);
 					break;
 			}
 		}

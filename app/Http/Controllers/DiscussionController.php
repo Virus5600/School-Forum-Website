@@ -56,45 +56,29 @@ class DiscussionController extends Controller
 		$discussion = $discussion
 			->with([
 				"postedBy:id,username,avatar",
-				"comments" => [
-					"repliedBy:id,username,avatar"
-				],
 				"votes"
 			])
 			->withCount("comments")
 			->firstOrFail();
 
 		// Vote Status
-		$status = null;
+		$action = VotedDiscussion::DEFAULT_ACTIONS;
 		if (auth()->check())
-			$status = VotedDiscussion::where('discussion_id', '=', $discussion->id)
+			$action = VotedDiscussion::where('discussion_id', '=', $discussion->id)
 				->where('voted_by', '=', auth()->user()->id)
-				->first();
+				->first()
+				?->getStatusAction() ?? $action;
 
-		// Identify the status.
-		if ($status) {
-			$status = $status->type;
-		}
-
-		// Provide the actions
-		$action = [
-			"upvote" => "upvote",
-			"downvote" => "downvote",
-		];
-
-		switch ($status) {
-			case VoteType::UPVOTE->value:
-				$action['upvote'] = "unvote";
-				$action['downvote'] = "swap-to-downvote";
-				break;
-			case VoteType::DOWNVOTE->value:
-				$action['upvote'] = "swap-to-upvote";
-				$action['downvote'] = "unvote";
-				break;
-		}
+		// Fetch Comments
+		$comments = $discussion->comments()
+			->with('repliedBy', 'votes')
+			->orderBy('created_at', 'asc')
+			->paginate(10)
+			->fragment('content');
 
 		return view('discussions.show', [
 			"discussion" => $discussion,
+			"comments" => $comments,
 			"upvoteAction" => $action['upvote'],
 			"downvoteAction" => $action['downvote'],
 		]);

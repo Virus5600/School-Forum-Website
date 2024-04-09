@@ -11,11 +11,11 @@ use DB;
 use Exception;
 use Log;
 
-class VotedDiscussion extends Model
+class VotedComment extends Model
 {
 	protected $fillable = [
 		'type',
-		'discussion_id',
+		'comment_id',
 		'voted_by'
 	];
 
@@ -33,7 +33,7 @@ class VotedDiscussion extends Model
 	];
 
 	// Relationships
-	public function discussion() { return $this->belongsTo('App\Models\Discussion'); }
+	public function comment() { return $this->belongsTo('App\Models\DiscussionReplies'); }
 	public function votedBy() { return $this->belongsTo('App\Models\User', 'voted_by');}
 
 	// Custom Functions
@@ -85,7 +85,7 @@ class VotedDiscussion extends Model
 			DB::beginTransaction();
 
 			// Fetch the vote record
-			$vote = VotedDiscussion::where('discussion_id', '=', $cleanData->id)
+			$vote = VotedComment::where('comment_id', '=', $cleanData->id)
 				->where('voted_by', '=', $cleanData->userID)
 				->first();
 
@@ -93,9 +93,9 @@ class VotedDiscussion extends Model
 			$newlyCreated = false;
 			if (!$vote) {
 				$newlyCreated = true;
-				$vote = VotedDiscussion::create([
+				$vote = VotedComment::create([
 					'type' => $type->value,
-					'discussion_id' => $cleanData->id,
+					'comment_id' => $cleanData->id,
 					'voted_by' => $cleanData->userID,
 				]);
 			}
@@ -141,7 +141,7 @@ class VotedDiscussion extends Model
 					break;
 			}
 
-			$updatedCount = $vote->discussion->getVoteCount();
+			$updatedCount = $vote->comment->getVoteCount();
 
 			DB::commit();
 		} catch (Exception $e) {
@@ -160,7 +160,7 @@ class VotedDiscussion extends Model
 			"updatedData" => [
 				"id" => $cleanData->id,
 				"updatedCount" => $updatedCount,
-				"voteType" => "discussion",
+				"voteType" => "comment",
 			],
 			"action" => $cleanData->action,
 			"newAction" =>	$action,

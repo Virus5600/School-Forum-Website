@@ -24,5 +24,14 @@ Route::group(['namespace' => "App\Http\Controllers", 'middleware' => ['permissio
 
 		// Downvote (Discussion)
 		Route::patch('/downvote', 'DiscussionController@downvote')->name('api.discussions.downvote');
+
+		// Comment (Discussion)
+		Route::group(['prefix' => 'comment'], function() {
+			// Upvote (Comment)
+			Route::patch('/upvote', 'VotedCommentController@upvote')->name('api.discussions.comments.upvote');
+
+			// Downvote (Comment)
+			Route::patch('/downvote', 'VotedCommentController@downvote')->name('api.discussions.comments.downvote');
+		});
 	});
 });

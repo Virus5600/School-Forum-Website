@@ -37,6 +37,11 @@ class Discussion extends Model
 	public function votes() { return $this->hasMany('App\Models\VotedDiscussion'); }
 
 	// Custom Functions
+	/**
+	 * Get the vote count for the discussion.
+	 *
+	 * @return int The vote count for the discussion.
+	 */
 	public function getVoteCount(): int
 	{
 		$updatedCount = $this->votes->sum(function($vote) {

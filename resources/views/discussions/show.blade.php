@@ -85,13 +85,13 @@
 						<li class="list-group-item d-flex flex-row justify-content-between border-0">
 							<div class="btn-group" role="group" aria-label="Comment Actions">
 								{{-- UPVOTE --}}
-								<button type="button" id="upvote-{{ $discussion->id }}" class="btn btn-sm icon-link icon-link-hover border border-end-0 rounded-start-pill upvote {{ $upvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(-.25rem);" data-vote-id="{{ $discussion->id }}" data-vote-route="{{ route('api.discussions.upvote') }}" data-vote-action="{{ $upvoteAction }}">
+								<button type="button" id="upvote-discussion-{{ $discussion->id }}" class="btn btn-sm icon-link icon-link-hover border border-end-0 rounded-start-pill upvote {{ $upvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(-.25rem);" data-vote-id="{{ $discussion->id }}" data-vote-route="{{ route('api.discussions.upvote') }}" data-vote-action="{{ $upvoteAction }}">
 									<i class="fas fa-up-long bi"></i>
-									<span id="vote-count-{{ $discussion->id }}">{{ $discussion->getVoteCount() }}</span>
+									<span id="vote-count-discussion-{{ $discussion->id }}">{{ $discussion->getVoteCount() }}</span>
 								</button>
 
 								{{-- DOWNVOTE --}}
-								<button type="button" id="downvote-{{ $discussion->id }}" class="btn btn-sm icon-link icon-link-hover border border-start-0 rounded-end-pill downvote {{ $downvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(.25rem);" data-vote-id="{{ $discussion->id }}" data-vote-route="{{ route('api.discussions.downvote') }}" data-vote-action="{{ $downvoteAction }}">
+								<button type="button" id="downvote-discussion-{{ $discussion->id }}" class="btn btn-sm icon-link icon-link-hover border border-start-0 rounded-end-pill downvote {{ $downvoteAction == 'unvote' ? 'active' : '' }}" style="--bs-icon-link-transform: translateY(.25rem);" data-vote-id="{{ $discussion->id }}" data-vote-route="{{ route('api.discussions.downvote') }}" data-vote-action="{{ $downvoteAction }}">
 									<i class="fas fa-down-long bi"></i>
 								</button>
 							</div>
@@ -112,12 +112,6 @@
 	<hr class="my-3">
 
 	{{-- COMMENTS --}}
-	@php(
-		$comments = $discussion->comments()
-			->orderBy('created_at', 'asc')
-			->paginate(10)
-			->fragment('content')
-	)
 	<div class="vstack row-gap-3">
 		{{-- COMMENT ITEM --}}
 		@forelse($comments as $reply)
