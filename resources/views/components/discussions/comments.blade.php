@@ -68,13 +68,15 @@ if ($page > 0 && is_int($page)) {
 	</li>
 
 	{{-- COMMENT ACTIONS --}}
+
+	@auth
+
 	@php
 	$action = $comment->getStatusAction(auth()->user()->id);
 	$upvoteAction = $action['upvote'];
 	$downvoteAction = $action['downvote'];
 	@endphp
 
-	@auth
 	<li class="list-group-item d-flex flex-row justify-content-between border-top-0 border-end-0 border-bottom-0 border-start-1">
 		<div class="btn-group" role="group" aria-label="Reply Actions">
 			{{-- UPVOTE --}}
