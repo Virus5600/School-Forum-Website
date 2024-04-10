@@ -1,6 +1,11 @@
 // Slick Carousel
 @import "../../libs/slick";
 
+// REQUIRED COLOR STYLING //
+:root {
+	--required-color: var(--bs-danger);
+}
+
 // SLICK CAROUSEL STYLINGS //
 .carousel img {
 	height: 50vh;

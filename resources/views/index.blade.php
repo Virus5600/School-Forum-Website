@@ -108,11 +108,11 @@
 				<article class="col-12 col-lg-6">
 					<div class="card h-100">
 						<h3 class="card-header bg-it-primary text-light fw-normal transition-3 d-flex justify-content-between">
-							<a href="{{ route('discussions.index', [$category]) }}" class="text-decoration-none link-body-emphasis" data-bs-theme="dark">
+							<a href="{{ route('discussions.categories.show', [$category]) }}" class="text-decoration-none link-body-emphasis" data-bs-theme="dark">
 								{{ ucwords($category) }}
 							</a>
 
-							<a href="{{ route('discussions.index', [$category]) }}" target="_blank" rel="noreferrer" class="text-decoration-none link-body-emphasis" data-bs-theme="dark">
+							<a href="{{ route('discussions.categories.show', [$category]) }}" target="_blank" rel="noreferrer" class="text-decoration-none link-body-emphasis" data-bs-theme="dark">
 								<i class="fas fa-up-right-from-square fa-xs"></i>
 							</a>
 						</h3>
@@ -120,7 +120,7 @@
 						<div class="card-body p-0">
 							<div class="list-group list-group-flush border-bottom">
 								@foreach ($items as $item)
-								<a href="@{{ route('discussions.show', [$item->id]) }}" class="list-group-item list-group-item-action fw-normal fs-4 link-body-emphasis transition-3">
+								<a href="{{ route('discussions.show', [$item->category->name, $item->slug]) }}" class="list-group-item list-group-item-action fw-normal fs-4 link-body-emphasis transition-3">
 									{{ Str::limit($item->title, 25) }}
 								</a>
 								@endforeach

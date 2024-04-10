@@ -18,7 +18,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
 	const ADMIN_QUERY_PARAMS = ["search", "sort", "direction", "page"];
-	const ADMIN_EXCEPT = ["_token", "search", "sort", "direction", "page"];
+	const EXCEPT = ["_token", "_method", "search", "sort", "direction", "page"];
 
 	/**
 	 * Format the errors from the validator into a format that allows

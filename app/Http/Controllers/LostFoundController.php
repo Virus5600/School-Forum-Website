@@ -114,9 +114,9 @@ class LostFoundController extends Controller
 	}
 
 	public function adminStore(Request $req) {
-		$cols = array_keys($req->except(self::ADMIN_EXCEPT));
+		$cols = array_keys($req->except(self::EXCEPT));
 		$validator = Validator::make(
-			$req->except(self::ADMIN_EXCEPT),
+			$req->except(self::EXCEPT),
 			LostFound::getValidationRules(...$cols),
 			LostFound::getValidationMessages()
 		);

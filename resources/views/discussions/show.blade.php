@@ -4,7 +4,17 @@
 
 @section('content')
 <div class="container-fluid body-container">
-	{{ Breadcrumbs::render() }}
+	<div class="d-flex flex-column flex-lg-row justify-content-start align-items-center gap-3">
+		<a href="{{ route('discussions.categories.show', [$discussion->category->name]) }}" class="link-body-emphasis icon-link icon-link-hover text-decoration-none" style="--bs-icon-link-transform: translateX(-.25rem);">
+			<i class="fas fa-chevron-left bi"></i>
+			Go back to {{ ucwords($discussion->category->name) }}
+		</a>
+
+		<div class="vr"></div>
+
+		{{ Breadcrumbs::render() }}
+	</div>
+
 	<hr>
 
 	{{-- HERO CONTENT --}}
@@ -52,14 +62,15 @@
 
 											<div class="dropdown-menu drop-down-menu-end" aria-label="More actions...">
 												{{-- EDIT --}}
-												<a class="dropdown-item" href="@{{ route('discussions.comments.edit', [$name, $discussion->slug]) }}">
+												<a class="dropdown-item" href="{{ route('discussions.edit', [$discussion->category->name, $discussion->slug]) }}">
 													Edit
 												</a>
 
 												{{-- DELETE --}}
-												<form action="@{{ route('discussions.comments.delete', [$name, $discussion->slug]) }}" method="POST">
+												<form action="{{ route('discussions.delete', [$discussion->category->name, $discussion->slug]) }}" method="POST" data-cl-form data-cl-form-title="This cannot be undone" data-cl-form-message="Are you sure you want to delete this post?">
 													@csrf
 													@method('DELETE')
+
 													<button type="submit" class="dropdown-item">
 														Delete
 													</button>
@@ -115,7 +126,14 @@
 	<div class="vstack row-gap-3">
 		{{-- COMMENT ITEM --}}
 		@forelse($comments as $reply)
-			<x-discussions.comments :comment="$reply" additionalClass="my-3" name="{{ $discussion->category->name }}" slug="{{ $discussion->slug }}" :discussion="$discussion" page="{{ request()->page }}"/>
+			<x-discussions.comments :comment="$reply"
+				additionalClass="my-3"
+				name="{{ $discussion->category->name }}"
+				slug="{{ $discussion->slug }}"
+				page="{{ request()->page }}"
+				includeScripts="false"
+				:discussion="$discussion"
+				/>
 		@empty
 			<div class="card card-body">
 				<p class="m-0 p-0 text-center">
@@ -162,19 +180,20 @@
 </div>
 @endsection
 
-@if (auth()->check())
-@push('meta')
-<meta name="token" content="{{ csrf_token() }}"/>
-<meta name="bearer" content="{{ session()->get('bearer') }}"/>
-<meta name="uid" content="{{ auth()->user()->id }}"/>
-@endpush
-@endif
+@auth
+	@push('meta')
+		<meta name="token" content="{{ csrf_token() }}"/>
+		<meta name="bearer" content="{{ session()->get('bearer') }}"/>
+		<meta name="uid" content="{{ auth()->user()->id }}"/>
+	@endpush
+@endauth
 
 @push('css')
 <link rel="stylesheet" href="{{ mix('views/discussions/general.css') }}" nonce="{{ csp_nonce() }}">
 @endpush
 
 @push('scripts')
-<script type="text/javascript" src="{{ mix('views/discussions/show-text-editor.js') }}" nonce="{{ csp_nonce() }}"></script>
-<script type="text/javascript" src="{{ mix('views/discussions/voting-fn.js') }}" nonce="{{ csp_nonce() }}"></script>
+<script type="text/javascript" src="{{ mix('views/discussions/show-text-editor.js') }}" nonce="{{ csp_nonce() }}" defer></script>
+<script type="text/javascript" src="{{ mix('views/discussions/voting-fn.js') }}" nonce="{{ csp_nonce() }}" defer></script>
+<script type="text/javascript" src="{{ mix("js/util/confirm-leave.js") }}" nonce="{{ csp_nonce() }}" defer></script>
 @endpush

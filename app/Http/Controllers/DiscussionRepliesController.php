@@ -125,4 +125,27 @@ class DiscussionRepliesController extends Controller
 			->with('flash_success', 'Your reply has been successfully updated.')
 			->withFragment(Carbon::parse($comment->created_at)->timestamp . $comment->id);
 	}
+
+	public function delete(Request $req, string $name, string $slug, int $id) {
+		$comment = DiscussionReplies::findOrFail($id);
+
+		try {
+			DB::beginTransaction();
+
+			$comment->delete();
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			Log::error($e);
+
+			return redirect()
+				->back()
+				->with('flash_error', 'An error occurred while trying to delete your reply. Please try again later.');
+		}
+
+		return redirect()
+			->route('discussions.show', ['name' => $name, 'slug' => $slug])
+			->with('flash_success', 'Your reply has been successfully deleted.');
+	}
 }

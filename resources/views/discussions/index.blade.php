@@ -4,12 +4,20 @@
 
 @section('content')
 <div class="container-fluid body-container">
-	{{ Breadcrumbs::render() }}
+	<div class="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+		{{ Breadcrumbs::render() }}
+
+		<a href="{{ route('discussions.create') }}" class="btn btn-it-primary icon-link icon-link-hover" title="Start your own discussion." style="--bs-icon-link-transform: scale(1.125);">
+			<i class="fas fa-comments bi"></i>
+			Start your own discussion
+		</a>
+	</div>
+
 	<hr>
 
 	{{-- HERO CONTENT --}}
 	<hgroup class="d-flex flex-column">
-		<h1 class="m-0 p-2 display-1">Discussion Categories</h1>
+		<h2 class="m-0 p-2 display-1">Discussion Categories</h2>
 	</hgroup>
 
 	{{-- CATEGORIES --}}
@@ -49,7 +57,7 @@
 	{{ $discussions->onEachSide(-1)->links() }}
 
 	{{-- DISCUSSIONS --}}
-	<div class="row row-cols-1 row-cols-lg-2 row-gap-3 my-3">
+	<section class="row row-cols-1 row-cols-lg-2 row-gap-3 my-3">
 		@forelse($discussions as $value)
 			@if (!$value->discussions->isEmpty())
 			<x-discussions.categories :value="$value"/>
@@ -65,10 +73,12 @@
 			</div>
 		</div>
 		@endforelse
-	</div>
+	</section>
 
 	{{-- BOT PAGINATOR --}}
 	{{ $discussions->onEachSide(-1)->links() }}
+
+	<hr>
 </div>
 @endsection
 

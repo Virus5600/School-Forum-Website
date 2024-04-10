@@ -4,7 +4,24 @@
 
 @section('content')
 <div class="container-fluid body-container">
-	{{ Breadcrumbs::render() }}
+	<div class="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+		<div class="d-flex flex-column flex-lg-row justify-content-start align-items-center gap-3">
+			<a href="{{ route('discussions.index') }}" class="link-body-emphasis icon-link icon-link-hover text-decoration-none" style="--bs-icon-link-transform: translateX(-.25rem);">
+				<i class="fas fa-chevron-left bi"></i>
+				Go back to Discussions
+			</a>
+
+			<div class="vr"></div>
+
+			{{ Breadcrumbs::render() }}
+		</div>
+
+		<a href="{{ route('discussions.create', ["url" => url()->full()]) }}" class="btn btn-it-primary icon-link icon-link-hover" title="Start your own discussion." style="--bs-icon-link-transform: scale(1.125);">
+			<i class="fas fa-comments bi"></i>
+			Start your own discussion
+		</a>
+	</div>
+
 	<hr>
 
 	{{-- HERO CONTENT --}}

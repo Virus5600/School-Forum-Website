@@ -46,6 +46,15 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		// Index
 		Route::get('/', 'DiscussionController@index')->name('discussions.index');
 
+		// Creating a Discussion
+		Route::group(['prefix' => 'create', 'middleware' => ['auth']], function() {
+			// Create Page
+			Route::get('/', 'DiscussionController@create')->name('discussions.create');
+
+			// Store
+			Route::post('/store', 'DiscussionController@store')->name('discussions.store');
+		});
+
 		// Categories
 		Route::group(['prefix' => 'category'], function() {
 			// Index
@@ -60,6 +69,18 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 				Route::group(['prefix' => '{slug}'], function() {
 					// Show
 					Route::get('/', 'DiscussionController@show')->name('discussions.show');
+
+					// Edit
+					Route::group(['prefix' => 'edit', 'middleware' => ['auth']], function() {
+						// Edit Page
+						Route::get('/', 'DiscussionController@edit')->name('discussions.edit');
+
+						// Update
+						Route::patch('/update', 'DiscussionController@update')->name('discussions.update');
+					});
+
+					// Delete
+					Route::delete('/delete', 'DiscussionController@delete')->name('discussions.delete');
 
 					// Comments (AUTHENTICATION REQUIRED)
 					Route::group(['prefix' => 'comment', 'middleware' => ['auth']], function() {

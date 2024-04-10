@@ -18,6 +18,13 @@ Breadcrumbs::for(
 	fn(Trail $trail) => $trail->push("Discussions", route("discussions.index"))
 );
 
+// DISCUSSIONS > CREATE
+Breadcrumbs::for(
+	"discussions.create",
+	fn(Trail $trail) => $trail->parent("discussions.index")
+		->push("Create Discussion", route("discussions.create"))
+);
+
 // DISCUSSIONS > CATEGORY
 Breadcrumbs::for(
 	"discussions.categories.index",
@@ -44,6 +51,13 @@ Breadcrumbs::for(
 		$trail->parent("discussions.categories.show", $category)
 			->push(Str::limit($title, 10), route("discussions.show", [$category, $slug]));
 	}
+);
+
+// DISCUSSIONS > CATEGORY > SHOW (DISCUSSION) > EDIT
+Breadcrumbs::for(
+	"discussions.edit",
+	fn(Trail $trail, string $category, string $slug) => $trail->parent("discussions.show", $category, $slug)
+		->push("Edit Discussion", route("discussions.edit", [$category, $slug]))
 );
 
 // DISCUSSIONS > CATEGORY > SHOW (DISCUSSION) > COMMENT (EDIT)

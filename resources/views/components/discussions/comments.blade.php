@@ -1,7 +1,8 @@
-@props(['comment', 'additionalClass' => '', 'discussion', 'name', 'slug', 'page' => 0])
+@props(['comment', 'additionalClass' => '', 'discussion', 'name', 'slug', 'page' => 0, 'includeScripts' => "true"])
 
 @php
-$params = [$name, $slug, $comment->id];
+$vanillaParams = [$name, $slug, $comment->id];
+$params = $vanillaParams;
 
 if ($page > 0 && is_int($page)) {
 	$params['page'] = $page;
@@ -44,9 +45,10 @@ if ($page > 0 && is_int($page)) {
 							</a>
 
 							{{-- DELETE --}}
-							<form action="@{{ route('discussions.comments.delete', $params) }}" method="POST">
+							<form action="{{ route('discussions.comments.delete', $vanillaParams) }}" method="POST" data-cl-form data-cl-form-title="This cannot be undone" data-cl-form-message="Are you sure you want to delete this comment?">
 								@csrf
 								@method('DELETE')
+
 								<button type="submit" class="dropdown-item">
 									Delete
 								</button>
@@ -68,9 +70,7 @@ if ($page > 0 && is_int($page)) {
 	</li>
 
 	{{-- COMMENT ACTIONS --}}
-
 	@auth
-
 	@php
 	$action = $comment->getStatusAction(auth()->user()->id);
 	$upvoteAction = $action['upvote'];
@@ -99,3 +99,9 @@ if ($page > 0 && is_int($page)) {
 	</li>
 	@endauth
 </ul>
+
+@if ($includeScripts === "true")
+	@push('scripts')
+	<script type="text/javascript" src="{{ mix("js/util/confirm-leave.js") }}" nonce="{{ csp_nonce() }}" defer></script>
+	@endpush
+@endif

@@ -13,7 +13,7 @@
 
 	{{-- Navbar Contents --}}
 	<div class="collapse navbar-collapse" id="navbarContent">
-		<ul class="navbar-nav nav-underline navbar-nav-scroll text-bg-dark bg-it-primary ms-auto text-center text-lg-start row-gap-2">
+		<ul class="navbar-nav nav-underline navbar-nav-scroll text-bg-dark bg-it-primary ms-auto text-center text-lg-start row-gap-2 align-items-center">
 			{{-- HOME --}}
 			<li class="nav-item">
 				@if (\Request::is('/'))
@@ -57,8 +57,8 @@
 			</li>
 
 			{{-- SEPARATOR --}}
-			<li class="nav-item">
-				<div class="vr h-100 d-none d-lg-block bg-it-secondary opacity-75" style="width: 2.5px;"></div>
+			<li class="nav-item w-100 w-md-auto">
+				<div class="vr h-100 d-none d-lg-block bg-it-secondary opacity-75 h1 m-0" style="width: 2.5px;"></div>
 				<hr class="w-100 d-block d-lg-none my-0" style="border-width: 2.5px;">
 			</li>
 
@@ -68,10 +68,10 @@
 			<li class="nav-item">
 				<div class="dropdown my-auto">
 					{{-- Dropdown Trigger --}}
-					<a href="#" role="button" class="nav-link dropdown-toggle fs-6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<button type="button" class="nav-link dropdown-toggle fs-6" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						{!! auth()->user()->getAvatar(type: 'html', additionalClasses: 'avatar avatar-5 rounded-circle') !!}
 						{{ auth()->user()->getName() }}
-					</a>
+					</button>
 
 					<div class="dropdown-menu dropdown-menu-end text-center text-lg-end text-bg-dark bg-it-primary" style="--bs-dropdown-link-hover-bg: var(--bs-it-secondary)">
 						{{-- DASHBOARD --}}
