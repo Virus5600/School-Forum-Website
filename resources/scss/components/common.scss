@@ -19,6 +19,16 @@ $avatarSize: (
 	3: 1.75rem,
 	4: 2rem,
 	5: 2.5rem,
+	6: 3rem,
+	7: 3.5rem,
+	8: 4rem,
+	9: 4.5rem,
+	10: 5rem,
+
+	lg: 6rem,
+	xl: 7.5rem,
+	2xl: 10rem,
+	3xl: 12.5rem,
 );
 
 .avatar {
@@ -27,15 +37,22 @@ $avatarSize: (
 	width: var(--avatar-size);
 	height: var(--avatar-size);
 
+	object-fit: cover;
 	object-position: center;
 
 	&.avatar-1 {
 		@extend .avatar;
 	}
 
-	@each $ask, $asv in $avatarSize {
-		&.avatar-#{$ask} {
-			--avatar-size: #{$asv};
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		@include media-breakpoint-up($breakpoint) {
+			@each $ask, $asv in $avatarSize {
+				$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+				&.avatar#{$infix}-#{$ask} {
+					--avatar-size: #{$asv};
+				}
+			}
 		}
 	}
 }

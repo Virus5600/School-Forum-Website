@@ -10,9 +10,7 @@ use Illuminate\Validation\Rule;
 
 use Laravel\Sanctum\HasApiTokens;
 
-use DB;
 use Exception;
-use Log;
 
 class User extends Authenticatable
 {
@@ -124,12 +122,13 @@ class User extends Authenticatable
 	 * @param string $type The format of the image to be returned. Allowed values are: html, url, filename. By default, it is set to `html`.
 	 * @param bool $useDefault Whether to use the default image if the image is not found or you feel like it. By default, it is set to `false`.
 	 * @param string $additionalClasses Additional classes to be added to the image tag. Purely optional.
+	 * @param string $imgSize The size of the image (i.e.: 1rem). Purely optional.
 	 *
 	 * @return string The value of the setting with the specified key as a string.
 	 *
 	 * @throws Exception if `$type` is not one of the allowed values.
 	 */
-	public function getAvatar($type="html", $useDefault=false, $additionalClasses='') {
+	public function getAvatar($type="html", $useDefault=false, $additionalClasses='', $imgSize='') {
 		if (in_array($type, ["html", "url", "filename"]) === false)
 			throw new Exception("Invalid parameter value for \"\$type\": {$type}\nOnly allowed values are: html, url, filename.");
 
@@ -137,10 +136,13 @@ class User extends Authenticatable
 		if ($useDefault)
 			$file = 'default.png';
 
+		if (!empty($imgSize))
+			$imgSize = "style=\"--avatar-size: {$imgSize};\"";
+
 		switch ($type) {
 			case "html":
 				$caption = $this->caption ?? $this->avatar;
-				return "<img src=\"" . asset("/uploads/users/{$this->avatar}") . "\" class=\"mx-auto {$additionalClasses}\" alt=\"{$caption}\">";
+				return "<img src=\"" . asset("/uploads/users/{$this->avatar}") . "\" class=\"mx-auto {$additionalClasses}\" {$imgSize} alt=\"{$caption}\">";
 
 			case "url":
 				return asset("/uploads/users/{$file}");

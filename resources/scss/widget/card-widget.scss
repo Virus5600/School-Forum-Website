@@ -67,7 +67,7 @@ hr:has(+ .card.floating-header:not(.no-buffer, .no-header-buffer)) {
 			max-width: 90%;
 			overflow: hidden;
 
-			img {
+			img:not(.cw-unaffected) {
 				height: 1em;
 			}
 

@@ -132,6 +132,13 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		// Logout
 		Route::post('/logout', 'AuthenticationController@logout')->name('logout');
 
+		////////////////////
+		// PROFILE MODULE //
+		////////////////////
+		Route::group(['prefix' => 'profile'], function() {
+			Route::get('/', 'ProfileController@index')->name('profile.index');
+		});
+
 		/////////////////////////
 		// VERIFICATION MODULE //
 		/////////////////////////

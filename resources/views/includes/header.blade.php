@@ -74,10 +74,16 @@
 					</button>
 
 					<div class="dropdown-menu dropdown-menu-end text-center text-lg-end text-bg-dark bg-it-primary" style="--bs-dropdown-link-hover-bg: var(--bs-it-secondary)">
+
+						{{-- PROFILE --}}
+						<a href="{{ route('profile.index') }}" class="dropdown-item transition-2">My Profile</a>
+
+						<hr class="dropdown-divider">
+
 						{{-- DASHBOARD --}}
 						<a href="{{ route('admin.dashboard') }}" class="dropdown-item transition-2">Dashboard</a>
 
-						<div class="dropdown-divider"></div>
+						<hr class="dropdown-divider">
 
 						{{-- LOGOUT --}}
 						<form action="{{ route('logout') }}" method="POST" class="dropdown-item transition-2">

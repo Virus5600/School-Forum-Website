@@ -98,3 +98,9 @@ Breadcrumbs::for(
 			->push(Str::limit($item->item_found, 10), route("lost-and-found.show", $item->id));
 	}
 );
+
+// PROFILE
+Breadcrumbs::for(
+	"profile.index",
+	fn(Trail $trail) => $trail->push("Profile", route("profile.index"))
+);
