@@ -19,5 +19,5 @@ yarn-error.log
 
 /storage/debugbar
 
-db-management.sh
+db-management*.sh
 *.sql
