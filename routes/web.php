@@ -18,6 +18,9 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	// GUEST SIDE //
 	////////////////
 
+	// LoaderIO Verification
+	Route::get('loaderio-52abcb913a992fad9c8e1eef99be8e70', 'PageController@loaderIO')->name('loaderio');
+
 	// Home Page
 	Route::get('/', 'PageController@index')->name('home');
 

@@ -98,6 +98,10 @@ class PageController extends Controller
 		]);
 	}
 
+	protected function loaderIO() {
+		return view('loaderio');
+	}
+
 	////////////////
 	// ADMIN SIDE //
 	////////////////
