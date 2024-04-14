@@ -107,6 +107,75 @@
 		</h2>
 
 		<div class="card-body">
+			<div class="row">
+				{{-- Discussions --}}
+				@forelse ($activities as $groupName => $acts)
+				<div class="col-12">
+					<div class="card floating-header">
+						{{-- Date --}}
+						<div class="card-header border rounded d-flex justify-content-between align-items-center">
+							<h3 class="card-title m-0">
+								{{ $groupName }}
+							</h3>
+						</div>
+
+						{{-- Activities --}}
+						<div class="card-body">
+							<div class="accordion" id="activity-logs">
+								@forelse ($acts as $a)
+								<div class="accordion-item">
+									<div class="accordion-header">
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item-{{ $a->id }}" aria-expanded="false" aria-controls="item-{{ $a->id }}">
+											{{ ucwords($a->log_name) . " - " . ucwords($a->event) }}
+										</button>
+									</div>
+
+									<div class="accordion-collapse collapse" id="item-{{ $a->id }}" data-bs-parent="#activity-logs">
+										<div class="accordion-body">
+											<p class="card-text">
+												{{ $a->description }}
+											</p>
+
+											<ul class="list-group">
+												@forelse ($a->properties as $key => $value)
+												<li class="list-group-item d-flex justify-content-between">
+													<span>
+														{{ ucwords($key) . ": " }}
+													</span>
+
+													<span>
+														@if (is_array($value))
+														{{ implode(', ', $value) }}
+														@else
+															@if ($key == "type")
+															{{ ucwords($value) }}
+															@elseif ($key == "timestamp")
+															{{ Carbon::parse($value)->timezone('Asia/Manila')->format('F j, Y (h:i A)') }}
+															@else
+															{{ $value }}
+															@endif
+														@endif
+													</span>
+												</li>
+												@empty
+												<li class="list-group-item">
+													No additional information.
+												</li>
+												@endforelse
+											</ul>
+										</div>
+									</div>
+								</div>
+								@empty
+								@endforelse
+							</div>
+					</div>
+				</div>
+				@empty
+				<div class="col-12">
+					<h3 class="text-center">No activities yet.</h3>
+				</div>
+				@endforelse
 		</div>
 	</section>
 </div>

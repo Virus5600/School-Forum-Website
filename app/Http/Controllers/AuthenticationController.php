@@ -356,7 +356,7 @@ class AuthenticationController extends Controller
 			DB::beginTransaction();
 
 			// FILE HANDLING
-			$defaultAvatar = 'default.png';
+			$defaultAvatar = "default-{$cleanData->gender}.png";
 			if ($req->exists('avatar')) {
 				// Convert to WEBP format
 				$avatarName = $cleanData->username . '-avatar-' . time() . '.webp';

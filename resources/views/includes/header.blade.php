@@ -81,9 +81,11 @@
 						<hr class="dropdown-divider">
 
 						{{-- DASHBOARD --}}
+						@if (auth()->user()->hasPermission('admin_access'))
 						<a href="{{ route('admin.dashboard') }}" class="dropdown-item transition-2">Dashboard</a>
 
 						<hr class="dropdown-divider">
+						@endif
 
 						{{-- LOGOUT --}}
 						<form action="{{ route('logout') }}" method="POST" class="dropdown-item transition-2">
