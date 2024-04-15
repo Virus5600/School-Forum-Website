@@ -3,9 +3,9 @@ if (!Swal)
 
 /**
  * Warns the user that they're leaving without saving their changes.
- * @param urlTo String value. The page they're attempting to open.
- * @param title String value. The title of the warning.
- * @param message String value. The message of the warning.
+ * @param {string} urlTo String value. The page they're attempting to open.
+ * @param {string} title String value. The title of the warning.
+ * @param {string} message String value. The message of the warning.
  */
 function confirmLeave(urlTo, title = "Are you sure?", message = "You might have unsaved changes.") {
 	Swal.fire({
@@ -25,6 +25,16 @@ function confirmLeave(urlTo, title = "Are you sure?", message = "You might have 
 	});
 }
 
+/**
+ * Warns the user that they're submitting a form. Used for API calls and regular form
+ * submissions. This function is asynchronous to allow awaiting of the value returned by the
+ * confirmLeaveApi function. If the user confirms, the form will be submitted. Otherwise, it will
+ * not.
+ *
+ * @param {HTMLFormElement} form HTML Form Element. The form to be submitted.
+ * @param {string} title String value. The title of the warning.
+ * @param {string} message String value. The message of the warning.
+ */
 async function confirmFormSubmit(form, title = "Are you sure?", message = "You might have unsaved changes.") {
 	confirmLeaveApi(title, message).then((result) => {
 		if (result.isConfirmed) {
@@ -34,9 +44,24 @@ async function confirmFormSubmit(form, title = "Are you sure?", message = "You m
 }
 
 /**
+ * Warns the user that they're resetting a form.
+ *
+ * @param {HTMLFormElement} form HTML Form Element. The form to reset.
+ * @param {string} title String value. The title of the warning.
+ * @param {string} message String value. The message of the warning.
+ */
+async function confirmFormReset(form, title = "This will reset the form.", message = "Are you sure you want to reset the form?") {
+	confirmLeaveApi(title, message).then((result) => {
+		if (result.isConfirmed) {
+			form.reset();
+		}
+	});
+}
+
+/**
  * Warns the user that they're leaving without saving their changes. Used for API calls and thus, is created as an asynchronous function to allow awaiting of value.
- * @param title String value. The title of the warning.
- * @param message String value. The message of the warning.
+ * @param {string} title String value. The title of the warning.
+ * @param {string} message String value. The message of the warning.
  */
 async function confirmLeaveApi(title = "Are you sure?", message = "You might have unsaved changes.") {
 	return Swal.fire({
@@ -57,12 +82,29 @@ async function confirmLeaveApi(title = "Are you sure?", message = "You might hav
 // Automatically add event listeners to all forms with the data-cl-form attribute.
 document.addEventListener('DOMContentLoaded', function () {
 	document.querySelectorAll(`[data-cl-form]`).forEach((form) => {
-		form.addEventListener('submit', (e) => {
-			e.preventDefault();
-			e.stopPropagation();
+		// For submitting forms
+		if (form.hasAttribute(`data-cs-form-submit`))
+			form.addEventListener('submit', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
 
-			confirmFormSubmit(form, form.dataset.clFormTitle, form.dataset.clFormMessage);
-		});
+				confirmFormSubmit(form, form.dataset.clFormSubmitTitle, form.dataset.clFormSubmitMessage);
+			});
+
+		// For resetting forms
+		if (form.hasAttribute(`data-cs-form-reset`))
+			form.addEventListener('reset', (e) => {
+				if (form.dataset.clFormResetOngoing === 'true') {
+					form.removeAttribute('data-cl-form-reset-ongoing');
+					return;
+				}
+				e.preventDefault();
+				e.stopPropagation();
+
+				form.setAttribute('data-cl-form-reset-ongoing', 'true');
+
+				confirmFormReset(form, form.dataset.clFormResetTitle, form.dataset.clFormResetMessage);
+			});
 	});
 }, {once: true});
 

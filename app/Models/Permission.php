@@ -13,8 +13,8 @@ class Permission extends Model
 	];
 
 	// Relationships
-	public function userTypes() { return $this->belongsToMany('App\Model\UserType'); }
-	public function users() { return $this->belongsToMany('App\Model\User'); }
+	public function userTypes() { return $this->belongsToMany('App\Models\UserType'); }
+	public function users() { return $this->belongsToMany('App\Models\User'); }
 
 	// Custom Functions
 	public function childPermissions() {

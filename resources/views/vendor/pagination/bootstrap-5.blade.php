@@ -1,7 +1,7 @@
 <nav class="d-flex justify-items-center justify-content-between">
 	<div class="flex-fill d-flex flex-column flex-sm-row align-items-center justify-content-between">
 		<div>
-			<p class="small text-muted">
+			<p class="small text-muted m-0">
 				{!! __('Showing') !!}
 				<span class="fw-semibold">{{ $paginator->firstItem() }}</span>
 				{!! __('to') !!}
@@ -13,7 +13,7 @@
 		</div>
 
 		<div>
-			<ul class="pagination pagination-sm">
+			<ul class="pagination pagination-sm m-0">
 				{{-- Previous Page Link --}}
 				@if ($paginator->onFirstPage())
 					{{-- FIRST PAGE --}}

@@ -45,7 +45,7 @@ if ($page > 0 && is_int($page)) {
 							</a>
 
 							{{-- DELETE --}}
-							<form action="{{ route('discussions.comments.delete', $vanillaParams) }}" method="POST" data-cl-form data-cl-form-title="This cannot be undone" data-cl-form-message="Are you sure you want to delete this comment?">
+							<form action="{{ route('discussions.comments.delete', $vanillaParams) }}" method="POST" data-cl-form data-cl-form-submit data-cl-form-submit-title="This cannot be undone" data-cl-form-submit-message="Are you sure you want to delete this comment?">
 								@csrf
 								@method('DELETE')
 

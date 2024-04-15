@@ -19,7 +19,8 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	////////////////
 
 	// LoaderIO Verification
-	Route::get('loaderio-52abcb913a992fad9c8e1eef99be8e70', 'PageController@loaderIO')->name('loaderio');
+	Route::get('loaderio-52abcb913a992fad9c8e1eef99be8e70', 'PageController@loaderIO')->name('loaderio1');
+	Route::get('loaderio-d339104e9d20dac006c782f918e6683e', 'PageController@loaderIO')->name('loaderio2');
 
 	// Home Page
 	Route::get('/', 'PageController@index')->name('home');
@@ -139,7 +140,14 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		// PROFILE MODULE //
 		////////////////////
 		Route::group(['prefix' => 'profile'], function() {
+			// Index
 			Route::get('/', 'ProfileController@index')->name('profile.index');
+
+			// Edit
+			Route::get('/edit', 'ProfileController@edit')->name('profile.edit');
+
+			// Update
+			Route::put('/update', 'ProfileController@update')->name('profile.update');
 		});
 
 		/////////////////////////

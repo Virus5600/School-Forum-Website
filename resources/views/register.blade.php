@@ -93,9 +93,7 @@
 						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="first_name" class="form-label required-after">First Name</label>
-
-								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('first_name') ? 'is-invalid' : 'is-valid') : '' }}" name="first_name" id="first_name" value="{{ old('first_name') }}" required>
-
+								<x-forms.input-field name="first_name" value="{{ old('first_name') }}" required="true" />
 								<x-forms.validation-error field="first_name"/>
 							</div>
 						</div>
@@ -104,9 +102,7 @@
 						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="middle_name" class="form-label">Middle Name</label>
-
-								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('middle_name') ? 'is-invalid' : 'is-valid') : '' }}" name="middle_name" id="middle_name" value="{{ old('middle_name') }}">
-
+								<x-forms.input-field name="middle_name" value="{{ old('middle_name') }}" />
 								<x-forms.validation-error field="middle_name"/>
 							</div>
 						</div>
@@ -115,9 +111,7 @@
 						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="last_name" class="form-label required-after">Last Name</label>
-
-								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('last_name') ? 'is-invalid' : 'is-valid') : '' }}" name="last_name" id="last_name" value="{{ old('last_name') }}" required>
-
+								<x-forms.input-field name="last_name" value="{{ old('last_name') }}" required="true" />
 								<x-forms.validation-error field="last_name"/>
 							</div>
 						</div>
@@ -126,9 +120,7 @@
 						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="suffix" class="form-label">Suffix</label>
-
-								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('suffix') ? 'is-invalid' : 'is-valid') : '' }}" name="suffix" id="suffix" value="{{ old('suffix') }}">
-
+								<x-forms.input-field name="suffix" value="{{ old('suffix') }}" />
 								<x-forms.validation-error field="suffix"/>
 							</div>
 						</div>
@@ -180,9 +172,7 @@
 						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="username" class="form-label required-after">Username</label>
-
-								<input type="text" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('username') ? 'is-invalid' : 'is-valid') : '' }}" name="username" id="username" value="{{ old('username') }}" required>
-
+								<x-forms.input-field name="username" value="{{ old('username') }}" required="true" />
 								<x-forms.validation-error field="username"/>
 							</div>
 						</div>
@@ -191,9 +181,7 @@
 						<div class="col-12 col-lg-6">
 							<div class="form-group">
 								<label for="email" class="form-label required-after">Email</label>
-
-								<input type="email" class="form-control py-1 {{ $errors->count() > 0 ? ($errors->has('email') ? 'is-invalid' : 'is-valid') : '' }}" name="email" id="email" value="{{ old('email') }}" required>
-
+								<x-forms.input-field name="email" value="{{ old('email') }}" type="email" required="true" />
 								<x-forms.validation-error field="email"/>
 							</div>
 						</div>
@@ -270,6 +258,7 @@
 	@endif
 
 	<script type="text/javascript" src="{{ mix('views/login/login.js') }}" nonce="{{ csp_nonce() }}"></script>
+	<script type="text/javascript" src="{{ mix('js/util/disable-on-submit.js') }}" nonce="{{ csp_nonce() }}"></script>
 	<script type="text/javascript" src="{{ mix('js/util/image-input.js') }}" nonce="{{ csp_nonce() }}"></script>
 	<script type="text/javascript" src="{{ mix('js/util/swal-flash.js')  }}" nonce="{{ csp_nonce() }}"></script>
 @endpush

@@ -48,11 +48,19 @@ class User extends Authenticatable
 		'last_auth' => 'datetime',
 	];
 
+	// Constants
+	const DEFAULT_AVATAR = [
+		'master_admin' => 'master-admin.png',
+		'male' => 'default-male.png',
+		'female' => 'default-female.png',
+		'others' => 'default-others.png',
+	];
+
     // Relationships
 	public function accountVerification() { return $this->hasOne('App\Models\AccountVerification'); }
 	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
 	public function discussions() { return $this->hasMany('App\Models\Discussion', 'posted_by'); }
-	protected function passwordReset() { return $this->belongsTo('App\Models\PasswordReset'); }
+	public function passwordReset() { return $this->belongsTo('App\Models\PasswordReset'); }
 	public function replies() { return $this->hasMany('App\Models\DiscussionReplies', 'replied_by'); }
 	public function userType() { return $this->belongsTo('App\Models\UserType'); }
 	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }
@@ -189,6 +197,17 @@ class User extends Authenticatable
 	 */
 	public static function getValidationRules(...$fields): array
 	{
+		$uniqueRule = [
+			'username' => [
+				'register' => 'unique:users,username',
+				'update' => Rule::unique('users', 'username')->ignore(auth()->user()->id),
+			],
+			'email' => [
+				'register' => 'unique:users,email',
+				'update' => Rule::unique('users', 'email')->ignore(auth()->user()->id),
+			],
+		];
+
 		$rules = [
 			'avatar' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:5120', 'nullable'],
 			'first_name' => ['required', 'string'],
@@ -196,8 +215,8 @@ class User extends Authenticatable
 			'last_name' => ['required', 'string'],
 			'suffix' => ['string', 'max:50', 'nullable'],
 			'gender' => ['required', 'string', Rule::in(['male', 'female', 'others'])],
-			'username' => ['required', 'unique:users,username', 'string'],
-			'email' => ['required', 'unique:users,email', 'email'],
+			'username' => ['required', 'string'],
+			'email' => ['required', 'email'],
 			'password' => ['required', 'string', 'min:8', 'confirmed'],
 		];
 
@@ -206,6 +225,19 @@ class User extends Authenticatable
 
 		$toRet = [];
 		foreach ($fields as $field) {
+			// Check if the field has options
+			$fieldOpt = preg_split('/[:]/', $field, -1, PREG_SPLIT_NO_EMPTY);
+			$field = $fieldOpt[0];
+			$fieldOpt = preg_split('/[,]/', $fieldOpt[1] ?? '', -1, PREG_SPLIT_NO_EMPTY);
+
+			// Update the unique rule for the a field that's present in the uniqueRule array
+			if (array_key_exists($field, $uniqueRule)) {
+				if (in_array('update', $fieldOpt))
+					array_push($rules[$field], $uniqueRule[$field]['update']);
+				else
+					array_push($rules[$field], $uniqueRule[$field]['register']);
+			}
+
 			if (array_key_exists($field, $rules))
 				$toRet[$field] = $rules[$field];
 		}

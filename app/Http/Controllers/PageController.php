@@ -98,8 +98,19 @@ class PageController extends Controller
 		]);
 	}
 
-	protected function loaderIO() {
-		return view('loaderio');
+	protected function loaderIO(Request $req) {
+		$tokens = [
+			"52abcb913a992fad9c8e1eef99be8e70",
+			"d339104e9d20dac006c782f918e6683e"
+		];
+
+		$token = preg_replace("/.+loaderio-(\w+)/", '$1', $req->fullUrl());
+		$index = 0;
+
+		if (in_array($token, $tokens))
+			$index = array_search($token, $tokens);
+
+		return view("loaderio{$index}");
 	}
 
 	////////////////

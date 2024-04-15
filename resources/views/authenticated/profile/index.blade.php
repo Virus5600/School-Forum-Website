@@ -7,7 +7,7 @@
 	<hgroup class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
 		{{ Breadcrumbs::render() }}
 
-		<a href="{{ route('discussions.create') }}" class="btn btn-it-primary icon-link icon-link-hover" title="Edit your profile." style="--bs-icon-link-transform: scale(1.125);">
+		<a href="{{ route('profile.edit') }}" class="btn btn-it-primary icon-link icon-link-hover" title="Edit your profile." style="--bs-icon-link-transform: scale(1.125);">
 			<i class="fas fa-user-pen bi"></i>
 			Edit Profile
 		</a>
@@ -140,7 +140,7 @@
 												@forelse ($a->properties as $key => $value)
 												<li class="list-group-item d-flex justify-content-between">
 													<span>
-														{{ ucwords($key) . ": " }}
+														{{ ucwords(str_replace('_', ' ', $key)) . ": " }}
 													</span>
 
 													<span>
@@ -169,6 +169,11 @@
 								@empty
 								@endforelse
 							</div>
+						</div>
+
+						<div class="card-footer">
+							{{ $activities->onEachSide(-1)->links() }}
+						</div>
 					</div>
 				</div>
 				@empty

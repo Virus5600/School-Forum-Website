@@ -67,7 +67,7 @@
 												</a>
 
 												{{-- DELETE --}}
-												<form action="{{ route('discussions.delete', [$discussion->category->name, $discussion->slug]) }}" method="POST" data-cl-form data-cl-form-title="This cannot be undone" data-cl-form-message="Are you sure you want to delete this post?">
+												<form action="{{ route('discussions.delete', [$discussion->category->name, $discussion->slug]) }}" method="POST" data-cl-form data-cl-form-submit data-cl-form-submit-title="This cannot be undone" data-cl-form-submit-message="Are you sure you want to delete this post?">
 													@csrf
 													@method('DELETE')
 
