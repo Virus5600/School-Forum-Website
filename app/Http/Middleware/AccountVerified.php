@@ -28,7 +28,6 @@ class AccountVerified
 
 		$user = auth()->user();
 
-
 		if ($status == 'verified') {
 			if ($user->is_verified === 0) {
 				return redirect()->route('verification.index');

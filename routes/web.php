@@ -139,7 +139,7 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		////////////////////
 		// PROFILE MODULE //
 		////////////////////
-		Route::group(['prefix' => 'profile'], function() {
+		Route::group(['prefix' => 'profile', 'middleware' => ['verification:verified']], function() {
 			// Index
 			Route::get('/', 'ProfileController@index')->name('profile.index');
 
