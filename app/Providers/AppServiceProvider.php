@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 use URL;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
 	{
 		// Use Bootstrap as default paginator styling.
 		Paginator::useBootstrapFive();
+
+		// Implement Custom Rules
+		$this->implementCustomRules();
 
 		// Use HTTPS when not in testing or local/dev environment
 		$envArr = [
@@ -60,5 +65,20 @@ class AppServiceProvider extends ServiceProvider
 			\Faker\Generator::class . ":" . config("app.faker_locale"),
 			\Faker\Generator::class
 		);
+	}
+
+	private function implementCustomRules(): void
+	{
+		$classes = [
+			\App\Rules\PasswordMatch::class
+		];
+
+		foreach ($classes as $class) {
+			Validator::extend(
+				Str::snake(class_basename($class)),
+				$class . "@validate",
+				$class::MESSAGE
+			);
+		}
 	}
 }

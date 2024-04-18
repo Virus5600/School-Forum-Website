@@ -77,15 +77,18 @@ hr:has(+ .card.floating-header:not(.no-buffer, .no-header-buffer)) {
 
 					&.header#{$infix}-start {
 						left: 0;
+						right: auto;
 						transform: translate(1rem, -50%);
 					}
 
 					&.header#{$infix}-center {
 						left: 50%;
+						right: auto;
 						transform: translate(-50%, -50%);
 					}
 
 					&.header#{$infix}-end {
+						left: auto;
 						right: 0;
 						transform: translate(-1rem, -50%);
 					}
@@ -129,15 +132,18 @@ hr:has(+ .card.floating-header:not(.no-buffer, .no-header-buffer)) {
 
 					&.footer#{$infix}-start {
 						left: 0;
+						right: auto;
 						transform: translate(1rem, 50%);
 					}
 
 					&.footer#{$infix}-center {
 						left: 50%;
+						right: auto;
 						transform: translate(-50%, 50%);
 					}
 
 					&.footer#{$infix}-end {
+						left: auto;
 						right: 0;
 						transform: translate(-1rem, 50%);
 					}

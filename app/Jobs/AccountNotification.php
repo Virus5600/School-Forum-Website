@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+use App\Enums\EmailVerificationType;
+
 use App\Models\User;
 
 use Artisan;
@@ -25,9 +27,17 @@ class AccountNotification implements ShouldQueue, ShouldBeEncrypted
 	/**
 	 * Create a new job instance.
 	 *
+	 * @param User $user							The user affected by the notification
+	 * @param EmailVerificationType|string $type	The type of notification to send
+	 * @param array $args							The arguments to pass to the email view
+	 * @param bool $callOnDestruct					Whether to call the queue on destruct
+	 *
 	 * @return void
 	 */
-	public function __construct(User $user, string $type, array $args, bool $callOnDestruct = false) {
+	public function __construct(User $user, EmailVerificationType|string $type, array $args, bool $callOnDestruct = false) {
+		if ($type instanceof EmailVerificationType)
+			$type = $type->value;
+
 		$this->user = $user;
 		$this->type = $type;
 		$this->args = $args;

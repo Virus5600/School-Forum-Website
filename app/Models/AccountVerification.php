@@ -37,10 +37,10 @@ class AccountVerification extends Model
 		try {
 			DB::beginTransaction();
 
-			$this->token = substr(bin2hex(random_bytes(8)), 0, 16);
+			$this->token = substr(bin2hex(random_bytes(32)), 0, 16);
 
 			while (AccountVerification::where('token', $this->token)->exists())
-				$this->token = bin2hex(random_bytes(8));
+				$this->token = substr(bin2hex(random_bytes(32)), 0, 16);
 
 			$this->expires_at = now()->addDay();
 			$this->save();

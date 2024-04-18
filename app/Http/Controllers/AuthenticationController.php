@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EmailVerificationType;
 use Illuminate\Http\Request;
 
 use Laravel\Sanctum\PersonalAccessToken;
@@ -405,10 +406,10 @@ class AuthenticationController extends Controller
 			];
 			AccountNotification::dispatchAfterResponse(
 				user: $user,
-				type: "creation",
+				type: EmailVerificationType::ACCOUNT_CREATION(),
 				args: $args,
 				callOnDestruct: true
-			)->onQueue("account_creation");
+			)->onQueue(EmailVerificationType::ACCOUNT_CREATION());
 
 			// Logger
 			activity('user')

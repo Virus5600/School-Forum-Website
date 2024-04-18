@@ -83,7 +83,7 @@ async function confirmLeaveApi(title = "Are you sure?", message = "You might hav
 document.addEventListener('DOMContentLoaded', function () {
 	document.querySelectorAll(`[data-cl-form]`).forEach((form) => {
 		// For submitting forms
-		if (form.hasAttribute(`data-cs-form-submit`))
+		if (form.hasAttribute(`data-cl-form-submit`))
 			form.addEventListener('submit', (e) => {
 				e.preventDefault();
 				e.stopPropagation();
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 
 		// For resetting forms
-		if (form.hasAttribute(`data-cs-form-reset`))
+		if (form.hasAttribute(`data-cl-form-reset`))
 			form.addEventListener('reset', (e) => {
 				if (form.dataset.clFormResetOngoing === 'true') {
 					form.removeAttribute('data-cl-form-reset-ongoing');

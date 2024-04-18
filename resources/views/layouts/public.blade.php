@@ -50,7 +50,7 @@
 		<title>{{ $webName }} | @yield('title')</title>
 	</head>
 
-	<body class="custom-scrollbar apply-to-all bg-it-quaternary hf-outline-only hf-flash">
+	<body class="custom-scrollbar apply-to-all bg-it-quaternary hf-outline-only hf-flash {{ isset($additionalBodyClasses) ? $additionalBodyClasses : '' }}">
 		{{-- NOSCRIPT --}}
 		@php ($noCarousel = isset($noCarousel) ? $noCarousel : false)
 		@include('includes.noscript')

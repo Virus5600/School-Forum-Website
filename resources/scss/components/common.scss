@@ -5,6 +5,10 @@
 	--required-color: white;
 }
 
+*:target {
+	scroll-margin-top: calc(1rem + var(--navbar-height));
+}
+
 .remove-button-style {
 	color: inherit;
 	border: none;

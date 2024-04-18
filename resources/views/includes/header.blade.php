@@ -64,7 +64,6 @@
 
 			{{-- Additional directories if authenticated --}}
 			@auth
-			{{-- ADMIN DIRECTORIES --}}
 			<li class="nav-item">
 				<div class="dropdown my-auto">
 					{{-- Dropdown Trigger --}}
@@ -73,14 +72,14 @@
 						{{ auth()->user()->getName() }}
 					</button>
 
-					<div class="dropdown-menu dropdown-menu-end text-center text-lg-end text-bg-dark bg-it-primary" style="--bs-dropdown-link-hover-bg: var(--bs-it-secondary)">
+					<div class="dropdown-menu dropdown-menu-end text-center text-lg-end text-bg-dark bg-it-primary" style="--bs-dropdown-link-hover-bg: var(--bs-it-secondary); --bs-dropdown-link-active-bg: var(--bs-red-700);">
 
 						{{-- PROFILE --}}
 						<a href="{{ route('profile.index') }}" class="dropdown-item transition-2">My Profile</a>
 
 						<hr class="dropdown-divider">
 
-						{{-- DASHBOARD --}}
+						{{-- ADMIN DIRECTORIES --}}
 						@if (auth()->user()->hasPermission('admin_access'))
 						<a href="{{ route('admin.dashboard') }}" class="dropdown-item transition-2">Dashboard</a>
 

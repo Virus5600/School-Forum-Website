@@ -20,7 +20,7 @@
 		<div class="form-group">
 			<label class="form-label" for="identifier">Username or Email</label>
 				<input class="form-control border-secondary" type="text" name="identifier" value="{{ old('identifier') ? old('identifier') : $identifier }}" aria-label="Username or E-mail" placeholder="Username or E-mail" />
-				<small class="text-danger">{{ $errors->first('email') }}</small>
+				<x-forms.validation-error field="email" />
 			</div>
 
 			<div class="form-group text-center mt-3">

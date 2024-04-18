@@ -56,6 +56,11 @@ class User extends Authenticatable
 		'others' => 'default-others.png',
 	];
 
+	const VERIFICATION_TYPES = [
+		"EMAIL_UPDATE" => 'email_update',
+		"PASSWORD_RESET" => 'password_reset',
+	];
+
     // Relationships
 	public function accountVerification() { return $this->hasOne('App\Models\AccountVerification'); }
 	public function announcements() { return $this->hasMany('App\Models\Announcement', 'author_id', 'id'); }
@@ -164,6 +169,10 @@ class User extends Authenticatable
 		return $this->first_name . ($include_middle ? (' ' . $this->middle_name . ' ') : ' ') . $this->last_name;
 	}
 
+	public function getUserIP() {
+		return self::getIP();
+	}
+
 	// STATIC FUNCTIONS
 	public static function getIP() {
 		$ip = request()->ip();
@@ -206,6 +215,9 @@ class User extends Authenticatable
 				'register' => 'unique:users,email',
 				'update' => Rule::unique('users', 'email')->ignore(auth()->user()->id),
 			],
+			'current_password' => [
+				'update' => 'required|passwordMatch:users,current_password',
+			],
 		];
 
 		$rules = [
@@ -232,10 +244,16 @@ class User extends Authenticatable
 
 			// Update the unique rule for the a field that's present in the uniqueRule array
 			if (array_key_exists($field, $uniqueRule)) {
-				if (in_array('update', $fieldOpt))
-					array_push($rules[$field], $uniqueRule[$field]['update']);
-				else
-					array_push($rules[$field], $uniqueRule[$field]['register']);
+				foreach ($fieldOpt as $opt) {
+					if (array_key_exists($opt, $uniqueRule[$field])) {
+						# Run a check first if the rule is already in the array. If
+						# it is not, then add it.
+						if (!key_exists($field, $rules))
+							$rules[$field] = [];
+
+						$rules[$field] = array_diff($rules[$field], [$uniqueRule[$field][$opt]]);
+					}
+				}
 			}
 
 			if (array_key_exists($field, $rules))

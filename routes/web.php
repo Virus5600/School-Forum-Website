@@ -25,6 +25,9 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	// Home Page
 	Route::get('/', 'PageController@index')->name('home');
 
+	// Privacy Policy
+	Route::get('/privacy-policy', 'PageController@privacyPolicy')->name('privacy-policy');
+
 	// Authentication
 	Route::group(['middleware' => ['guest']], function() {
 		// Login
@@ -136,6 +139,15 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		// Logout
 		Route::post('/logout', 'AuthenticationController@logout')->name('logout');
 
+		// Confirm Password (Middleware)
+		Route::group(['prefix' => 'confirm-password'], function() {
+			// Page
+			Route::get('/', 'PageController@confirmPassword')->name('password.confirm');
+
+			// Confirm
+			Route::post('/submit', 'PageController@confirmSubmittedPassword')->name('password.confirm.submit');
+		});
+
 		////////////////////
 		// PROFILE MODULE //
 		////////////////////
@@ -148,6 +160,26 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 
 			// Update
 			Route::put('/update', 'ProfileController@update')->name('profile.update');
+
+			// Change Password
+			Route::group(['prefix' => 'change-password'], function() {
+				// Edit
+				Route::get('/', 'ProfileController@changePassword')->name('profile.change-password.edit');
+
+				// Update
+				Route::patch('/update', 'ProfileController@updatePassword')->name('profile.change-password.update');
+			});
+
+			// Deactivate
+			Route::group(['prefix' => 'deactivate'], function() {
+				// Confirm
+				Route::get('/', 'ProfileController@deactivate')->name('profile.deactivate');
+
+				// Update (Requires Password Confirmation)
+				Route::delete('/confirmed', 'ProfileController@deactivateConfirmed')
+					->middleware(['password.confirm'])
+					->name('profile.deactivate.confirmed');
+			});
 		});
 
 		/////////////////////////

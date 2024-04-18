@@ -3,7 +3,7 @@
 @section('title', 'Register')
 
 @section('content')
-<form class="card floating-header floating-footer bg-it-primary text-white border rounded border-it-secondary m-lg-1" method="POST" action="{{ route("register.store") }}" enctype="multipart/form-data">
+<form class="card floating-header floating-footer bg-it-primary text-white border rounded border-it-secondary m-2" method="POST" action="{{ route("register.store") }}" enctype="multipart/form-data">
 	<h1 class="z-3 card-header card-title h3 bg-it-primary border rounded border-it-secondary">Register</h1>
 
 	{{-- ACTUAL FORM --}}

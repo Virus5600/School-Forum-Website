@@ -9,8 +9,12 @@ use App\Models\Announcement;
 use App\Models\Discussion;
 use App\Models\DiscussionCategory;
 use App\Models\LostFound;
+use App\Models\User;
 
 use DB;
+use Exception;
+use Hash;
+use Validator;
 
 class PageController extends Controller
 {
@@ -113,10 +117,59 @@ class PageController extends Controller
 		return view("loaderio{$index}");
 	}
 
+	////////////////////////
+	// AUTHENTICATED SIDE //
+	////////////////////////
+	protected function confirmPassword() {
+		return view("authenticated.password-confirmation");
+	}
+
+	protected function confirmSubmittedPassword(Request $req) {
+		$validator = Validator::make(
+			$req->except(self::EXCEPT),
+			User::getValidationRules('password'),
+			User::getValidationMessages()
+		);
+
+		if ($validator->fails()) {
+			return redirect()
+				->back()
+				->with('flash_error', 'Wrong password...')
+				->withErrors($validator);
+		}
+
+		$cleanData = (object) $validator->validated();
+
+		try {
+			$verified = Hash::check(
+				$cleanData->password,
+				auth()->user()->password
+			);
+
+			if (!$verified) {
+				return redirect()
+					->back()
+					->with('flash_error', 'Wrong password...');
+			}
+
+			session()->remove('before-confirm-password');
+			$req->session()->passwordConfirmed();
+
+			return redirect()
+				->intended(route('profile.index'));
+		} catch (Exception $e) {
+			Log::error($e->getMessage());
+
+			return redirect()
+				->back()
+				->with('flash_error', 'An error occurred while verifying your password...');
+		}
+	}
+
 	////////////////
 	// ADMIN SIDE //
 	////////////////
-	protected function dashboard(Request $req) {
+	protected function dashboard() {
 		return view("authenticated.admin.dashboard");
 	}
 }

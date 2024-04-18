@@ -19,26 +19,3 @@ try {
 } catch (ex) {
 	console.error(ex);
 }
-
-// Adjusts the target scrolling offset
-$(() => {
-	$(document).on('click', 'a[href^="#"]', (e) => {
-		e.preventDefault();
-
-		const LOCATION = $(e.currentTarget).attr('href');
-		const TOP = $(LOCATION).offset().top;
-		let offset = getComputedStyle(document.body).getPropertyValue('--navbar-height');
-
-		offset = offset.replace(/[a-zA-Z]/, '');
-		offset = parseInt(offset);
-		offset = isNaN(offset) ? 0 : offset;
-
-		console.log({
-			"Top": TOP,
-			"Offset": offset,
-			"Diff": TOP - offset,
-		});
-		$(document).scrollTop(TOP - offset);
-		history.pushState(null, null, LOCATION);
-	});
-});

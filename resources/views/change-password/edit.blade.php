@@ -38,7 +38,7 @@
 						</button>
 					</div>
 
-					<span class="small text-danger">{{ $errors->first('password') }}</span>
+					<x-forms.validation-error field="password" />
 				</div>
 
 				{{-- CONFIRM PASSWORD --}}
@@ -53,7 +53,7 @@
 						</button>
 					</div>
 
-					<span class="small text-danger">{{ $errors->first('password_confirmation') }}</span>
+					<x-forms.validation-error field="password_confirmation" />
 				</div>
 			</div>
 
