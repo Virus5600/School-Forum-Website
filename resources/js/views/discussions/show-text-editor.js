@@ -1,5 +1,10 @@
 $(() => {
 	const uiToastElTarget = document.getElementById('editor');
+
+	// If the target element does not exist, return false
+	if (!uiToastElTarget)
+		return false;
+
 	const uiToastOpt = {
 	// Element to be used as a container for the editor
 		el: uiToastElTarget,

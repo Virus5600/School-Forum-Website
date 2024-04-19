@@ -25,11 +25,11 @@ class Base extends Policy
 			->addDirective(Directive::FONT, "self data:")
 
 			// FRAME DIRECTIVES
-			->addDirective(Directive::FRAME_ANCESTORS, "self")
+			->addDirective(Directive::FRAME_ANCESTORS, "none")
 			->addDirective(Directive::FRAME, "self https://www.facebook.com/")
 
 			// SCRIPTS AND STYLES
-			->addDirective(Directive::SCRIPT, "self unsafe-eval")
+			->addDirective(Directive::SCRIPT, "self")
 			->addDirective(Directive::SCRIPT_ELEM, "self")
 			->addDirective(Directive::STYLE, Keyword::UNSAFE_INLINE)
 			->addDirective(Directive::STYLE_ELEM, "self")

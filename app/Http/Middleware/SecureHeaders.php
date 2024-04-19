@@ -18,6 +18,9 @@ class SecureHeaders
 
 	private $wantedHeaderList = [
 		'X-XSS-Protection' => '1; mode=block',
+		'Strict-Transport-Security' => 'max-age=31536000;',
+		'Referrer-Policy' => 'no-referrer-when-downgrade',
+		'Permissions-Policy' => 'accelerometer=(), camera=(), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()',
 	];
 
 	/**

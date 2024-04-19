@@ -117,6 +117,10 @@ class PageController extends Controller
 		return view("loaderio{$index}");
 	}
 
+	protected function privacyPolicy() {
+		return view("privacy-policy");
+	}
+
 	////////////////////////
 	// AUTHENTICATED SIDE //
 	////////////////////////

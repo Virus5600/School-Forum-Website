@@ -5,16 +5,16 @@
 			<div class="d-flex flex-column">
 				<h5 class="fw-bold mb-3 text-light">Site Pages</h5>
 				<a href="{{ route('home') }}" class="small my-1 text-decoration-none link-body-emphasis">Home</a>
-				<a href="{{ route('home') }}" class="small my-1 text-decoration-none link-body-emphasis">Downloads</a>
-				<a href="{{ route('home') }}" class="small my-1 text-decoration-none link-body-emphasis">Installations</a>
-				<a href="{{ route('home') }}" class="small my-1 text-decoration-none link-body-emphasis">Contents</a>
+				<a href="{{ route('discussions.index') }}" class="small my-1 text-decoration-none link-body-emphasis">Discussions</a>
+				<a href="{{ route('announcements.index') }}" class="small my-1 text-decoration-none link-body-emphasis">Announcements</a>
+				<a href="{{ route('lost-and-found.index') }}" class="small my-1 text-decoration-none link-body-emphasis">Lost & Found</a>
 			</div>
 		</section>
 
 		<section class="col-12 col-md-3 text-center">
 			<div class="d-flex flex-column">
 				<h6 class="fw-bold mb-3 text-light">Technical Stuff</h6>
-				<a href="{{ route('home') }}" class="small my-1 text-decoration-none link-body-emphasis">Privacy Policy</a>
+				<a href="{{ route('privacy-policy') }}" class="small my-1 text-decoration-none link-body-emphasis">Privacy Policy</a>
 				<a href="{{ route('home') }}" class="small my-1 text-decoration-none link-body-emphasis">About</a>
 			</div>
 		</section>
