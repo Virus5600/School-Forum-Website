@@ -104,3 +104,17 @@ Breadcrumbs::for(
 	"profile.index",
 	fn(Trail $trail) => $trail->push("Profile", route("profile.index"))
 );
+
+// PROFILE > EDIT
+Breadcrumbs::for(
+	"profile.edit",
+	fn(Trail $trail) => $trail->parent("profile.index")
+		->push("Edit Profile", route("profile.edit"))
+);
+
+// PROFILE > DEACTIVATE
+Breadcrumbs::for(
+	"profile.deactivate",
+	fn(Trail $trail) => $trail->parent("profile.index")
+		->push("Deactivate Account", route("profile.deactivate"))
+);

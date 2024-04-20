@@ -16,7 +16,7 @@
 				<div class="d-flex justify-content-between align-items-center" style="width: 250px;">
 					<small class="text-muted">
 						<i class="fas fa-user"></i>
-						{{ $d->postedBy->username }}
+						{{ $d->postedBy->trashed() ? '[Deleted User]' : $d->postedBy->username }}
 					</small>
 
 					<small class="text-muted">

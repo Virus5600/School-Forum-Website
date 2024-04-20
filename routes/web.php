@@ -28,6 +28,9 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 	// Privacy Policy
 	Route::get('/privacy-policy', 'PageController@privacyPolicy')->name('privacy-policy');
 
+	// Contact Us
+	Route::get('/contact-us', 'PageController@contactUs')->name('contact-us');
+
 	// Authentication
 	Route::group(['middleware' => ['guest']], function() {
 		// Login
@@ -171,14 +174,12 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 			});
 
 			// Deactivate
-			Route::group(['prefix' => 'deactivate'], function() {
+			Route::group(['prefix' => 'deactivate', 'middleware' => ['password.confirm']], function() {
 				// Confirm
 				Route::get('/', 'ProfileController@deactivate')->name('profile.deactivate');
 
 				// Update (Requires Password Confirmation)
-				Route::delete('/confirmed', 'ProfileController@deactivateConfirmed')
-					->middleware(['password.confirm'])
-					->name('profile.deactivate.confirmed');
+				Route::delete('/confirmed', 'ProfileController@deactivateConfirmed')->name('profile.deactivate.confirmed');
 			});
 		});
 

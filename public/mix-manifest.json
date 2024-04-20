@@ -33,6 +33,7 @@
     "/js/util/disable-on-submit.js": "/js/util/disable-on-submit.js",
     "/js/util/fallback-image.js": "/js/util/fallback-image.js",
     "/js/util/image-input.js": "/js/util/image-input.js",
+    "/js/util/others-field-control.js": "/js/util/others-field-control.js",
     "/js/util/reloaded.js": "/js/util/reloaded.js",
     "/js/util/remove-script.js": "/js/util/remove-script.js",
     "/js/util/swal-flash.js": "/js/util/swal-flash.js",

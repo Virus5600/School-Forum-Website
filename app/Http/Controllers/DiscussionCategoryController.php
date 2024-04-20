@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 use App\Models\Discussion;
 use App\Models\DiscussionCategory;
@@ -23,7 +22,7 @@ class DiscussionCategoryController extends Controller
 				"search" => "string|max:255",
 			])->validate()["search"];
 
-			$search = Str::lower(trim($search));
+			$search = strtolower(trim($search));
 
 			$query->where("name", "like", "%$search%");
 		}
@@ -76,7 +75,7 @@ class DiscussionCategoryController extends Controller
 
 		// Initialize Discussion Query
 		$query = Discussion::select("discussions.*")
-			->with('postedBy:id,username')
+			->with('postedBy:id,username,deleted_at')
 			->leftJoin('users', 'discussions.posted_by', '=', 'users.id')
 			->where('category_id', '=', $category->id);
 
@@ -87,14 +86,15 @@ class DiscussionCategoryController extends Controller
 				"search" => "string|max:255",
 			])->validate()["search"];
 
-			$search = Str::lower(trim($search));
+			$search = strtolower(trim($search));
 
 			$query = $query->where(function($q) use ($search, $req) {
 				$q = $q->where("discussions.title", "like", "%$search%")
 					->orWhere("discussions.content", "like", "%$search%");
 
 				if (!$req->has('user'))
-					$q->orWhere("users.username", "like", "%$search%");
+					$q->orWhere("users.username", "like", "%$search%")
+						->whereNull("users.deleted_at");
 			});
 		}
 
@@ -137,7 +137,7 @@ class DiscussionCategoryController extends Controller
 			->withQueryString();
 
 		return view('discussions.categories.show', [
-			"search" => $search,
+			"search" => $req->search,
 			"category" => $category,
 			"discussions" => $discussions,
 		]);

@@ -14,6 +14,7 @@
 		<section class="col-12 col-md-3 text-center">
 			<div class="d-flex flex-column">
 				<h6 class="fw-bold mb-3 text-light">Technical Stuff</h6>
+				<a href="{{ route('contact-us') }}" class="small my-1 text-decoration-none link-body-emphasis">Contact Us</a>
 				<a href="{{ route('privacy-policy') }}" class="small my-1 text-decoration-none link-body-emphasis">Privacy Policy</a>
 				<a href="{{ route('home') }}" class="small my-1 text-decoration-none link-body-emphasis">About</a>
 			</div>

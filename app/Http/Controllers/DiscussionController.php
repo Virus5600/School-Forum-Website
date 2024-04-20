@@ -120,7 +120,7 @@ class DiscussionController extends Controller
 		// FINAL MODIFICATION
 		$discussion = $discussion
 			->with([
-				"postedBy:id,username,avatar",
+				"postedBy:id,username,avatar,gender,deleted_at",
 				"votes"
 			])
 			->withCount("comments")

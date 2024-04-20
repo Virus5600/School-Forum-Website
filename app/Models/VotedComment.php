@@ -34,7 +34,7 @@ class VotedComment extends Model
 
 	// Relationships
 	public function comment() { return $this->belongsTo('App\Models\DiscussionReplies'); }
-	public function votedBy() { return $this->belongsTo('App\Models\User', 'voted_by');}
+	public function votedBy() { return $this->belongsTo('App\Models\User', 'voted_by')->withTrashed(); }
 
 	// Custom Functions
 	/**

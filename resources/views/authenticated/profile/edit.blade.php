@@ -3,6 +3,12 @@
 @section('title', 'Profile - Edit')
 
 @section('content')
+<hgroup class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+	{{ Breadcrumbs::render() }}
+</hgroup>
+
+<hr>
+
 <div class="container-fluid">
 	<form method="POST" action="{{ route('profile.update') }}" class="card floating-header floating-footer bg-it-primary text-white border rounded border-it-secondary m-lg-1" data-cl-form data-cl-form-reset>
 		{{-- Header --}}

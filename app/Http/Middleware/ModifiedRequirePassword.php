@@ -19,7 +19,9 @@ class ModifiedRequirePassword extends RequirePassword
      */
     public function handle($request, Closure $next, $redirectToRoute = null, $passwordTimeoutSeconds = null): Response
     {
+		// Store the previous URL before the password confirmation page
 		session()->put('before-confirm-password', $request->session()->get('_previous')['url']);
-        return parent::handle($request, $next);
+
+        return parent::handle($request, $next, $redirectToRoute, $passwordTimeoutSeconds);
     }
 }

@@ -1,38 +1,62 @@
-$(document).ready(() => {
-	$(document).on('change keyup keydown', '.text-counter-input', (e) => {
-		let obj = $(e.currentTarget);
-		let parent = obj.parent();
-		let counter = parent.find('.text-counter');
-		let max = obj.attr('data-max');
-		let warnAt = obj.attr('data-warn-at') ?? 0;
+document.addEventListener('DOMContentLoaded', () => {
+	const UPDATE_COUNTER = (e) => {
+		let obj = e.currentTarget;
+		let parent = obj.parentElement;
+		let counter = parent.querySelector('.text-counter');
+		let max = obj.getAttribute('data-tc-max');
+		let warnAt = obj.getAttribute('data-tc-warn-at') ?? 0;
+		let restrictEnabled = obj.getAttribute('data-tc-restrict') ? obj.getAttribute('data-tc-restrict') == 'true' : false;
+		const DEBUG = obj.getAttribute('data-tc-debug') ? obj.getAttribute('data-tc-debug') == 'true' : false;
+
+		if (DEBUG) {
+			console.log({
+				obj,
+				parent,
+				counter,
+				max,
+				warnAt,
+				DEBUG
+			});
+		}
 
 		if (typeof warnAt !== 'number' && isNaN(warnAt))
 			warnAt = 0;
 
-		counter.text(max - obj.val().length);
+		counter.innerText = max - obj.value.length;
 
 		warnAt = parseInt(warnAt);
-		textLen = parseInt(counter.text());
+		textLen = parseInt(counter.innerText);
+
+		if (restrictEnabled) {
+			if (textLen < 0) {
+				obj.value = obj.value.slice(0, max);
+				counter.innerText = 0;
+			}
+		}
 
 		if (textLen <= warnAt && textLen >= 0) {
-			counter.addClass('bg-warning');
-			counter.removeClass('bg-danger');
-			obj.addClass('mark-warning');
-			obj.removeClass('mark-danger');
+			counter.classList.add('bg-warning');
+			counter.classList.remove('bg-danger');
+			obj.classList.add('mark-warning');
+			obj.classList.remove('mark-danger');
 		}
 		else if (textLen < 0) {
-			counter.removeClass('bg-warning');
-			counter.addClass('bg-danger');
-			obj.removeClass('mark-warning');
-			obj.addClass('mark-danger');
+			counter.classList.remove('bg-warning');
+			counter.classList.add('bg-danger');
+			obj.classList.remove('mark-warning');
+			obj.classList.add('mark-danger');
 		}
 		else {
-			counter.removeClass('bg-danger');
-			counter.removeClass('bg-warning');
-			obj.removeClass('mark-danger');
-			obj.removeClass('mark-warning');
+			counter.classList.remove('bg-danger');
+			counter.classList.remove('bg-warning');
+			obj.classList.remove('mark-danger');
+			obj.classList.remove('mark-warning');
 		}
-	});
+	};
 
-	$('.text-counter-input').trigger('change');
+	document.querySelectorAll('.text-counter-input').forEach((el) => {
+		el.addEventListener('change', UPDATE_COUNTER);
+		el.addEventListener('keyup', UPDATE_COUNTER);
+		el.addEventListener('keydown', UPDATE_COUNTER);
+	});
 });

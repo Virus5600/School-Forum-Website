@@ -121,6 +121,10 @@ class PageController extends Controller
 		return view("privacy-policy");
 	}
 
+	protected function contactUs() {
+		return view("contact-us");
+	}
+
 	////////////////////////
 	// AUTHENTICATED SIDE //
 	////////////////////////

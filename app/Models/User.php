@@ -147,7 +147,7 @@ class User extends Authenticatable
 
 		$file = $this->avatar;
 		if ($useDefault)
-			$file = 'default.png';
+			$file = "default-{$this->gender}.png";
 
 		if (!empty($imgSize))
 			$imgSize = "style=\"--avatar-size: {$imgSize};\"";

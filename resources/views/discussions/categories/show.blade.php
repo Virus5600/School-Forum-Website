@@ -79,9 +79,9 @@
 								</td>
 
 								<td class="text-start text-nowrap">
-									<a href="{{ request()->fullUrlWithQuery(["user" => $d->postedBy->username]) }}" class="small text-muted icon-link icon-link-hover" style="--bs-icon-link-transform: scale(1.25);">
+									<a href="{{ request()->fullUrlWithQuery(["user" => $d->postedBy->trashed() ? '' : $d->postedBy->username]) }}" class="small text-muted icon-link icon-link-hover" style="--bs-icon-link-transform: scale(1.25);">
 										<i class="fas fa-user bi"></i>
-										{{ $d->postedBy->username }}
+										{{ $d->postedBy->trashed() ? '[Deleted User]' : $d->postedBy->username }}
 									</a>
 								</td>
 

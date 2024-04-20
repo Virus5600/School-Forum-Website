@@ -19,10 +19,14 @@
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-end bg-it-primary text-end" style="z-index: 1001;" data-bs-theme="dark">
+							{{-- Home Page --}}
 							<a href="{{ route('home') }}" class="dropdown-item">View Home Page</a>
+							{{-- Profile Page --}}
+							<a href="{{ route('profile.index') }}" class="dropdown-item">View Profile</a>
 
 							<div class="dropdown-divider"></div>
 
+							{{-- Logout --}}
 							<form action="{{ route('logout') }}" method="POST" class="dropdown-item">
 								@csrf
 								<button type="submit" class="remove-button-style w-100 text-end">Logout</button>

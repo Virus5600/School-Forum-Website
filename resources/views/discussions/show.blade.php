@@ -35,8 +35,8 @@
 							{{-- DISCUSSION AUTHOR --}}
 							<h2 class="m-0 p-0 fw-normal h5">
 								<a href="javascript:void(0);" class="text-body-emphasis link-offset-1 icon-link icon-link-hover" style="--bs-icon-link-transform: scale(1.125);">
-									<img src="{{ $discussion->postedBy->getAvatar('url') }}" alt="{{ $discussion->postedBy->username }}" class="rounded-circle border bi" style="width: 32px !important; height: 32px !important;">
-									By {{ $discussion->postedBy->username }}
+									<img src="{{ $discussion->postedBy->getAvatar('url', $discussion->postedBy->trashed()) }}" alt="{{ $discussion->postedBy->trashed() ? "[Deleted User]" : $discussion->postedBy->username }}" class="rounded-circle border bi" style="width: 32px !important; height: 32px !important;">
+									By {{ $discussion->postedBy->trashed() ? "[Deleted User]" : $discussion->postedBy->username }}
 								</a>
 							</h2>
 

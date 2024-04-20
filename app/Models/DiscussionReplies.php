@@ -28,7 +28,7 @@ class DiscussionReplies extends Model
 
 	// Relationships
 	public function discussion() { return $this->belongsTo("App\Models\Discussion", 'discussion_id'); }
-	public function repliedBy() { return $this->belongsTo("App\Models\User", 'replied_by'); }
+	public function repliedBy() { return $this->belongsTo("App\Models\User", 'replied_by')->withTrashed(); }
 	public function votes() { return $this->hasMany("App\Models\VotedComment", 'comment_id'); }
 
 	// Custom Functions

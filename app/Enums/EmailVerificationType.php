@@ -9,6 +9,7 @@ enum EmailVerificationType: string {
 
 	case ACCOUNT_CREATION = "account_creation";
 	case ACCOUNT_DEACTIVATION = "account_deactivation";
+	case ACCOUNT_REACTIVATION = "account_reactivation";
 	case EMAIL_UPDATE = "email_update";
 	case PASSWORD_RESET = "password_reset";
 	case PASSWORD_UPDATE = "password_update";
@@ -21,6 +22,7 @@ enum EmailVerificationType: string {
 		return match ($this) {
 			self::ACCOUNT_CREATION => "Account Verification",
 			self::ACCOUNT_DEACTIVATION => "Your Account Has Been De-Activated",
+			self::ACCOUNT_REACTIVATION => "Account Re-Activation",
 			self::EMAIL_UPDATE => "Email Update Verification",
 			self::PASSWORD_RESET => "Password Reset Verification",
 			self::PASSWORD_UPDATE => "Password Update Verification",
@@ -35,6 +37,7 @@ enum EmailVerificationType: string {
 		return match ($this) {
 			self::ACCOUNT_CREATION => "account_creation",
 			self::ACCOUNT_DEACTIVATION => "account_deactivation",
+			self::ACCOUNT_REACTIVATION => "verification",
 			self::EMAIL_UPDATE => "email_update",
 			self::PASSWORD_RESET => "change_password",
 			self::PASSWORD_UPDATE => "password_update",

@@ -14,8 +14,8 @@ if ($page > 0 && is_int($page)) {
 	<li class="list-group-item d-flex justify-content-between border-bottom-0 border-top-0 border-end-0 border-bottom-0 border-start-1">
 		{{-- COMMENTS AUTHOR --}}
 		<a href="javascript:void(0);" class="text-body-emphasis link-offset-1 icon-link icon-link-hover" style="--bs-icon-link-transform: scale(1.125);">
-			<img src="{{ $comment->repliedBy->getAvatar('url') }}" alt="{{ $comment->repliedBy->username }}" class="rounded-circle border bi" style="width: 32px !important; height: 32px !important;">
-			{{ $comment->repliedBy->username }}
+			<img src="{{ $comment->repliedBy->getAvatar('url', $comment->repliedBy->trashed()) }}" alt="{{ $comment->repliedBy->trashed() ? "[Deleted User]" : $comment->repliedBy->username }}" class="rounded-circle border bi" style="width: 32px !important; height: 32px !important;">
+			{{ $comment->repliedBy->trashed() ? "[Deleted User]" : $comment->repliedBy->username }}
 		</a>
 
 		{{-- COMMENTS DATE --}}

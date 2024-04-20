@@ -17,6 +17,25 @@ use Artisan;
 use Log;
 use Mail;
 
+/**
+ * Sends an email notification to the user.
+ *
+ * When dispatching this job, you can pass the following arguments:
+ *
+ * - `user` (User): The user affected by the notification
+ * - `type` (EmailVerificationType|string): The type of notification to send
+ * - `args` (array): The arguments to pass to the email view
+ * - `callOnDestruct` (bool): Whether to call the queue on destruct
+ *
+ * The `args` array should at least contain the following keys:
+ *
+ * - `subject` (string): The subject of the email
+ * - `recipients` (array): The recipients of the email
+ * - `email` (string): The email address of the sender or initiator
+ *
+ * @package App\Jobs
+ * @version 1.0.0
+ */
 class AccountNotification implements ShouldQueue, ShouldBeEncrypted
 {
 	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;

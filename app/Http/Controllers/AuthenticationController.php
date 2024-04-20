@@ -28,12 +28,16 @@ class AuthenticationController extends Controller
 	}
 
 	protected function authenticate(Request $req) {
-		$validator = Validator::make($req->all(), [
+		$validator = Validator::make($req->except(self::EXCEPT), [
 			'username' => ["required", "string"],
 			'password' => ["required", "string"]
 		]);
 
-		$user = User::where('username', '=', $req->username)->first();
+		$user = User::where('username', '=', $req->username)
+			->withTrashed()
+			->first();
+		$isTrashed = false;
+		$deletedAt = null;
 
 		// Identifies whether the user exists or not.
 		if ($user == null || $validator->fails()) {
@@ -41,6 +45,19 @@ class AuthenticationController extends Controller
 				->back()
 				->with('flash_error', 'Wrong username/password!')
 				->withInput($req->only('username'));
+		}
+
+		// If the user is soft deleted (deactivated), reactivate the account
+		if ($user->trashed()) {
+			$isTrashed = true;
+			$deletedAt = $user->deleted_at;
+			$user->restore();
+
+			$this->reVerifyAccount(
+				EmailVerificationType::ACCOUNT_REACTIVATION,
+				$validator,
+				$user
+			);
 		}
 
 		// Authenticate the user
@@ -182,6 +199,22 @@ class AuthenticationController extends Controller
 					DB::rollback();
 					Log::error($e);
 				}
+			}
+		}
+
+		// If the user is soft deleted (deactivated), return it to the same state the account
+		if ($isTrashed) {
+			try {
+				DB::beginTransaction();
+
+				$user->restore();
+				$user->deleted_at = $deletedAt;
+				$user->save();
+
+				DB::commit();
+			} catch (Exception $e) {
+				DB::rollback();
+				Log::error($e);
 			}
 		}
 
@@ -475,7 +508,13 @@ class AuthenticationController extends Controller
 				->tokenable;
 
 			// Generate a new token
-			$user->accountVerification->generateToken();
+			if ($user->accountVerification()->count() <= 0)
+				$user->accountVerification()->create([
+					'token' => substr(bin2hex(random_bytes(32)), 0, 16),
+					'expires_at' => now()->addDay()
+				]);
+			else
+				$user->accountVerification->generateToken();
 
 			// Send the email
 			$args = [

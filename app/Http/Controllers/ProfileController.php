@@ -166,7 +166,7 @@ class ProfileController extends Controller
 		return view('authenticated.profile.deactivate');
 	}
 
-	public function deactivateConfirmed() {
+	public function deactivateConfirmed(Request $req) {
 		try {
 			DB::beginTransaction();
 
@@ -197,7 +197,9 @@ class ProfileController extends Controller
 				->log("User {$user->username} ({$user->email}) logged out");
 
 			// Deactivate the user...
+			$user->is_verified = false;
 			$user->delete();
+			$user->save();
 
 			// Log the deactivation activity...
 			activity('user')
@@ -211,10 +213,20 @@ class ProfileController extends Controller
 				])
 				->log("User {$user->username} ({$user->email}) deactivated");
 
+			$type = EmailVerificationType::ACCOUNT_DEACTIVATION;
+			$args = [
+				'subject' => $type->getEmailSubject(),
+				'recipients' => [$user->email],
+				'email' => $user->email,
+			];
+
+			if ($req->reason != null)
+				$args['reason'] = $req->reason;
+
 			// Notify the user of the deactivation...
 			AccountNotification::dispatchAfterResponse(
 				user: $user,
-				type: $type,
+				type: $type->getEmailView(),
 				args: $args,
 				callOnDestruct: true
 			);
@@ -224,6 +236,14 @@ class ProfileController extends Controller
 			DB::rollback();
 
 			Log::error($e);
+
+			return redirect()
+				->back()
+				->with('flash_error', 'An error occurred while trying to deactivate your account. Please try again later.');
 		}
+
+		return redirect()
+			->route('home')
+			->with('flash_success', 'Your account has been successfully deactivated.');
 	}
 }
