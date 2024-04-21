@@ -8,6 +8,7 @@
     "/views/includes/lock-view/lock-view.js": "/views/includes/lock-view/lock-view.js",
     "/views/discussions/show-text-editor.js": "/views/discussions/show-text-editor.js",
     "/views/discussions/voting-fn.js": "/views/discussions/voting-fn.js",
+    "/views/discussions/report-fn.js": "/views/discussions/report-fn.js",
     "/views/discussions/autocomplete.js": "/views/discussions/autocomplete.js",
     "/views/login/login.js": "/views/login/login.js",
     "/views/register/register.js": "/views/register/register.js",

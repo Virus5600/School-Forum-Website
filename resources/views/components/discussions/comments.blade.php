@@ -31,31 +31,40 @@ if ($page > 0 && is_int($page)) {
 			</time>
 
 			@auth
-				@if (auth()->user()->id === $comment->replied_by)
-					<div class="dropdown">
-						{{-- DROPDOWN BUTTON --}}
-						<button class="btn btn-sm btn-light text-body-emphasis" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="fas fa-ellipsis-vertical"></i>
+			<div class="dropdown">
+				{{-- DROPDOWN BUTTON --}}
+				<button class="btn btn-sm btn-light text-body-emphasis" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="fas fa-ellipsis-vertical"></i>
+				</button>
+
+				<div class="dropdown-menu drop-down-menu-end" aria-label="More actions...">
+					@if (auth()->user()->id === $comment->replied_by)
+					{{-- EDIT --}}
+					<a class="dropdown-item" href="{{ route('discussions.comments.edit', $params) }}">
+						Edit
+					</a>
+
+					{{-- DELETE --}}
+					<form action="{{ route('discussions.comments.delete', $vanillaParams) }}" method="POST" data-cl-form data-cl-form-submit data-cl-form-submit-title="This cannot be undone" data-cl-form-submit-message="Are you sure you want to delete this comment?">
+						@csrf
+						@method('DELETE')
+
+						<button type="submit" class="dropdown-item">
+							Delete
 						</button>
+					</form>
 
-						<div class="dropdown-menu drop-down-menu-end" aria-label="More actions...">
-							{{-- EDIT --}}
-							<a class="dropdown-item" href="{{ route('discussions.comments.edit', $params) }}">
-								Edit
-							</a>
-
-							{{-- DELETE --}}
-							<form action="{{ route('discussions.comments.delete', $vanillaParams) }}" method="POST" data-cl-form data-cl-form-submit data-cl-form-submit-title="This cannot be undone" data-cl-form-submit-message="Are you sure you want to delete this comment?">
-								@csrf
-								@method('DELETE')
-
-								<button type="submit" class="dropdown-item">
-									Delete
-								</button>
-							</form>
-						</div>
-					</div>
-				@endif
+					@else
+					{{-- REPORT --}}
+					<button type="button" class="dropdown-item" aria-title="Report Comment"
+						data-report="comment"
+						data-report-route="{{ route('api.report.comment') }}"
+						data-report-id="{{ $comment->id }}"
+						>
+						Report Comment
+					@endif
+				</div>
+			</div>
 			@endauth
 		</div>
 	</li>

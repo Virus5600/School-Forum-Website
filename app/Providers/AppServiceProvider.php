@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -32,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
 
 		// Implement Custom Rules
 		$this->implementCustomRules();
+
+		// Implement Morph map
+		$this->implementMorphMap();
 
 		// Use HTTPS when not in testing or local/dev environment
 		$envArr = [
@@ -80,5 +84,14 @@ class AppServiceProvider extends ServiceProvider
 				$class::MESSAGE
 			);
 		}
+	}
+
+	private function implementMorphMap(): void
+	{
+		// Add morph map for polymorphic relationships
+		Relation::morphMap([
+			'discussion' => 'App\Models\Discussion',
+			'comment' => 'App\Models\DiscussionReply',
+		]);
 	}
 }

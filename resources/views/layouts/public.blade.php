@@ -79,8 +79,11 @@
 		<script type="text/javascript" src="{{ mix('views/layouts/public/public.js') }}"></script>
 
 		{{-- CUSTOM SCRIPTS --}}
-		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}"></script>
-		<script type="text/javascript" src="{{ mix('js/util/swal-flash.js') }}"></script>
+		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}" nonce="{{ csp_nonce() }}"></script>
+		<script type="text/javascript" src="{{ mix('js/util/swal-flash.js') }}" nonce="{{ csp_nonce() }}"></script>
+		@if (config('app.debug'))
+		<script type="text/javascript" nonce="{{ csp_nonce() }}">window.votingFNDebugMode = true;</script>
+		@endif
 		@stack('scripts')
 	</body>
 </html>

@@ -1,6 +1,7 @@
 .text-counter-parent {
 	display: flex;
 	flex-direction: column;
+	padding: 2.5px;
 
 	.text-counter-input {
 		border-radius: 0.25rem;

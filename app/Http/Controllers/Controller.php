@@ -25,7 +25,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
 	const ADMIN_QUERY_PARAMS = ["search", "sort", "direction", "page"];
-	const EXCEPT = ["_token", "_method", "search", "sort", "direction", "page"];
+	const EXCEPT = ["_token", "_method", "bearer", "search", "sort", "direction", "page"];
 
 	/**
 	 * Format the errors from the validator into a format that allows
@@ -95,6 +95,10 @@ class Controller extends BaseController
 	 *
 	 * @param string $type
 	 * @param array $params
+	 *
+	 * @return Validated
+	 *
+	 * @throws InvalidArgumentException
 	 */
 	protected function validateVoteParams(string $type, array $params): Validated
 	{
@@ -125,6 +129,50 @@ class Controller extends BaseController
 				'action.in' => "Invalid action. Must be one of the following: upvote, downvote, swap-to-upvote, swap-to-downvote, unvote"
 			]
 		);
+	}
+
+	/**
+	 * Creates a validator instance that will validates any report API request
+	 * parameters. The `$type` parameter defines whether this is for a Discussion
+	 * (`discussion`) or DiscussionReply (`comment`) model.
+	 *
+	 * @param string $type
+	 * @param array $params
+	 *
+	 * @return Validated
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	protected function validateReportParams(string $type, array $params): Validated
+	{
+		if (in_array($type, ['discussion', 'comment'])) {
+			$table = $type === 'comment' ? "discussion_replies" : "{$type}s";
+			$type = ucwords($type);
+		}
+		else {
+			throw new InvalidArgumentException("{$type} is not a valid argument. Use either \"discussion\" or \"comment\".");
+		}
+
+		return Validator::make(
+			$params,
+			[
+				'id' => ['required', 'numeric', "exists:{$table},id"],
+				'userID' => ['required', 'numeric', 'exists:users,id'],
+				'reason' => ['required', 'string', 'max:255']
+			],
+			[
+				'id.required' => "{$type} ID is required",
+				'id.numeric' => "Invalid ID format",
+				'id.exists' => "{$type} entry does not exists",
+				'userID.required' => "User ID is required",
+				'userID.numeric' => "Invalid ID format",
+				'userID.exists' => "User entry does not exists",
+				'reason.required' => "Reason is required",
+				'reason.string' => "Invalid reason format",
+				'reason.max' => "Reason must not exceed 255 characters"
+			]
+		);
+
 	}
 
 	/**

@@ -84,6 +84,7 @@ mix
 	// Discussions
 	.js('resources/js/views/discussions/show-text-editor.js', 'public/views/discussions')
 	.js('resources/js/views/discussions/voting-fn.js', 'public/views/discussions')
+	.js('resources/js/views/discussions/report-fn.js', 'public/views/discussions')
 	.js('resources/js/views/discussions/autocomplete.js', 'public/views/discussions')
 	.sass('resources/scss/views/discussions/general.scss', 'public/views/discussions')
 

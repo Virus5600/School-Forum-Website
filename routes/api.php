@@ -17,6 +17,15 @@ Route::group(['namespace' => "App\Http\Controllers", 'middleware' => ['permissio
 	// Resend Verification
 	Route::post('/resend', 'AuthenticationController@resendVerification')->name('verification.resend');
 
+	// Reporting Related
+	Route::group(['prefix' => 'report', 'middleware' => ['verification:verified']], function() {
+		// Report Discussion
+		Route::post('/discussion', 'ReportController@reportDiscussion')->name('api.report.discussion');
+
+		// Report Comment
+		Route::post('/comment', 'ReportController@reportComment')->name('api.report.comment');
+	});
+
 	// Discussion Related
 	Route::group(['prefix' => 'discussions'], function() {
 		// Upvote (Discussion)

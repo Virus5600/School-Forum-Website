@@ -53,31 +53,40 @@
 								</h3>
 
 								@auth
-									@if (auth()->user()->id === $discussion->posted_by)
-										<div class="dropdown">
-											{{-- DROPDOWN BUTTON --}}
-											<button class="btn btn-sm btn-light text-body-emphasis" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-												<i class="fas fa-ellipsis-vertical"></i>
+									<div class="dropdown">
+										{{-- DROPDOWN BUTTON --}}
+										<button class="btn btn-sm btn-light text-body-emphasis" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="fas fa-ellipsis-vertical"></i>
+										</button>
+
+										<div class="dropdown-menu drop-down-menu-end" aria-label="More actions...">
+											@if (auth()->user()->id === $discussion->posted_by)
+											{{-- EDIT --}}
+											<a class="dropdown-item" href="{{ route('discussions.edit', [$discussion->category->name, $discussion->slug]) }}">
+												Edit
+											</a>
+
+											{{-- DELETE --}}
+											<form action="{{ route('discussions.delete', [$discussion->category->name, $discussion->slug]) }}" method="POST" data-cl-form data-cl-form-submit data-cl-form-submit-title="This cannot be undone" data-cl-form-submit-message="Are you sure you want to delete this post?">
+												@csrf
+												@method('DELETE')
+
+												<button type="submit" class="dropdown-item">
+													Delete
+												</button>
+											</form>
+											@else
+											{{-- REPORT --}}
+											<button type="button" class="dropdown-item" aria-title="Report Discussion"
+												data-report="discussion"
+												data-report-route="{{ route('api.report.discussion') }}"
+												data-report-id="{{ $discussion->id }}"
+												>
+												Report Discussion
 											</button>
-
-											<div class="dropdown-menu drop-down-menu-end" aria-label="More actions...">
-												{{-- EDIT --}}
-												<a class="dropdown-item" href="{{ route('discussions.edit', [$discussion->category->name, $discussion->slug]) }}">
-													Edit
-												</a>
-
-												{{-- DELETE --}}
-												<form action="{{ route('discussions.delete', [$discussion->category->name, $discussion->slug]) }}" method="POST" data-cl-form data-cl-form-submit data-cl-form-submit-title="This cannot be undone" data-cl-form-submit-message="Are you sure you want to delete this post?">
-													@csrf
-													@method('DELETE')
-
-													<button type="submit" class="dropdown-item">
-														Delete
-													</button>
-												</form>
-											</div>
+											@endif
 										</div>
-									@endif
+									</div>
 								@endauth
 							</div>
 						</li>
@@ -190,10 +199,13 @@
 
 @push('css')
 <link rel="stylesheet" href="{{ mix('views/discussions/general.css') }}" nonce="{{ csp_nonce() }}">
+<link rel="stylesheet" href="{{ mix('css/util/text-counter.css') }}" nonce="{{ csp_nonce() }}">
 @endpush
 
 @push('scripts')
 <script type="text/javascript" src="{{ mix('views/discussions/show-text-editor.js') }}" nonce="{{ csp_nonce() }}" defer></script>
+<script type="text/javascript" src="{{ mix('views/discussions/report-fn.js') }}" nonce="{{ csp_nonce() }}" defer></script>
 <script type="text/javascript" src="{{ mix('views/discussions/voting-fn.js') }}" nonce="{{ csp_nonce() }}" defer></script>
 <script type="text/javascript" src="{{ mix("js/util/confirm-leave.js") }}" nonce="{{ csp_nonce() }}" defer></script>
+<script type="text/javascript" src="{{ mix('js/util/text-counter.js') }}" nonce="{{ csp_nonce() }}" defer></script>
 @endpush

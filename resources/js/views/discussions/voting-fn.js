@@ -53,10 +53,12 @@ $(() => {
 			let actualAction = action.replace(/.*-/, ``),
 				otherAction = actualAction === `upvote` ? `downvote` : `upvote`;
 
-			console.log({
-				actualAction: `#${actualAction}-${voteType}-${id}`,
-				otherAction: `#${otherAction}-${voteType}-${id}`
-			})
+			if (window.votingFNDebugMode)
+				console.log({
+					actualAction: `#${actualAction}-${voteType}-${id}`,
+					otherAction: `#${otherAction}-${voteType}-${id}`
+				});
+
 			switch (action.replace(/-.*/, '')) {
 				case `upvote`:
 				case `downvote`:

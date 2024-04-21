@@ -12,7 +12,7 @@ class VotedCommentController extends Controller
 {
     // API FUNCTIONS
 	public function upvote(Request $req) {
-		$validator = $this->validateVoteParams('comment', $req->except('_token', 'bearer', '_method'));
+		$validator = $this->validateVoteParams('comment', $req->except(self::EXCEPT));
 
 		if ($validator->fails()) {
 			return response()->json([
@@ -25,7 +25,7 @@ class VotedCommentController extends Controller
 	}
 
 	public function downvote(Request $req) {
-		$validator = $this->validateVoteParams('comment', $req->except('_token', 'bearer', '_method'));
+		$validator = $this->validateVoteParams('comment', $req->except(self::EXCEPT));
 
 		if ($validator->fails()) {
 			return response()->json([
