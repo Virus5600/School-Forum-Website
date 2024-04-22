@@ -3,7 +3,7 @@
 	<div class="container-fluid">
 		{{-- Branding --}}
 		<a href="{{ route('admin.dashboard') }}" class="navbar-brand mx-auto mx-lg-0 py-0 h-auto d-none d-lg-block text-light">
-			<img src="{{ $webLogo }}" alt="Defensive Measures Icon" style="max-height: 3.25rem;" class="m-0 p-0 me-2">
+			<img src="{{ $webLogo }}" alt="{{ $webName }} Icon" style="max-height: 3.25rem; --imgf-missing-shadow-color: var(--bs-it-quaternary);" class="m-0 p-0 me-2 rounded">
 			{{ $webName }}
 		</a>
 

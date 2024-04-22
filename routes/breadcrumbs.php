@@ -118,3 +118,20 @@ Breadcrumbs::for(
 	fn(Trail $trail) => $trail->parent("profile.index")
 		->push("Deactivate Account", route("profile.deactivate"))
 );
+
+////////////////
+// ADMIN SIDE //
+////////////////
+
+// REPORTS
+Breadcrumbs::for(
+	"admin.reports.index",
+	fn(Trail $trail) => $trail->push("Reports", route("admin.reports.index"))
+);
+
+// REPORTS > SHOW
+Breadcrumbs::for(
+	"admin.reports.show",
+	fn(Trail $trail, string $uuid) => $trail->parent("admin.reports.index")
+		->push("View Report", route("admin.reports.show", $uuid))
+);

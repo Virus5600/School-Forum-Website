@@ -1,0 +1,17 @@
+@import "./../bs-modifiers/base";
+
+.table {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		@include media-breakpoint-up($breakpoint) {
+			$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+			&.table#{$infix}-full-height {
+				height: 100%;
+
+				tr {
+					height: 1px;
+				}
+			}
+		}
+	}
+}

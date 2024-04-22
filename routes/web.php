@@ -231,6 +231,35 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 				});
 
 			});
+
+			// Reported Contents
+			Route::group(['prefix' => 'reported-contents', 'middleware' => ['permissions:reports_tab_access']], function() {
+				// Index
+				Route::get('/', 'ReportController@index')->name('admin.reports.index');
+
+				Route::group(['prefix' => '/{uuid}'], function() {
+					// Show
+					Route::get('/', 'ReportController@show')->name('admin.reports.show');
+
+					// Update Status
+					Route::group(['prefix' => 'update-status'], function() {
+						// Update
+						Route::get('/', 'ReportController@updateStatus')->name('admin.reports.status');
+
+						// Store
+						Route::put('/store', 'ReportController@storeStatus')->name('admin.reports.status.store');
+					});
+
+					// Update Action Taken
+					Route::group(['prefix' => 'update-action-taken'], function() {
+						// Update
+						Route::get('/', 'ReportController@updateActionTaken')->name('admin.reports.action');
+
+						// Store
+						Route::put('/store', 'ReportController@storeActionTaken')->name('admin.reports.action.store');
+					});
+				});
+			});
 		});
 	});
 });

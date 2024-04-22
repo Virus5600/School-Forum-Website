@@ -19,6 +19,24 @@ class PermissionsTableSeeder extends Seeder
 			'slug' => 'admin_access'
 		]);
 
+		// REPORTS
+		$reportsPerm = Permission::create([
+			'name' => 'Reports Tab Access',
+			'slug' => 'reports_tab_access'
+		]);
+
+		Permission::create([
+			'parent_permission' => $reportsPerm->id,
+			'name' => 'Reports Tab Status',
+			'slug' => 'reports_tab_status'
+		]);
+
+		Permission::create([
+			'parent_permission' => $reportsPerm->id,
+			'name' => 'Reports Tab Action',
+			'slug' => 'reports_tab_action'
+		]);
+
 		// LOST AND FOUND
 		$lostFoundPerm = Permission::create([
 			'name' => 'Lost and Found Tab Access',

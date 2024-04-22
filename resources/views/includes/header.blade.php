@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-md fixed-top shadow-lg px-3 bg-it-primary" id="mainNavbar" data-bs-theme="dark">
 	{{-- Branding --}}
 	<a href="{{ route('home') }}" class="navbar-brand m-0 link-body-emphasis">
-		<img src="{{ $webLogo }}" alt="{{ $webName }} Logo" class="m-0" draggable="false">
+		<img src="{{ $webLogo }}" alt="{{ $webName }} Logo" class="m-0 rounded" draggable="false" style=" --imgf-missing-shadow-color: var(--bs-it-quaternary);">
 		{{ $webName }}
 	</a>
 

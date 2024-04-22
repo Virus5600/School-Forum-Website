@@ -91,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
 		// Add morph map for polymorphic relationships
 		Relation::morphMap([
 			'discussion' => 'App\Models\Discussion',
-			'comment' => 'App\Models\DiscussionReply',
+			'comment' => 'App\Models\DiscussionReplies',
 		]);
 	}
 }

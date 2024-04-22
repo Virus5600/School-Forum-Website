@@ -6,6 +6,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="Content-Language" content="en-US" />
+		<meta name="csp-nonce" content="{{ csp_nonce() }}">
+
+		{{-- META STACK --}}
+		@stack('meta')
 
 		{{-- SITE META --}}
 		<meta name="type" content="website">
@@ -14,7 +18,6 @@
 		<meta name="image" content="{{ asset('uploads/settings/meta-banner.png') }}">
 		<meta name="keywords" content="{{ env('APP_KEYW') }}">
 		<meta name="application-name" content="{{ $webName }}">
-		@stack('meta')
 
 		{{-- TWITTER META --}}
 		<meta name="twitter:card" content="summary_large_image">
@@ -23,11 +26,11 @@
 		<meta name="twitter:image" content="{{ asset('uploads/settings/meta-banner.png') }}">
 
 		{{-- OG META --}}
-		<meta name="og:url" content="{{ Request::url() }}">
-		<meta name="og:type" content="website">
-		<meta name="og:title" content="{{ $webName }}">
-		<meta name="og:description" content="{{ $webDesc }}">
-		<meta name="og:image" content="{{ asset('uploads/settings/meta-banner.png') }}">
+		<meta property="og:url" name="og:url" content="{{ Request::url() }}">
+		<meta property="og:type" name="og:type" content="website">
+		<meta property="og:title" name="og:title" content="{{ $webName }}">
+		<meta property="og:description" name="og:description" content="{{ $webDesc }}">
+		<meta property="og:image" name="og:image" content="{{ asset('uploads/settings/meta-banner.png') }}">
 
 		{{-- FAVICON --}}
 		<link rel="icon" href="{{ $webLogo }}">
@@ -35,12 +38,12 @@
 		<link rel="apple-touch-icon" href="{{ $webLogo }}">
 		<link rel="mask-icon" href="{{ $webLogo }}">
 
-		@yield('meta')
-
 		{{-- COMMON LIBS --}}
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/animations.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/fallback-image.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/custom-scrollbar.css') }}">
+
 		<script type="text/javascript" src="{{ mix('js/app.js') }}" data-auto-add-css="false"></script>
 
 		{{-- CUSTOM STYLES --}}
@@ -63,15 +66,13 @@
 
 			{{-- CONTENTS --}}
 			<main class="d-flex flex-column flex-fill m-0" id="content">
-				<div class="d-flex flex-fill m-0">
-					<div class="d-flex flex-fill position-relative h-100">
-						{{-- SIDEBAR --}}
-						@include('includes.admin.sidebar')
+				<div class="bg-it-quaternary d-flex flex-fill position-relative h-100">
+					{{-- SIDEBAR --}}
+					@include('includes.admin.sidebar')
 
-						{{-- CONTENT --}}
-						<div class="container-fluid content flex-fill m-0 pt-2 pb-5 min-h-100 bg-it-quaternary">
-							@yield('content')
-						</div>
+					{{-- CONTENT --}}
+					<div class="container-fluid content flex-fill m-0 pt-2 pb-5 min-h-100 bg-it-quaternary">
+						@yield('content')
 					</div>
 				</div>
 			</main>
@@ -82,6 +83,7 @@
 		{{-- COMMON LIBS --}}
 		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}"></script>
 		<script type="text/javascript" src="{{ mix('js/util/confirm-leave.js') }}" defer></script>
+		<script type="text/javascript" src="{{ mix('js/util/fallback-image.js') }}" nonce="{{ csp_nonce() }}"></script>
 
 		<script type="text/javascript" src="{{ mix('views/layouts/admin/admin.js') }}"></script>
 		@stack('scripts')

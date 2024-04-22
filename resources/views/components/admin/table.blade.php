@@ -1,7 +1,7 @@
 @props(['columns', 'sortable' => false, 'hasActions' => true])
 
 @php ($columns = json_decode($columns, true))
-<div class="rounded-3 table-responsive">
+<div class="rounded-3 table-responsive h-100">
 	<table class="table table-striped table-hover my-0 align-middle overflow-x-auto">
 		<thead>
 			<tr>
@@ -26,7 +26,7 @@
 			</tr>
 		</thead>
 
-		<tbody class="table-group-divider">
+		<tbody class="table-group-divider h-100">
 			{{ $slot }}
 		</tbody>
 

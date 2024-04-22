@@ -6,6 +6,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="Content-Language" content="en-US" />
+		<meta name="csp-nonce" content="{{ csp_nonce() }}">
+
+		{{-- META STACK --}}
 		@stack('meta')
 
 		{{-- SITE META --}}
@@ -39,6 +42,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/animations.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/custom-scrollbar.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/fallback-image.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ mix('css/util/highlight-fragment.css') }}">
 		<script type="text/javascript" src="{{ mix('js/app.js') }}" data-auto-add-css="false"></script>
 
@@ -79,11 +83,9 @@
 		<script type="text/javascript" src="{{ mix('views/layouts/public/public.js') }}"></script>
 
 		{{-- CUSTOM SCRIPTS --}}
-		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}" nonce="{{ csp_nonce() }}"></script>
-		<script type="text/javascript" src="{{ mix('js/util/swal-flash.js') }}" nonce="{{ csp_nonce() }}"></script>
-		@if (config('app.debug'))
-		<script type="text/javascript" nonce="{{ csp_nonce() }}">window.votingFNDebugMode = true;</script>
-		@endif
+		<script type="text/javascript" src="{{ mix('js/util/animation.js') }}" nonce="{{ csp_nonce() }}" defer></script>
+		<script type="text/javascript" src="{{ mix('js/util/swal-flash.js') }}" nonce="{{ csp_nonce() }}" defer></script>
+		<script type="text/javascript" src="{{ mix('js/util/fallback-image.js') }}" nonce="{{ csp_nonce() }}" defer></script>
 		@stack('scripts')
 	</body>
 </html>
