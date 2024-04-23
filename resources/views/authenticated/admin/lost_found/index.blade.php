@@ -130,7 +130,7 @@
 				</tr>
 			@empty
 				<tr>
-					<td colspan="{{ count($columns) }}" class="text-center">No items found.</td>
+					<td colspan="{{ count($columns) + 1 }}" class="text-center">No items found.</td>
 				</tr>
 			@endforelse
 

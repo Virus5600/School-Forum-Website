@@ -24,6 +24,17 @@ class UserTypePermissionsTableSeeder extends Seeder
 		$typeID = UserType::where('slug', '=', 'admin')->first()->id;
 		$perms = [
 			'admin_dashboard',
+			'lost_and_found_tab_access',
+			'lost_and_found_tab_access',
+			'lost_and_found_tab_create',
+			'lost_and_found_tab_edit',
+			'lost_and_found_tab_status',
+			'lost_and_found_tab_archive',
+			'lost_and_found_tab_unarchive',
+			'lost_and_found_tab_delete',
+			'reports_tab_access',
+			'reports_tab_status',
+			'reports_tab_action',
 			'settings_tab_access',
 			'settings_tab_edit'
 		];
@@ -33,6 +44,17 @@ class UserTypePermissionsTableSeeder extends Seeder
 		$typeID = UserType::where('slug', '=', 'teacher')->first()->id;
 		$perms = [
 			'admin_dashboard',
+			'lost_and_found_tab_access',
+			'lost_and_found_tab_access',
+			'lost_and_found_tab_create',
+			'lost_and_found_tab_edit',
+			'lost_and_found_tab_status',
+			'lost_and_found_tab_archive',
+			'lost_and_found_tab_unarchive',
+			'lost_and_found_tab_delete',
+			'reports_tab_access',
+			'reports_tab_status',
+			'reports_tab_action',
 		];
 		$this->insertEntries($typeID, $perms);
 
@@ -42,13 +64,14 @@ class UserTypePermissionsTableSeeder extends Seeder
 		];
 	}
 
-	private function insertEntries($typeID, $perms = []): void
+	private function insertEntries(int $typeID, array $perms = []): void
 	{
-		for ($i = 1; $i <= count($perms); $i++) {
-			UserTypePermission::insert([
-				'user_type_id' => $typeID,
-				'permission_id' => $i
-			]);
-		}
+		UserType::find($typeID)
+			->permissions()
+			->attach(
+				Permission::whereIn('slug', $perms)
+					->pluck('id')
+					->toArray()
+			);
 	}
 }

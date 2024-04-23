@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,10 @@ class DiscussionCategoryFactory extends Factory
      */
     public function definition(): array
     {
+		$word = fake()->word();
         return [
-			'name' => fake()->word(),
+			'name' => $word,
+			'slug' => Str::slug($word, "-")
         ];
     }
 
@@ -42,6 +45,7 @@ class DiscussionCategoryFactory extends Factory
 	{
 		return $this->state(fn (array $attributes) => [
 			'name' => $name,
+			'slug' => Str::slug($name, '-'),
 		]);
 	}
 }

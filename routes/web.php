@@ -197,7 +197,7 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 		////////////////
 		// ADMIN SIDE //
 		////////////////
-		Route::group(['prefix' => 'admin', 'middleware' => ['verification:verified', 'permissions:admin_access']], function() {
+		Route::group(['prefix' => 'admin', 'middleware' => ['verification:verified', 'permissions:admin_dashboard']], function() {
 			// Dashboard
 			Route::get('/', 'PageController@dashboard')->name('admin.dashboard');
 

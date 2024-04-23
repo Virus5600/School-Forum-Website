@@ -5,7 +5,6 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 use App\Models\Discussion;
-use App\Models\DiscussionReplies;
 use App\Models\User;
 
 /**
@@ -72,6 +71,33 @@ class DiscussionRepliesFactory extends Factory
 			return [
 				'created_at' => $createdAt,
 				'updated_at' => $edited ? $updatedAt : $createdAt,
+			];
+		});
+	}
+
+	/**
+	 * Provides a reply with a specific date.
+	 */
+	public function dates(string $createdAt, string|null $updatedAt = null): static
+	{
+		return $this->state(fn (array $attributes) => [
+			'created_at' => $createdAt,
+			'updated_at' => $updatedAt ?? $createdAt,
+		]);
+	}
+
+	/**
+	 * Randomly marks a reply as edited.
+	 */
+	public function randomEdit(string|null $createdAt = null): static
+	{
+		return $this->state(function (array $attributes) use ($createdAt) {
+			$createdAt = $createdAt == null ? fake()->dateTimeBetween('-1 day', 'now', 'Asia/Manila') : $createdAt;
+			$updatedAt = fake()->dateTimeBetween($createdAt, 'now', 'Asia/Manila');
+
+			return [
+				'created_at' => $createdAt,
+				'updated_at' => fake()->boolean() ? $updatedAt : $createdAt,
 			];
 		});
 	}

@@ -5,27 +5,30 @@
 		{{ ucwords($value->name) }}
 	</h2>
 
-	<div class="card-body bg-light p-0">
-		<div class="list-group list-group-flush border-bottom transition-3">
-			@foreach ($value->discussions->splice(0, 5) as $d)
-			<div class="hstack justify-content-between list-group-item list-group-item-action">
-				<a href="{{ route('discussions.show', [$value->name, $d->slug]) }}" class="fw-normal fs-6 text-wrap">
-					{{ Str::limit($d->title, 25) }}
-				</a>
+	<div class="card-body bg-light p-0 table-responsive">
+		<table class="table table-striped table-hover my-0 align-middle text-nowrap">
+			<tbody>
+				@foreach ($value->discussions->splice(0, 5) as $d)
+				<tr>
+					<td>
+						<a href="{{ route('discussions.show', [$value->name, $d->slug]) }}" class="fw-normal fs-6">
+							{{ Str::limit($d->title, 25) }}
+						</a>
+					</td>
 
-				<div class="d-flex justify-content-between align-items-center" style="width: 250px;">
-					<small class="text-muted">
+					<td class="text-muted small">
 						<i class="fas fa-user"></i>
 						{{ $d->postedBy->trashed() ? '[Deleted User]' : $d->postedBy->username }}
-					</small>
+					</td>
 
-					<small class="text-muted">
+					<td class="text-muted small">
+						<i class="fas fa-calendar-days"></i>
 						{{ $d->created_at->diffForHumans() }}
-					</small>
-				</div>
-			</div>
-			@endforeach
-		</div>
+					</td>
+				</tr>
+				@endforeach
+			</tbody>
+		</table>
 	</div>
 
 	<div class="card-footer bg-it-secondary text-center">

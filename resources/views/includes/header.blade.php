@@ -80,7 +80,7 @@
 						<hr class="dropdown-divider">
 
 						{{-- ADMIN DIRECTORIES --}}
-						@if (auth()->user()->hasPermission('admin_access'))
+						@if (auth()->user()->hasPermission('admin_dashboard'))
 						<a href="{{ route('admin.dashboard') }}" class="dropdown-item transition-2">Dashboard</a>
 
 						<hr class="dropdown-divider">

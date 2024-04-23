@@ -94,6 +94,7 @@ $(() => {
 		// If the server encountered an error
 		else if (status === 500) {
 			const message = response.responseJSON.message;
+			if (SwalFlash) SwalFlash.error(message);
 			console.error(message);
 		}
 	};

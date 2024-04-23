@@ -81,6 +81,9 @@ class DiscussionController extends Controller
 			// Fetch/Create category
 			$category = DiscussionCategory::firstOrCreate([
 				'name' => strtolower($cleanData->category),
+			], [
+				'name' => $cleanData->category,
+				'slug' => Str::of(strtolower($cleanData->category))->slug('-'),
 			]);
 
 			// Create Discussion

@@ -29,12 +29,16 @@
 		<h1 class="m-0 p-2 display-1">Categories</h1>
 	</hgroup>
 
-	<div class="row justify-content-center">
+	<div class="row justify-content-center row-gap-3">
 		{{-- QUERIES --}}
 		<div class="col-12 col-lg-4">
 			<div class="card">
 				<div class="card-body vstack row-gap-3">
 					<form action="{{ route('discussions.categories.index') }}" method="GET">
+						@foreach (request()->except(["_token", "search", "sort", "direction"]) as $k => $v)
+						<input type="hidden" name="{{ $k }}" value="{{ $v }}">
+						@endforeach
+
 						<x-search search="{{ $search }}" />
 					</form>
 
@@ -46,7 +50,7 @@
 		{{-- CATEGORIES --}}
 		<div class="col-12 col-lg-8">
 			<div class="card">
-				<div class="card-body">
+				<div class="card-body table-responsive">
 					<table class="table table-striped table-hover table-sm" id="category_table">
 						<thead>
 							<tr>

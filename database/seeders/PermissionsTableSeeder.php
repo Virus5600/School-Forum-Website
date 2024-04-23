@@ -15,8 +15,8 @@ class PermissionsTableSeeder extends Seeder
 	{
 		// ADMIN ACCESS
 		Permission::create([
-			'name' => 'Admin Access',
-			'slug' => 'admin_access'
+			'name' => 'Admin Dashboard',
+			'slug' => 'admin_dashboard'
 		]);
 
 		// REPORTS

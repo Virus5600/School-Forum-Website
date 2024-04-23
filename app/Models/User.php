@@ -134,8 +134,8 @@ class User extends Authenticatable
 	 *
 	 * @param string $type The format of the image to be returned. Allowed values are: html, url, filename. By default, it is set to `html`.
 	 * @param bool $useDefault Whether to use the default image if the image is not found or you feel like it. By default, it is set to `false`.
-	 * @param string $additionalClasses Additional classes to be added to the image tag. Purely optional.
-	 * @param string $imgSize The size of the image (i.e.: 1rem). Purely optional.
+	 * @param string $additionalClasses Additional classes to be added to the image tag. **Purely optional**.
+	 * @param string $imgSize The size of the image (i.e.: `1rem`). If the unit of measurement is not set, it will default to `rem`. **Purely optional**.
 	 *
 	 * @return string The value of the setting with the specified key as a string.
 	 *
@@ -149,8 +149,28 @@ class User extends Authenticatable
 		if ($useDefault)
 			$file = "default-{$this->gender}.png";
 
-		if (!empty($imgSize))
-			$imgSize = "style=\"--avatar-size: {$imgSize};\"";
+		if (!empty($imgSize)) {
+			// Checks if the unit of measurement is set
+			$isMeasurementSet = false;
+			$units = ["em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%",
+				"cm", "mm", "in", "px", "pt", "pc"];
+			foreach ($units as $unit) {
+				if (str_contains($imgSize, $unit)) {
+					$isMeasurementSet = true;
+					break;
+				}
+			}
+
+			// Sets the unit of measurement for the image size if it is not set
+			if ($isMeasurementSet)
+				$imgSize .= "rem";
+
+			// Sets the size of the image based on the additional classes
+			if (str_contains($additionalClasses, "avatar"))
+				$imgSize = "style=\"--avatar-size: {$imgSize};\"";
+			else
+				$imgSize = "style=\"width: {$imgSize}; height: {$imgSize};\"";
+		}
 
 		switch ($type) {
 			case "html":

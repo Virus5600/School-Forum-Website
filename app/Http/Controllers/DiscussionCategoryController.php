@@ -75,6 +75,7 @@ class DiscussionCategoryController extends Controller
 
 		// Initialize Discussion Query
 		$query = Discussion::select("discussions.*")
+			->withCount("comments as total_comments")
 			->with('postedBy:id,username,deleted_at')
 			->leftJoin('users', 'discussions.posted_by', '=', 'users.id')
 			->where('category_id', '=', $category->id);

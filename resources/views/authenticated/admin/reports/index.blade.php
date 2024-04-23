@@ -96,7 +96,7 @@
 				</tr>
 			@empty
 				<tr>
-					<td colspan="{{ count($columns) }}">No reports found.</td>
+					<td colspan="{{ count($columns) + 1 }}" class="text-center">No reports found.</td>
 				</tr>
 			@endforelse
 

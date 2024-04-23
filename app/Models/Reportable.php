@@ -49,8 +49,10 @@ class Reportable extends Model
 		static::created(function(Reportable $reportable) {
 			try {
 				DB::beginTransaction();
+
 				$reportable->uuid = Str::uuid();
 				$reportable->save();
+
 				DB::commit();
 			} catch (Exception $e) {
 				Log::error($e);

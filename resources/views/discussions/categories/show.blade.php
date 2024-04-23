@@ -29,7 +29,7 @@
 		<h1 class="m-0 p-2 display-1">{{ ucwords($category->name) }}</h1>
 	</hgroup>
 
-	<div class="row justify-content-center">
+	<div class="row justify-content-center row-gap-3">
 		{{-- QUERIES --}}
 		<div class="col-12 col-lg-4">
 			<div class="card">
@@ -50,12 +50,16 @@
 		{{-- CATEGORIES --}}
 		<div class="col-12 col-lg-8">
 			<div class="card">
-				<div class="card-body">
+				<div class="card-body table-responsive">
 					<table class="table table-striped table-hover table-sm" id="category_table">
 						<thead>
 							<tr>
 								<th class="text-start text-nowrap w-75" scope="col">
 									@sortablelink('discussions.title', 'Title')
+								</th>
+
+								<th class="text-start text-nowrap" scope="col">
+									@sortablelink('discussions.total_comments', 'Comments')
 								</th>
 
 								<th class="text-start text-nowrap" scope="col">
@@ -71,11 +75,18 @@
 						<tbody>
 							@forelse($discussions as $d)
 							<tr>
-								<td class="text-start">
+								<td class="text-start text-nowrap">
 									<a href="{{ route('discussions.show', [$category->name, $d->slug]) }}" class="link-body-emphasis text-decoration-none icon-link icon-link-hover w-100" title="{{ ucwords($d->title) }}." style="--bs-icon-link-transform: translate3d(0, -.25rem, 0);">
 										<i class="fas fa-up-right-from-square bi transition-2"></i>
 										{{ ucwords($d->title) }}
 									</a>
+								</td>
+
+								<td class="text-start text-nowrap">
+									<small class="text-muted d-flex flex-row justify-content-between">
+										<i class="fas fa-comment-dots"></i>
+										{{ $d->total_comments }}
+									</small>
 								</td>
 
 								<td class="text-start text-nowrap">
@@ -93,15 +104,17 @@
 								</td>
 							</tr>
 							@empty
-							<td colspan="3">
-								<div class="card text-bg-dark">
-									<img src="{{ asset("uploads/discussions/default.png") }}" alt="Lost and Found's default background image." class="card-img brightness-1">
-									<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
-										<i class="fas fa-box-open fa-3x"></i>
-										<h3 class="card-title m-0">No Discussions Yet...</h3>
+							<tr>
+								<td colspan="4">
+									<div class="card text-bg-dark">
+										<img src="{{ asset("uploads/discussions/default.png") }}" alt="Lost and Found's default background image." class="card-img brightness-1">
+										<div class="card-img-overlay has-backdrop-blur active d-flex flex-column justify-content-center align-items-center">
+											<i class="fas fa-box-open fa-3x"></i>
+											<h3 class="card-title m-0">No Discussions Yet...</h3>
+										</div>
 									</div>
-								</div>
-							</td>
+								</td>
+							</tr>
 							@endforelse
 						</tbody>
 					</table>
