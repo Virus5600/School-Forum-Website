@@ -28,6 +28,7 @@ $isDiscussion = $report->reportable_type == 'discussion';
 		</hgroup>
 		@endif
 
+		{{-- INFORMATION --}}
 		<div class="card-body">
 			<div class="vstack row-gap-7">
 				{{-- General Information --}}
@@ -194,14 +195,86 @@ $isDiscussion = $report->reportable_type == 'discussion';
 									</a>
 								</div>
 
+								{{-- Content --}}
+								<div class="list-group-item d-flex flex-column">
+									<h6>Content</h6>
+
+									<div class="card card-body mt-3">
+										{!!
+											Str::of($report->reportable->content)->markdown([
+												'html' => "strip"
+											])
+											!!}
+									</div>
+								</div>
+							@endif
+
 							{{-- Comment --}}
-							@else
+							@if (!$isDiscussion)
+								{{-- Discussion Source --}}
 								<div class="list-group-item d-flex flex-row justify-content-between">
+									<h6>Discussion</h6>
+
+									<a href="{{ route('discussions.show', [$report->reportable->discussion->category->slug, $report->reportable->discussion->slug]) }}" class="icon-link icon-link-hover" style="--bs-icon-link-transform: scale(1.125);" title="Open in new tab" target="_blank">
+										<i class="fas fa-up-right-from-square bi transition-2"></i>
+										{{ $report->reportable->discussion->title }}
+									</a>
+								</div>
+
+								{{-- Replied By --}}
+								<div class="list-group-item d-flex flex-row justify-content-between">
+									<h6>Replied By</h6>
+
+									<a href="@{{ route('') }}" class="icon-link icon-link-hover" style="--bs-icon-link-transform: scale(1.125);" title="Open in new tab" target="_blank">
+										<i class="fas fa-up-right-from-square bi transition-2"></i>
+										{{ $report->reportable->repliedBy->username }}
+									</a>
+								</div>
+
+								{{-- Content --}}
+								<div class="list-group-item d-flex flex-column">
+									<h6>Content</h6>
+
+									<div class="card card-body mt-3">
+										{!!
+											Str::of($report->reportable->content)->markdown([
+												'html' => "strip"
+											])
+										!!}
+									</div>
 								</div>
 							@endif
 						</div>
 					</div>
 				</section>
+			</div>
+		</div>
+
+		{{-- ACTIONS --}}
+		<div class="card-footer footer-center shadow-lg bg-white border rounded">
+			<div class="hstack justify-content-between align-items-center column-gap-3">
+				{{-- Update Status --}}
+				@if ($report->status == 'pending review')
+				<a href="" class="btn btn-warning">
+					<i class="fas fa-magnifying-glass me-2"></i>
+					Update Status: Under Review
+				</a>
+				@elseif ($report->status == 'under review')
+				<a href="" class="btn btn-secondary">
+					<i class="fas fa-hourglass-start me-2"></i>
+					Update Status: pending Review
+				</a>
+
+				<a href="" class="btn btn-success">
+					<i class="fas fa-check me-2"></i>
+					Update Status: Reviewed
+				</a>
+				@elseif ($report->review == 'reviewed')
+				<a href="" class="btn btn-warning">
+					<i class="fas fa-magnifying-glass me-2"></i>
+					Update Status: Under Review
+				</a>
+				@endif
 			</div>
 		</div>
 	</div>

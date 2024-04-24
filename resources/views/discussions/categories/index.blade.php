@@ -69,7 +69,7 @@
 								@if (!$value->discussions->isEmpty())
 								<tr>
 									<td class="text-start">
-										<a href="{{ route('discussions.categories.show', [$value->name]) }}" class="link-body-emphasis text-decoration-none icon-link icon-link-hover w-100" title="See disucssions under {{ ucwords($value->name) }}." style="--bs-icon-link-transform: translate3d(0, -.25rem, 0);">
+										<a href="{{ route('discussions.categories.show', [$value->slug]) }}" class="link-body-emphasis text-decoration-none icon-link icon-link-hover w-100" title="See disucssions under {{ ucwords($value->name) }}." style="--bs-icon-link-transform: translate3d(0, -.25rem, 0);">
 											<i class="fas fa-up-right-from-square bi transition-2"></i>
 											{{ ucwords($value->name) }}
 										</a>

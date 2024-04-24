@@ -33,6 +33,7 @@ class DiscussionCategoryFactory extends Factory
 	{
 		return $this->state(fn (array $attributes) => [
 			'name' => "general",
+			'slug' => "general"
 		]);
 	}
 

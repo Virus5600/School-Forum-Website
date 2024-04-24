@@ -87,7 +87,7 @@
 				<button type="submit" class="btn btn-it-primary" data-dos-action="submit" data-dos-disabled-label="Posting">Post</button>
 
 				{{-- CANCEL --}}
-				<button class="btn btn-it-secondary text-light" data-cl-leave data-cl-leave-href="{{ route("discussions.index") }}">Cancel</button>
+				<button class="btn btn-it-secondary text-light" data-cl-leave data-cl-leave-href="{{ $url }}">Cancel</button>
 			</div>
 		</div>
 	</form>

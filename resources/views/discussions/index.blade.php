@@ -24,8 +24,8 @@
 	<section class="card floating-footer border-0 bg-transparent mb-6">
 		<div class="card-body bg-transparent">
 			<div class="row gap-3 justify-content-center align-items-center">
-				@forelse ($categories->splice(0, 5) as $c)
-					<a href="{{ route('discussions.categories.show', [$c->name]) }}" class="link-body-emphasis text-decoration-none badge rounded-pill text-bg-danger bg-it-primary fs-6 w-75 w-lg-25 p-3 d-flex justify-content-between transition-3" data-bs-theme="dark" title="See disucssions under {{ ucwords($c->name) }}.">
+				@forelse ($categories as $c)
+					<a href="{{ route('discussions.categories.show', [$c->slug]) }}" class="link-body-emphasis text-decoration-none badge rounded-pill text-bg-danger bg-it-primary fs-6 w-75 w-lg-25 p-3 d-flex justify-content-between transition-3" data-bs-theme="dark" title="See disucssions under {{ ucwords($c->name) }}.">
 						<div>
 							<i class="fas fa-up-right-from-square"></i>
 							{{ ucwords($c->name) }}

@@ -37,7 +37,7 @@ class DiscussionController extends Controller
 			->withCount("discussions")
 			->orderBy("updated_at", "desc")
 			->orderBy("discussions_count", "desc")
-			->limit(9)
+			->limit(6)
 			->get();
 
 		// FINAL MODIFICATION
@@ -107,13 +107,13 @@ class DiscussionController extends Controller
 		}
 
 		return redirect()
-			->route('discussions.show', ['name' => $category->name, 'slug' => $discussion->slug])
+			->route('discussions.show', ['catSlug' => $category->slug, 'slug' => $discussion->slug])
 			->with('flash_success', 'Discussion has been created successfully.');
 	}
 
-	public function show(Request $req, string $name, string $slug) {
+	public function show(Request $req, string $catSlug, string $slug) {
 		// Fetch Category
-		$category = DiscussionCategory::where("name", Str::lower($name))
+		$category = DiscussionCategory::where("slug", Str::lower($catSlug))
 			->firstOrFail();
 
 		// Fetch Discussion
@@ -152,19 +152,19 @@ class DiscussionController extends Controller
 		]);
 	}
 
-	public function edit(Request $req, string $name, string $slug) {
+	public function edit(Request $req, string $catSlug, string $slug) {
 		// Fetch Discussion
 		$discussion = Discussion::where("slug", "=", $slug)
 			->firstOrFail();
 
 		return view('discussions.edit', [
 			"discussion" => $discussion,
-			"category" => $name,
+			"category" => $catSlug,
 			"slug" => $slug,
 		]);
 	}
 
-	public function update(Request $req, string $name, string $slug) {
+	public function update(Request $req, string $catSlug, string $slug) {
 		// Fetch Discussion
 		$discussion = Discussion::where("slug", "=", $slug)
 			->firstOrFail();
@@ -207,11 +207,11 @@ class DiscussionController extends Controller
 		}
 
 		return redirect()
-			->route('discussions.show', ['name' => $name, 'slug' => $discussion->slug])
+			->route('discussions.show', ['catSlug' => $catSlug, 'slug' => $discussion->slug])
 			->with('flash_success', 'Discussion has been updated successfully.');
 	}
 
-	public function delete(Request $req, string $name, string $slug) {
+	public function delete(Request $req, string $catSlug, string $slug) {
 		// Fetch Discussion
 		$discussion = Discussion::where("slug", "=", $slug)
 			->firstOrFail();
@@ -227,7 +227,7 @@ class DiscussionController extends Controller
 
 			// Set redirection
 			$route = 'discussions.categories.show';
-			$params = ['name' => $category->name];
+			$params = ['catSlug' => $category->slug];
 			if (count($category->discussions) <= 0) {
 				$route = 'discussions.index';
 				$params = [];

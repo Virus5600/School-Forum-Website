@@ -15,7 +15,7 @@ use Validator;
 
 class DiscussionRepliesController extends Controller
 {
-    public function store(Request $req, string $name, string $slug) {
+    public function store(Request $req, string $catSlug, string $slug) {
 		$validator = Validator::make(
 			$req->except('_token'),
 			DiscussionReplies::getValidationRules(),
@@ -54,16 +54,15 @@ class DiscussionRepliesController extends Controller
 
 			return redirect()
 				->back()
-				->with('flash_error', 'An error occurred while trying to save your comment. Please try again later.');
+				->with('flash_error', 'An error occurred while trying to comment. Please try again later.');
 		}
 
 		return redirect()
-			->route('discussions.show', ['name' => $name, 'slug' => $slug, 'page' => $lastPage])
-			->with('flash_success', 'Your comment has been successfully saved.')
+			->route('discussions.show', ['catSlug' => $catSlug, 'slug' => $slug, 'page' => $lastPage])
 			->withFragment(Carbon::parse($comment->created_at)->timestamp . $comment->id);
 	}
 
-	public function edit(Request $req, string $name, string $slug, int $id) {
+	public function edit(Request $req, string $catSlug, string $slug, int $id) {
 		$comment = DiscussionReplies::where('id', $id)
 			->with('repliedBy')
 			->firstOrFail();
@@ -71,12 +70,12 @@ class DiscussionRepliesController extends Controller
 		return view('discussions.comments.edit', [
 			'page' => $req->page ?? null,
 			'comment' => $comment,
-			'name' => $name,
+			'catSlug' => $catSlug,
 			'slug' => $slug,
 		]);
 	}
 
-	public function update(Request $req, string $name, string $slug, int $id) {
+	public function update(Request $req, string $catSlug, string $slug, int $id) {
 		$validator = Validator::make(
 			$req->except(['_token', '_method']),
 			DiscussionReplies::getValidationRules(),
@@ -112,7 +111,7 @@ class DiscussionRepliesController extends Controller
 		}
 
 		$params = [
-			'name' => $name,
+			'catSlug' => $catSlug,
 			'slug' => $slug,
 		];
 
@@ -126,7 +125,7 @@ class DiscussionRepliesController extends Controller
 			->withFragment(Carbon::parse($comment->created_at)->timestamp . $comment->id);
 	}
 
-	public function delete(Request $req, string $name, string $slug, int $id) {
+	public function delete(Request $req, string $catSlug, string $slug, int $id) {
 		$comment = DiscussionReplies::findOrFail($id);
 
 		try {
@@ -145,7 +144,7 @@ class DiscussionRepliesController extends Controller
 		}
 
 		return redirect()
-			->route('discussions.show', ['name' => $name, 'slug' => $slug])
+			->route('discussions.show', ['name' => $catSlug, 'slug' => $slug])
 			->with('flash_success', 'Your reply has been successfully deleted.');
 	}
 }

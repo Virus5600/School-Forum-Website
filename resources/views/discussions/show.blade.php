@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid body-container">
 	<div class="d-flex flex-column flex-lg-row justify-content-start align-items-center gap-3">
-		<a href="{{ route('discussions.categories.show', [$discussion->category->name]) }}" class="link-body-emphasis icon-link icon-link-hover text-decoration-none" style="--bs-icon-link-transform: translateX(-.25rem);">
+		<a href="{{ route('discussions.categories.show', [$discussion->category->slug]) }}" class="link-body-emphasis icon-link icon-link-hover text-decoration-none" style="--bs-icon-link-transform: translateX(-.25rem);">
 			<i class="fas fa-chevron-left bi"></i>
 			Go back to {{ ucwords($discussion->category->name) }}
 		</a>
@@ -137,7 +137,7 @@
 		@forelse($comments as $reply)
 			<x-discussions.comments :comment="$reply"
 				additionalClass="my-3"
-				name="{{ $discussion->category->name }}"
+				catSlug="{{ $discussion->category->slug }}"
 				slug="{{ $discussion->slug }}"
 				page="{{ request()->page }}"
 				includeScripts="false"
@@ -159,7 +159,7 @@
 	@auth
 	<div class="card mt-5" id="comment-form">
 		<div class="card-body">
-			<form action="{{ route('discussions.comments.store', [$discussion->category->name, $discussion->slug]) }}" method="POST">
+			<form action="{{ route('discussions.comments.store', [$discussion->category->slug, $discussion->slug]) }}" method="POST">
 				@csrf
 
 				<div class="form-group">

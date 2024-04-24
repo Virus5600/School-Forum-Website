@@ -69,8 +69,8 @@ class DiscussionCategoryController extends Controller
 		]);
 	}
 
-	public function show(Request $req, $name) {
-		$category = DiscussionCategory::where('name', '=', $name)
+	public function show(Request $req, $slug) {
+		$category = DiscussionCategory::where('slug', '=', $slug)
 			->firstOrFail();
 
 		// Initialize Discussion Query

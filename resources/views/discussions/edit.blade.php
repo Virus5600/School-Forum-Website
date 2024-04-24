@@ -15,7 +15,7 @@
 	</hgroup>
 
 	{{-- FORM --}}
-	<form action="{{ route('discussions.update', [$discussion->category->name, $discussion->slug]) }}" class="card my-5" method="POST" enctype="multipart/form-data">
+	<form action="{{ route('discussions.update', [$discussion->category->slug, $discussion->slug]) }}" class="card my-5" method="POST" enctype="multipart/form-data">
 		@csrf
 		@method('PATCH')
 
@@ -73,7 +73,7 @@
 				<button type="submit" class="btn btn-it-primary" data-dos-action="update">Update</button>
 
 				{{-- CANCEL --}}
-				<button class="btn btn-it-secondary text-light" data-cl-leave data-cl-leave-href="{{ route('discussions.show', [$discussion->category->name, $discussion->slug]) }}">Cancel</button>
+				<button class="btn btn-it-secondary text-light" data-cl-leave data-cl-leave-href="{{ route('discussions.show', [$discussion->category->slug, $discussion->slug]) }}">Cancel</button>
 			</div>
 		</div>
 	</form>

@@ -71,7 +71,7 @@ Route::group(['namespace' => "App\Http\Controllers"], function() {
 			Route::get('/', 'DiscussionCategoryController@index')->name('discussions.categories.index');
 
 			// Show (Category)
-			Route::group(['prefix' => '{name}'], function() {
+			Route::group(['prefix' => '{catSlug}'], function() {
 				// Show
 				Route::get('/', 'DiscussionCategoryController@show')->name('discussions.categories.show');
 

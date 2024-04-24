@@ -1,7 +1,7 @@
-@props(['comment', 'additionalClass' => '', 'discussion', 'name', 'slug', 'page' => 0, 'includeScripts' => "true"])
+@props(['comment', 'additionalClass' => '', 'discussion', 'catSlug', 'slug', 'page' => 0, 'includeScripts' => "true"])
 
 @php
-$vanillaParams = [$name, $slug, $comment->id];
+$vanillaParams = [$catSlug, $slug, $comment->id];
 $params = $vanillaParams;
 
 if ($page > 0 && is_int($page)) {

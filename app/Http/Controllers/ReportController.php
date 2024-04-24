@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use Exception;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Log;
 
 class ReportController extends Controller
@@ -92,12 +93,16 @@ class ReportController extends Controller
 
 	public function show(Request $req, $uuid) {
 		$report = Reportable::with([
-				'reportedBy:id, avatar, username, gender, created_at, last_auth, is_verified',
-				'reportable' => [
-						'discussion' => ['id', 'title', 'content', 'created_at'],
-						'comment' => ['discussion']
-					]
-				])
+				'reportedBy:id,avatar,username,gender,created_at,last_auth,is_verified',
+				'reportable' => function(MorphTo $morphable) {
+					$morphable->morphWith([
+						"App\Models\Discussion" => ['postedBy'],
+						"App\Models\DiscussionReplies" => [
+							'repliedBy',
+							'discussion' => ['postedBy'],
+						],
+					]);
+				}])
 			->where('uuid', $uuid)
 			->firstOrFail();
 

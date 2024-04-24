@@ -42,7 +42,7 @@
 						<x-search search="{{ $search }}" />
 					</form>
 
-					<a href="{{ route('discussions.categories.show', [$category->name]) }}" class="btn btn-it-primary btn-sm">Reset Filter(s)</a>
+					<a href="{{ route('discussions.categories.show', [$category->slug]) }}" class="btn btn-it-primary btn-sm">Reset Filter(s)</a>
 				</div>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 							@forelse($discussions as $d)
 							<tr>
 								<td class="text-start text-nowrap">
-									<a href="{{ route('discussions.show', [$category->name, $d->slug]) }}" class="link-body-emphasis text-decoration-none icon-link icon-link-hover w-100" title="{{ ucwords($d->title) }}." style="--bs-icon-link-transform: translate3d(0, -.25rem, 0);">
+									<a href="{{ route('discussions.show', [$category->slug, $d->slug]) }}" class="link-body-emphasis text-decoration-none icon-link icon-link-hover w-100" title="{{ ucwords($d->title) }}." style="--bs-icon-link-transform: translate3d(0, -.25rem, 0);">
 										<i class="fas fa-up-right-from-square bi transition-2"></i>
 										{{ ucwords($d->title) }}
 									</a>
